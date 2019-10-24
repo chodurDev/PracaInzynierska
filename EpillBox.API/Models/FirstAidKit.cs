@@ -1,11 +1,17 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EpillBox.API.Models
 {
     public class FirstAidKit
     {
+
+        [ForeignKey("User")]
         public int IdUser { get; set; }
         public User User { get; set; }
+
+        [ForeignKey("Medicine")]
         public int IdMedicine { get; set; }
         public Medicine Medicine { get; set; }
 
