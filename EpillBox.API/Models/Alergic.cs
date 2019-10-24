@@ -2,10 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EpillBox.API.Models
 {
-    public class Alergics
+    public class Alergic
     {
         [Key]
-        public int IdAlergics { get; set; }
+        public int IdAlergic { get; set; }
         public User User { get; set; }
         public string substanceName { get; set; }
     }
