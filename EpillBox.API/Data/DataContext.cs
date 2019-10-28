@@ -21,22 +21,26 @@ namespace EpillBox.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //konfiguracja wiele do wielu user-> firstAidKit <-medicine
-            modelBuilder.Entity<FirstAidKit>().HasKey(fak => new { fak.IdMedicine, fak.IdUser });
+           
             modelBuilder.Entity<FirstAidKit>()
                 .HasOne(fak => fak.Medicine)
-                .WithMany(m => m.FirstAidKit)
-                .HasForeignKey(fak => fak.IdMedicine);
+                .WithMany(m => m.FirstAidKit);
+
             modelBuilder.Entity<FirstAidKit>()
                 .HasOne(fak => fak.User)
-                .WithMany(u => u.FirstAidKit)
-                .HasForeignKey(fak => fak.IdUser);
-            /////////////////
+                .WithMany(u => u.FirstAidKit);
+
+            
+
+            modelBuilder.Entity<UserAlergics>()
+                            .HasOne(ua => ua.User)
+                            .WithMany(u => u.UserAlergics);
+
+            modelBuilder.Entity<UserAlergics>()
+                            .HasOne(ua => ua.Alergic)
+                            .WithMany(a => a.UserAlergics);
 
 
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.Alergics)
-                .WithOne(a => a.User);
 
             modelBuilder.Entity<Producer>()
                 .HasMany(p => p.Medicines)
@@ -47,25 +51,25 @@ namespace EpillBox.API.Data
                 .WithOne(m => m.Form);
 
 
-            modelBuilder.Entity<MedicineComposition>().HasKey(mc => new { mc.IdMedicine, mc.IdComposition });
+            
             modelBuilder.Entity<MedicineComposition>()
                 .HasOne(mc => mc.Medicine)
-                .WithMany(m => m.MedicineCompositions)
-                .HasForeignKey(mc => mc.IdMedicine);
+                .WithMany(m => m.MedicineCompositions);
+                
             modelBuilder.Entity<MedicineComposition>()
                 .HasOne(mc => mc.Composition)
-                .WithMany(c => c.MedicineCompositions)
-                .HasForeignKey(mc => mc.IdComposition);
+                .WithMany(c => c.MedicineCompositions);
+                
 
-            modelBuilder.Entity<MedicineCategory>().HasKey(mc => new { mc.IdMedicine, mc.IdCategory });
+           
             modelBuilder.Entity<MedicineCategory>()
                 .HasOne(mc => mc.Medicine)
-                .WithMany(m => m.MedicineCategory)
-                .HasForeignKey(mc => mc.IdMedicine);
+                .WithMany(m => m.MedicineCategory);
+                
             modelBuilder.Entity<MedicineCategory>()
                 .HasOne(mc => mc.Category)
-                .WithMany(c => c.MedicineCategories)
-                .HasForeignKey(mc => mc.IdCategory);
+                .WithMany(c => c.MedicineCategories);
+                
 
 
 

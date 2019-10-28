@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EpillBox.API.Models
@@ -6,7 +7,8 @@ namespace EpillBox.API.Models
     {
         [Key]
         public int IdAlergic { get; set; }
-        public User User { get; set; }
+        
         public string substanceName { get; set; }
+        public ICollection<UserAlergics> UserAlergics { get; set; }
     }
 }

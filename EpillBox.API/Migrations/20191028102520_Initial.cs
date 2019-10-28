@@ -3,10 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EpillBox.API.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Alergics",
+                columns: table => new
+                {
+                    IdAlergic = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    substanceName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Alergics", x => x.IdAlergic);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -83,52 +96,60 @@ namespace EpillBox.API.Migrations
                 {
                     IdMedicine = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ProducerIdProducer = table.Column<int>(nullable: true),
+                    IdProducer = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    FormIdForm = table.Column<int>(nullable: true),
+                    IdForm = table.Column<int>(nullable: false),
                     Effect = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Medicines", x => x.IdMedicine);
                     table.ForeignKey(
-                        name: "FK_Medicines_Forms_FormIdForm",
-                        column: x => x.FormIdForm,
+                        name: "FK_Medicines_Forms_IdForm",
+                        column: x => x.IdForm,
                         principalTable: "Forms",
                         principalColumn: "IdForm",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Medicines_Producers_ProducerIdProducer",
-                        column: x => x.ProducerIdProducer,
+                        name: "FK_Medicines_Producers_IdProducer",
+                        column: x => x.IdProducer,
                         principalTable: "Producers",
                         principalColumn: "IdProducer",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Alergics",
+                name: "UserAlergics",
                 columns: table => new
                 {
-                    IdAlergic = table.Column<int>(nullable: false)
+                    IdUserAlergics = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserIdUser = table.Column<int>(nullable: true),
-                    substanceName = table.Column<string>(nullable: true)
+                    IdUser = table.Column<int>(nullable: false),
+                    IdAlergic = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Alergics", x => x.IdAlergic);
+                    table.PrimaryKey("PK_UserAlergics", x => x.IdUserAlergics);
                     table.ForeignKey(
-                        name: "FK_Alergics_Users_UserIdUser",
-                        column: x => x.UserIdUser,
+                        name: "FK_UserAlergics_Alergics_IdAlergic",
+                        column: x => x.IdAlergic,
+                        principalTable: "Alergics",
+                        principalColumn: "IdAlergic",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserAlergics_Users_IdUser",
+                        column: x => x.IdUser,
                         principalTable: "Users",
                         principalColumn: "IdUser",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "FirstAidKits",
                 columns: table => new
                 {
+                    IdFirstAidKit = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     IdUser = table.Column<int>(nullable: false),
                     IdMedicine = table.Column<int>(nullable: false),
                     ExpirationDate = table.Column<DateTime>(nullable: false),
@@ -138,7 +159,7 @@ namespace EpillBox.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FirstAidKits", x => new { x.IdMedicine, x.IdUser });
+                    table.PrimaryKey("PK_FirstAidKits", x => x.IdFirstAidKit);
                     table.ForeignKey(
                         name: "FK_FirstAidKits_Medicines_IdMedicine",
                         column: x => x.IdMedicine,
@@ -157,12 +178,14 @@ namespace EpillBox.API.Migrations
                 name: "MedicineCategories",
                 columns: table => new
                 {
+                    IdMedicineCategory = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     IdMedicine = table.Column<int>(nullable: false),
                     IdCategory = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicineCategories", x => new { x.IdMedicine, x.IdCategory });
+                    table.PrimaryKey("PK_MedicineCategories", x => x.IdMedicineCategory);
                     table.ForeignKey(
                         name: "FK_MedicineCategories_Categories_IdCategory",
                         column: x => x.IdCategory,
@@ -181,12 +204,14 @@ namespace EpillBox.API.Migrations
                 name: "MedicineCompositions",
                 columns: table => new
                 {
+                    IdMedicineComposition = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     IdMedicine = table.Column<int>(nullable: false),
                     IdComposition = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicineCompositions", x => new { x.IdMedicine, x.IdComposition });
+                    table.PrimaryKey("PK_MedicineCompositions", x => x.IdMedicineComposition);
                     table.ForeignKey(
                         name: "FK_MedicineCompositions_Compositions_IdComposition",
                         column: x => x.IdComposition,
@@ -202,9 +227,9 @@ namespace EpillBox.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Alergics_UserIdUser",
-                table: "Alergics",
-                column: "UserIdUser");
+                name: "IX_FirstAidKits_IdMedicine",
+                table: "FirstAidKits",
+                column: "IdMedicine");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FirstAidKits_IdUser",
@@ -217,26 +242,43 @@ namespace EpillBox.API.Migrations
                 column: "IdCategory");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MedicineCategories_IdMedicine",
+                table: "MedicineCategories",
+                column: "IdMedicine");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MedicineCompositions_IdComposition",
                 table: "MedicineCompositions",
                 column: "IdComposition");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Medicines_FormIdForm",
-                table: "Medicines",
-                column: "FormIdForm");
+                name: "IX_MedicineCompositions_IdMedicine",
+                table: "MedicineCompositions",
+                column: "IdMedicine");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Medicines_ProducerIdProducer",
+                name: "IX_Medicines_IdForm",
                 table: "Medicines",
-                column: "ProducerIdProducer");
+                column: "IdForm");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Medicines_IdProducer",
+                table: "Medicines",
+                column: "IdProducer");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAlergics_IdAlergic",
+                table: "UserAlergics",
+                column: "IdAlergic");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAlergics_IdUser",
+                table: "UserAlergics",
+                column: "IdUser");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Alergics");
-
             migrationBuilder.DropTable(
                 name: "FirstAidKits");
 
@@ -247,7 +289,7 @@ namespace EpillBox.API.Migrations
                 name: "MedicineCompositions");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "UserAlergics");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -257,6 +299,12 @@ namespace EpillBox.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Medicines");
+
+            migrationBuilder.DropTable(
+                name: "Alergics");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Forms");
