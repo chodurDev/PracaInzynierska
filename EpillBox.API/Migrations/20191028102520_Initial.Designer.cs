@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EpillBox.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191024155305_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20191028102520_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,13 +23,9 @@ namespace EpillBox.API.Migrations
                     b.Property<int>("IdAlergic")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("UserIdUser");
-
                     b.Property<string>("substanceName");
 
                     b.HasKey("IdAlergic");
-
-                    b.HasIndex("UserIdUser");
 
                     b.ToTable("Alergics");
                 });
@@ -60,11 +56,14 @@ namespace EpillBox.API.Migrations
 
             modelBuilder.Entity("EpillBox.API.Models.FirstAidKit", b =>
                 {
+                    b.Property<int>("IdFirstAidKit")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("ExpirationDate");
+
                     b.Property<int>("IdMedicine");
 
                     b.Property<int>("IdUser");
-
-                    b.Property<DateTime>("ExpirationDate");
 
                     b.Property<bool>("IsAlergicTo");
 
@@ -72,7 +71,9 @@ namespace EpillBox.API.Migrations
 
                     b.Property<int>("remainingQuantity");
 
-                    b.HasKey("IdMedicine", "IdUser");
+                    b.HasKey("IdFirstAidKit");
+
+                    b.HasIndex("IdMedicine");
 
                     b.HasIndex("IdUser");
 
@@ -98,43 +99,53 @@ namespace EpillBox.API.Migrations
 
                     b.Property<string>("Effect");
 
-                    b.Property<int?>("FormIdForm");
+                    b.Property<int>("IdForm");
 
-                    b.Property<int?>("ProducerIdProducer");
+                    b.Property<int>("IdProducer");
 
                     b.Property<int>("Quantity");
 
                     b.HasKey("IdMedicine");
 
-                    b.HasIndex("FormIdForm");
+                    b.HasIndex("IdForm");
 
-                    b.HasIndex("ProducerIdProducer");
+                    b.HasIndex("IdProducer");
 
                     b.ToTable("Medicines");
                 });
 
             modelBuilder.Entity("EpillBox.API.Models.MedicineCategory", b =>
                 {
-                    b.Property<int>("IdMedicine");
+                    b.Property<int>("IdMedicineCategory")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("IdCategory");
 
-                    b.HasKey("IdMedicine", "IdCategory");
+                    b.Property<int>("IdMedicine");
+
+                    b.HasKey("IdMedicineCategory");
 
                     b.HasIndex("IdCategory");
+
+                    b.HasIndex("IdMedicine");
 
                     b.ToTable("MedicineCategories");
                 });
 
             modelBuilder.Entity("EpillBox.API.Models.MedicineComposition", b =>
                 {
-                    b.Property<int>("IdMedicine");
+                    b.Property<int>("IdMedicineComposition")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("IdComposition");
 
-                    b.HasKey("IdMedicine", "IdComposition");
+                    b.Property<int>("IdMedicine");
+
+                    b.HasKey("IdMedicineComposition");
 
                     b.HasIndex("IdComposition");
+
+                    b.HasIndex("IdMedicine");
 
                     b.ToTable("MedicineCompositions");
                 });
@@ -173,11 +184,22 @@ namespace EpillBox.API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EpillBox.API.Models.Alergic", b =>
+            modelBuilder.Entity("EpillBox.API.Models.UserAlergics", b =>
                 {
-                    b.HasOne("EpillBox.API.Models.User", "User")
-                        .WithMany("Alergics")
-                        .HasForeignKey("UserIdUser");
+                    b.Property<int>("IdUserAlergics")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("IdAlergic");
+
+                    b.Property<int>("IdUser");
+
+                    b.HasKey("IdUserAlergics");
+
+                    b.HasIndex("IdAlergic");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("UserAlergics");
                 });
 
             modelBuilder.Entity("EpillBox.API.Models.FirstAidKit", b =>
@@ -197,11 +219,13 @@ namespace EpillBox.API.Migrations
                 {
                     b.HasOne("EpillBox.API.Models.Form", "Form")
                         .WithMany("Medicines")
-                        .HasForeignKey("FormIdForm");
+                        .HasForeignKey("IdForm")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EpillBox.API.Models.Producer", "Producer")
                         .WithMany("Medicines")
-                        .HasForeignKey("ProducerIdProducer");
+                        .HasForeignKey("IdProducer")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("EpillBox.API.Models.MedicineCategory", b =>
@@ -227,6 +251,19 @@ namespace EpillBox.API.Migrations
                     b.HasOne("EpillBox.API.Models.Medicine", "Medicine")
                         .WithMany("MedicineCompositions")
                         .HasForeignKey("IdMedicine")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EpillBox.API.Models.UserAlergics", b =>
+                {
+                    b.HasOne("EpillBox.API.Models.Alergic", "Alergic")
+                        .WithMany("UserAlergics")
+                        .HasForeignKey("IdAlergic")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EpillBox.API.Models.User", "User")
+                        .WithMany("UserAlergics")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

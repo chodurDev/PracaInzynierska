@@ -13,7 +13,7 @@ namespace EpillBox.API.Models
         public string Login { get; set; }
         public string Password { get; set; }
 
-        public ICollection<Alergic> Alergics { get; set; }
+        public ICollection<UserAlergics> UserAlergics { get; set; }
 
         public ICollection<FirstAidKit> FirstAidKit { get; set; }
     }

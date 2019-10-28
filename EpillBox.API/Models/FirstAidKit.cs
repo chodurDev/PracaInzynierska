@@ -6,6 +6,8 @@ namespace EpillBox.API.Models
 {
     public class FirstAidKit
     {
+        [Key]
+        public int IdFirstAidKit { get; set; }
 
         [ForeignKey("User")]
         public int IdUser { get; set; }
