@@ -7,15 +7,12 @@ namespace EpillBox.API.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<Alergic> Alergics { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Composition> Compositions { get; set; }
+      
+        
         public DbSet<FirstAidKit> FirstAidKits { get; set; }
-        public DbSet<Form> Forms { get; set; }
+        
         public DbSet<Medicine> Medicines { get; set; }
-        public DbSet<MedicineCategory> MedicineCategories { get; set; }
-        public DbSet<MedicineComposition> MedicineCompositions { get; set; }
-        public DbSet<Producer> Producers { get; set; }
+        
         public DbSet<User> Users { get; set; }
 
 
