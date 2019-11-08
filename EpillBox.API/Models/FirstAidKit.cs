@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,20 +7,11 @@ namespace EpillBox.API.Models
 {
     public class FirstAidKit
     {
-        [Key]
-        public int IdFirstAidKit { get; set; }
+       public int FirstAidKitID { get; set; }
 
-        [ForeignKey("User")]
-        public int IdUser { get; set; }
-        public User User { get; set; }
+       public ICollection<UserFirstAidKit> UserFirstAidKits { get; set; }
+        public ICollection<FirstAidKitMedicine> FirstAidKitMedicines { get; set; }
 
-        [ForeignKey("Medicine")]
-        public int IdMedicine { get; set; }
-        public Medicine Medicine { get; set; }
-
-        public DateTime ExpirationDate { get; set; }
-        public bool IsTaken { get; set; }
-        public int remainingQuantity { get; set; }
-        public bool IsAlergicTo { get; set; }
+        
     }
 }

@@ -6,23 +6,11 @@ namespace EpillBox.API.Models
 {
     public class Medicine
     {
-        [Key]
-        public int IdMedicine { get; set; }
-        [ForeignKey("IdProducer")]
-        public int IdProducer { get; set; }
+        public int MedicineID { get; set; }
+        public string Name { get; set; }
 
-        public Producer Producer { get; set; }
-        public int Quantity { get; set; }
-
-        public ICollection<MedicineComposition> MedicineCompositions { get; set; }
-
-        [ForeignKey("IdForm")]
-        public int IdForm { get; set; }
-        public Form Form { get; set; }
-        public ICollection<MedicineCategory> MedicineCategory { get; set; }
-        public string Effect { get; set; }
-
-        public ICollection<FirstAidKit> FirstAidKit { get; set; }
+        public ICollection<FirstAidKitMedicine> FirstAidKitMedicines { get; set; }
+       
 
 
 
