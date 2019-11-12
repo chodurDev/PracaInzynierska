@@ -7,19 +7,20 @@ namespace EpillBox.API.Data
     {
         public static void Initialize(DataContext context)
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+           
             //usuwac baze danych w momencie jesli ona istnieje i ponownie seedowac dane
             if (context.Users.Any())
             {
                 return;   // DB has been seeded
             }
+            //  context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
             var users = new User[]{
-                new User{Name="Bogdan",Surname="Bogdanowicz",Email="test@test.pl",Login="login",Password="password"},
-                new User{Name="Jan",Surname="Kowalski",Email="test@test.pl",Login="login",Password="password"},
-                new User{Name="Tomasz",Surname="Nowak",Email="test@test.pl",Login="login",Password="password"},
-                new User{Name="Kamil",Surname="Limak",Email="test@test.pl",Login="login",Password="password"},
+                new User{Name="Bogdan",Surname="Bogdanowicz",Email="test@test.pl"},
+                new User{Name="Jan",Surname="Kowalski",Email="test@test.pl"},
+                new User{Name="Tomasz",Surname="Nowak",Email="test@test.pl"},
+                new User{Name="Kamil",Surname="Limak",Email="test@test.pl"},
             };
 
             foreach (User u in users)

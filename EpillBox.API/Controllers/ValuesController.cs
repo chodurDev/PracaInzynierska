@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EpillBox.API.Models;
+using EpillBox.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EpillBox.API.Controllers
@@ -10,19 +12,30 @@ namespace EpillBox.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly UserService _user;
+
+        public ValuesController(UserService user)
+        {
+            _user = user;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<IActionResult> GetUsers()
         {
-            return new string[] { "value1", "value2" };
+            var users = await _user.GetUsers();
+            
+            return Ok(users);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            
+            return Ok();
         }
+        
 
         // POST api/values
         [HttpPost]
