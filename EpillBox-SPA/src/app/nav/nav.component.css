@@ -1,0 +1,11 @@
+.dropdown-toggle, .dropdown-item {
+    cursor: pointer;
+}
+
+/* .dropdown-menu{
+    margin-right: 16px;
+} */
+.row {
+    width: 100vw;
+}
+
