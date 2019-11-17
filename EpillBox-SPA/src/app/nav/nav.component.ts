@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 
@@ -9,6 +9,8 @@ import { AlertifyService } from '../_services/alertify.service';
 })
 export class NavComponent implements OnInit {
   model: any = {};
+
+  @Output() toggleSideBar = new EventEmitter();
 
   constructor(
     public authService: AuthService,
@@ -35,5 +37,8 @@ export class NavComponent implements OnInit {
   logout() {
     localStorage.removeItem('token');
     this.alertify.message('logged out');
+  }
+  showSideBar() {
+    this.toggleSideBar.emit();
   }
 }

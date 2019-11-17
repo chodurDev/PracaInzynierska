@@ -9,6 +9,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AppComponent implements OnInit {
   jwtHelper = new JwtHelperService();
+  closeOnClickOutside = true;
+  opened = false;
 
   constructor(private authService: AuthService) {}
 
@@ -17,5 +19,9 @@ export class AppComponent implements OnInit {
     if (token) {
       this.authService.decodedToken = this.jwtHelper.decodeToken(token);
     }
+  }
+
+  onToggleSideBar() {
+    this.opened = true;
   }
 }

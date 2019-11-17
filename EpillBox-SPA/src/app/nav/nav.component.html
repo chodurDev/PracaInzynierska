@@ -1,30 +1,9 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
   <div class="container-fluid">
-    
-  <div class="dropdown" dropdown>
-      <a class="dropdown-toggle text-light" dropdownToggle>
-        <i class="fa fa-bars fa-lg">pillBox</i>
+      <a class="text-light" (click)="showSideBar(true)">
+        <i class="fa fa-bars fa-lg"></i>
       </a>
-      
-
-        <div class="dropdown-menu mt-2" *dropdownMenu >
-          
-            
-            <a class="dropdown-item" *ngIf="loggedIn()" >Wyloguj</a>
-            <a class="dropdown-item"  *ngIf="loggedIn()">Wyloguj</a>
-            <a class="dropdown-item"  *ngIf="loggedIn()">Wyloguj</a>
-            <a class="dropdown-item"  *ngIf="loggedIn()">Wyloguj</a>
-            <a class="dropdown-item"  *ngIf="loggedIn()">Wyloguj</a>
-            <a class="dropdown-item" *ngIf="loggedIn()" >Wyloguj</a>
-          
-        </div>
-     
-    </div>
-
-
-
-    
 
       <div *ngIf="loggedIn()" class="dropdown mr-5" dropdown>
         <a class="dropdown-toggle text-light" dropdownToggle>
