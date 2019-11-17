@@ -1,2 +1,22 @@
-<app-nav></app-nav>
-<app-home></app-home>
+<ng-sidebar-container>
+       <!-- A sidebar -->
+       <ng-sidebar [(opened)]="opened" [(closeOnClickOutside)]="closeOnClickOutside">
+
+           <div >
+               <p>Sidebar contents</p>
+               <p>Sidebar contents</p>
+               <p>Sidebar contents</p>
+               <p>Sidebar contents</p>
+           </div>
+        </ng-sidebar>
+      
+          <!-- Page content -->
+        <div ng-sidebar-content>
+                <app-nav (toggleSideBar)="onToggleSideBar($event)"></app-nav>
+                <app-home></app-home>             
+        </div>
+           
+          
+     
+
+</ng-sidebar-container>
