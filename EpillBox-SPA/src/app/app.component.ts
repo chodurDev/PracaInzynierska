@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   jwtHelper = new JwtHelperService();
   closeOnClickOutside = true;
   opened = false;
+  mode: string = 'slide';
 
   constructor(private authService: AuthService) {}
 
@@ -23,5 +24,10 @@ export class AppComponent implements OnInit {
 
   onToggleSideBar() {
     this.opened = true;
+    console.log(this.opened);
+  }
+
+  loggedIn() {
+    return this.authService.loggedIn();
   }
 }

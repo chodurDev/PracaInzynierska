@@ -13,13 +13,19 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { SidebarModule } from 'ng-sidebar';
+import { MyFirstAidKitComponent } from './myFirstAidKit/myFirstAidKit.component';
+import { SideBarContentComponent } from './sideBarContent/sideBarContent.component';
+import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavComponent,
       HomeComponent,
-      RegisterComponent
+      RegisterComponent,
+      MyFirstAidKitComponent,
+      SideBarContentComponent,
+      CurrentlyUsedComponent
    ],
    imports: [
       BrowserModule,
@@ -29,7 +35,6 @@ import { SidebarModule } from 'ng-sidebar';
       BrowserAnimationsModule,
       BsDropdownModule.forRoot(),
       SidebarModule.forRoot()
-
    ],
    providers: [
       ErrorInterceptorProvider,
