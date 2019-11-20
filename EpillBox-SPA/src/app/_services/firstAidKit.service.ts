@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirstAidKitService {
-  baseUrl = 'http://localhost:5000/api';
+  baseUrl = environment.urlAddress;
+
   constructor(private http: HttpClient) {}
 
-  GetuserMedicines(id: number):Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl + '/fak/' + id);
+  GetuserMedicines(id: number) {
+    return this.http.get<Medicine[]>(this.baseUrl + '/fak/' + id);
   }
+}
+export interface Medicine {
+  medicineID: number;
+  name: string;
+  firstAidKitMedicines?: any;
 }

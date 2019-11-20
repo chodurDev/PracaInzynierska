@@ -3,9 +3,13 @@
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
 @import '../node_modules/alertifyjs/build/css/alertify.min.css';
 @import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .ng-sidebar{
     background-color: white;
     border: 1px solid gray;
     /* z-index: 999; */
 }
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

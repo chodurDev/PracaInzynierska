@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,10 @@ import { SidebarModule } from 'ng-sidebar';
 import { MyFirstAidKitComponent } from './myFirstAidKit/myFirstAidKit.component';
 import { SideBarContentComponent } from './sideBarContent/sideBarContent.component';
 import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { AngularMaterialsModule } from './angular-materials.module';
+import {FlexLayoutModule} from '@angular/flex-layout';
+
 
 @NgModule({
    declarations: [
@@ -29,13 +33,20 @@ import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component'
    ],
    imports: [
       BrowserModule,
+      BrowserAnimationsModule,
+      AngularMaterialsModule,
+      FlexLayoutModule,
       AppRoutingModule,
       HttpClientModule,
       FormsModule,
-      BrowserAnimationsModule,
+      ReactiveFormsModule,
       BsDropdownModule.forRoot(),
-      SidebarModule.forRoot()
+      SidebarModule.forRoot(),
+      NgxPaginationModule
+      
    ],
+   exports:[AngularMaterialsModule],
+
    providers: [
       ErrorInterceptorProvider,
       AuthService

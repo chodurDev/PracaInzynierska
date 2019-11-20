@@ -20,7 +20,7 @@ namespace EpillBox.API.Controllers
             
         }
 
-        // GET api/values/5
+        // GET api/fak/5
         [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserMedicines(int id)
@@ -34,19 +34,19 @@ namespace EpillBox.API.Controllers
         
 
 
-        // POST api/values
+        // POST api/fak
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/values/5
+        // PUT api/fak/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE api/fak/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
