@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EpillBox.API.Models;
+﻿using System.Threading.Tasks;
+using EpillBox.API.Data;
 using EpillBox.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,33 +9,30 @@ namespace EpillBox.API.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class FAKController : ControllerBase
     {
-        private readonly UserService _user;
 
-        public ValuesController(UserService user)
-        {
-            _user = user;
-        }
+        private readonly IFAKRepository _fakRepo;
 
-        // GET api/values
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public FAKController(IFAKRepository fakRepo)
         {
-            var users = await _user.GetUsers();
+            _fakRepo = fakRepo;
             
-            return Ok(users);
         }
 
         // GET api/values/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetUserMedicines(int id)
         {
+            var userMedicines = await _fakRepo.GetUserMedicines(id);
+
+            return Ok(userMedicines);
             
-            return Ok();
         }
+
         
+
 
         // POST api/values
         [HttpPost]
