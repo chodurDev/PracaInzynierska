@@ -1,5 +1,6 @@
 using System.Linq;
 using EpillBox.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EpillBox.API.Data
 {
@@ -7,23 +8,29 @@ namespace EpillBox.API.Data
     {
         public static void Initialize(DataContext context)
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-            //usuwac baze danych w momencie jesli ona istnieje i ponownie seedowac dane
+            
             if (context.Users.Any())
             {
                 return;   // DB has been seeded
             }
+            
+            
 
             var users = new User[]{
-                new User{Name="Bogdan",Surname="Bogdanowicz",Email="test@test.pl",Login="login",Password="password"},
-                new User{Name="Jan",Surname="Kowalski",Email="test@test.pl",Login="login",Password="password"},
-                new User{Name="Tomasz",Surname="Nowak",Email="test@test.pl",Login="login",Password="password"},
-                new User{Name="Kamil",Surname="Limak",Email="test@test.pl",Login="login",Password="password"},
+                new User{Name="Bogdan",Surname="Bogdanowicz",Email="bogdan@test.pl"},
+                new User{Name="Jan",Surname="Kowalski",Email="jan@test.pl"},
+                new User{Name="Tomasz",Surname="Nowak",Email="tomasz@test.pl"},
+                new User{Name="Kamil",Surname="Limak",Email="kamil@test.pl"},
             };
 
             foreach (User u in users)
             {
+                byte[] passwordHash, passwordSalt;
+                CreatePasswordHash("password", out passwordHash, out passwordSalt);
+                u.PasswordHash=passwordHash;
+                u.PasswordSalt=passwordSalt;
+                u.Name=u.Name.ToLower();
+                u.Surname=u.Surname.ToLower();
                 context.Users.Add(u);
             }
             context.SaveChanges();
@@ -84,6 +91,16 @@ namespace EpillBox.API.Data
             }
 
             context.SaveChanges();
+        }
+
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+
         }
 
     }

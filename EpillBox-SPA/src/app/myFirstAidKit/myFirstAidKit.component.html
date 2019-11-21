@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <div class="row mt-3">
+    <div class="col">
+      <h1 class="text-center">Moja apteczka</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="col-4">
+        
+          <app-tableForMedicine [medicines]="medicines"></app-tableForMedicine>
+          
+      </div>
+      
+    
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col  d-flex justify-content-end">
+          <a class=" btn btn-light text-uppercase font-weight-bold mr-5" [routerLink]="['/myFirstAidKit']" routerLinkActive="router-link-active"  >
+            <img src="https://img.icons8.com/material-two-tone/64/000000/plus.png">Dodaj Lek
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+</div>
+

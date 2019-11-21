@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+  <div class="container-fluid">
+    <div class="d-flex align-items-center">
+      <button class="btn  text-light" (click)="showSideBar()" [disabled]="!loggedIn()">
+        <i class="fa fa-bars fa-lg"></i>
+      </button>
+      <button class="btn text-light" [routerLink]="['/myFirstAidKit']" >E-PillBox</button>
+
+    </div>
+
+      <div *ngIf="loggedIn()" class="dropdown mr-5" dropdown>
+        <a class="dropdown-toggle text-light" dropdownToggle>
+          Cześć {{authService.decodedToken?.unique_name | titlecase}}
+        </a>
+      
+        <div class="dropdown-menu mt-2" *dropdownMenu>
+          <a class="dropdown-item"  (click)="logout()"><i class="fa fa-sign-out"></i>Wyloguj</a>
+        </div>
+      </div>
+  
+      <form *ngIf="!loggedIn()" #loginForm ="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+        <input class="form-control mr-sm-2" type="email" name="email" placeholder="E-mail" required [(ngModel)]="model.email" >
+        <input class="form-control mr-sm-2" type="password" name="password"  placeholder="Password" required [(ngModel)]="model.password">
+        <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit" >Login</button>
+      </form> 
+
+  </div>
+  
+</nav>
