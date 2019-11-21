@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using EpillBox.API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -77,12 +78,13 @@ namespace EpillBox.API.Data
             }
 
             context.SaveChanges();
+            var currentDayMinus7 = DateTime.Today.AddDays(-7);
 
             var firstAidKitMedicines = new FirstAidKitMedicine[]{
-                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=1},
-                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=2},
-                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=3},
-                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=4}
+                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=1,ExpirationDate=currentDayMinus7},
+                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=2,ExpirationDate=currentDayMinus7},
+                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=3,ExpirationDate=currentDayMinus7},
+                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=4,ExpirationDate=currentDayMinus7}
             };
 
             foreach (FirstAidKitMedicine fakm in firstAidKitMedicines)

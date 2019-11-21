@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Medicine } from '../_model/Medicine';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,7 @@ export class FirstAidKitService {
   GetuserMedicines(id: number) {
     return this.http.get<Medicine[]>(this.baseUrl + '/fak/' + id);
   }
-}
-export interface Medicine {
-  medicineID: number;
-  name: string;
-  firstAidKitMedicines?: any;
+  GetExpiredMedicines(id: number) {
+    return this.http.get<Medicine[]>(this.baseUrl + '/fak/expiredMedicines/' + id);
+  }
 }

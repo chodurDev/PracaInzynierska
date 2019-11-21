@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace EpillBox.API.Data
             _context.Remove(entity);
         }
 
+
         public async Task<IEnumerable<Medicine>> GetUserMedicines(int id)
         {
             // _context.UserFirstAidKits.Load();
@@ -36,6 +38,15 @@ namespace EpillBox.API.Data
              return  firstAidKitMedicines;
             
              
+        }
+        public async Task<IEnumerable<Medicine>> GetExpiredMedicines(int id)
+        {
+           var userFirstAidKit = await _context.UserFirstAidKits.FirstOrDefaultAsync(ufak=>ufak.UserID==id);
+              var expiredMedicines = await _context.FirstAidKitMedicines.Include(em=>em.Medicine).Where(em=>em.FirstAidKitID==userFirstAidKit.FirstAidKitID && em.ExpirationDate < DateTime.Today).Select(x=>x.Medicine).ToListAsync();
+            
+             
+             return  expiredMedicines;
+            
         }
 
         public Task<bool> SaveAll()

@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input, AfterViewInit, OnChanges } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { Medicine } from '../_services/firstAidKit.service';
+import { Medicine } from '../_model/Medicine';
 
 @Component({
   selector: 'app-tableForMedicine',

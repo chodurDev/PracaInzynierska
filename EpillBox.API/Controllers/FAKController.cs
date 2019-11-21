@@ -30,6 +30,15 @@ namespace EpillBox.API.Controllers
             return Ok(userMedicines);
             
         }
+        [AllowAnonymous]
+        [Route("expiredMedicines/{id}")]
+        public async Task<IActionResult> GetExpiredMedicines(int id)
+        {
+            var expiredMedicines = await _fakRepo.GetExpiredMedicines(id);
+
+            return Ok(expiredMedicines);
+            
+        }
 
         
 

@@ -11,20 +11,21 @@ import { AuthService } from '../_services/auth.service';
 export class ShortTermMedicinesComponent implements OnInit {
 
   medicines: Medicine[] = [];
+  
   constructor(
     private fakService: FirstAidKitService,
     private authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.getUserMedicines();
+    this.getMedicines();
   }
 
-  getUserMedicines() {
+  getMedicines() {
     const actualUserId = this.authService.decodedToken.nameid;
 
     this.fakService
-      .GetuserMedicines(actualUserId)
+      .GetExpiredMedicines(actualUserId)
       .subscribe((values: Medicine[]) => {
         this.medicines = values;
       });
