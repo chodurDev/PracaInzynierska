@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './_services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,18 +14,18 @@ export class AppComponent implements OnInit {
   opened = false;
   mode: string = 'slide';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     const token = localStorage.getItem('token');
     if (token) {
       this.authService.decodedToken = this.jwtHelper.decodeToken(token);
+      this.router.navigate(['/myFirstAidKit']);
     }
   }
 
   onToggleSideBar() {
     this.opened = true;
-    console.log(this.opened);
   }
 
   loggedIn() {

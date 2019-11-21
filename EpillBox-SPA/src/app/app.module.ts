@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,10 +16,9 @@ import { SidebarModule } from 'ng-sidebar';
 import { MyFirstAidKitComponent } from './myFirstAidKit/myFirstAidKit.component';
 import { SideBarContentComponent } from './sideBarContent/sideBarContent.component';
 import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component';
-import {NgxPaginationModule} from 'ngx-pagination';
 import { AngularMaterialsModule } from './angular-materials.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.component';
 
 @NgModule({
    declarations: [
@@ -29,7 +28,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
       RegisterComponent,
       MyFirstAidKitComponent,
       SideBarContentComponent,
-      CurrentlyUsedComponent
+      CurrentlyUsedComponent,
+      TableForMedicineComponent
    ],
    imports: [
       BrowserModule,
@@ -41,12 +41,11 @@ import {FlexLayoutModule} from '@angular/flex-layout';
       FormsModule,
       ReactiveFormsModule,
       BsDropdownModule.forRoot(),
-      SidebarModule.forRoot(),
-      NgxPaginationModule
-      
+      SidebarModule.forRoot()
    ],
-   exports:[AngularMaterialsModule],
-
+   exports: [
+      AngularMaterialsModule
+   ],
    providers: [
       ErrorInterceptorProvider,
       AuthService
@@ -55,4 +54,4 @@ import {FlexLayoutModule} from '@angular/flex-layout';
       AppComponent
    ]
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,45 +1,35 @@
-<!-- <div class="container-fluid">
+<div class="container-fluid">
   <div class="row mt-3">
     <div class="col">
-        <form>
-        <input type="text" results="5" name="s" placeholder="Search..." autosave="unique">
-      </form>
-      <div class="table-responsive">
-          <table class="table align-items-center">
-            <thead class="thead-light header">
-              <tr>
-                <th class="header" scope="col" style="width: 20%">Nazwa</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let medicine of medicines | paginate: { itemsPerPage: numberOfRows, currentPage: page }">
-                <td >{{ medicine.name }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <pagination-controls class="d-flex justify-content-center" (pageChange)="page = $event"></pagination-controls>
-        </div>
+      <h1 class="text-center">Moja apteczka</h1>
     </div>
-    <div class="col"></div>
   </div>
-  
-
-</div> -->
-<mat-form-field>
-    <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Szukaj...">
-  </mat-form-field>
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-  
+  <div class="row">
+    <div class="col">
+      <div class="col-4">
+        
+          <app-tableForMedicine [medicines]="medicines"></app-tableForMedicine>
+          
+      </div>
       
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col  d-flex justify-content-end">
+          <a class=" btn btn-light text-uppercase font-weight-bold mr-5" href="/myFirstAidKit" >
+            <img src="https://img.icons8.com/material-two-tone/64/000000/plus.png">Dodaj Lek
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          
+        </div>
+      </div>
+    </div>
   </div>
+  
+
+</div>
+
