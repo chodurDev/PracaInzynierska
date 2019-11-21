@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { MyFirstAidKitComponent } from './myFirstAidKit/myFirstAidKit.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component';
+import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedicines.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'myFirstAidKit', component: MyFirstAidKitComponent },
-      { path: 'currentlyUsed', component: CurrentlyUsedComponent }
+      { path: 'currentlyUsed', component: CurrentlyUsedComponent },
+      { path: 'shortTermMedicines', component: ShortTermMedicinesComponent },
     ]
   },
 

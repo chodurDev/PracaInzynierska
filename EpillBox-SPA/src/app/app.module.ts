@@ -19,6 +19,7 @@ import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component'
 import { AngularMaterialsModule } from './angular-materials.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.component';
+import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedicines.component';
 
 @NgModule({
    declarations: [
@@ -29,7 +30,8 @@ import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.c
       MyFirstAidKitComponent,
       SideBarContentComponent,
       CurrentlyUsedComponent,
-      TableForMedicineComponent
+      TableForMedicineComponent,
+      ShortTermMedicinesComponent
    ],
    imports: [
       BrowserModule,

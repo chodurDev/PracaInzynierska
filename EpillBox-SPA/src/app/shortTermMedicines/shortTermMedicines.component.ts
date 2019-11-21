@@ -4,11 +4,12 @@ import { FirstAidKitService } from '../_services/firstAidKit.service';
 import { AuthService } from '../_services/auth.service';
 
 @Component({
-  selector: 'app-currentlyUsed',
-  templateUrl: './currentlyUsed.component.html',
-  styleUrls: ['./currentlyUsed.component.css']
+  selector: 'app-shortTermMedicines',
+  templateUrl: './shortTermMedicines.component.html',
+  styleUrls: ['./shortTermMedicines.component.css']
 })
-export class CurrentlyUsedComponent implements OnInit {
+export class ShortTermMedicinesComponent implements OnInit {
+
   medicines: Medicine[] = [];
   constructor(
     private fakService: FirstAidKitService,
