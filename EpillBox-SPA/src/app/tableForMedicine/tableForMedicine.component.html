@@ -5,9 +5,13 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
 
-        <ng-container matColumnDef="name">
+        <ng-container matColumnDef="medicine">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa leku </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.medicine.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="remainingQuantity">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Pozostała ilość </th>
+          <td mat-cell *matCellDef="let element"> {{element.remainingQuantity}} </td>
         </ng-container>
   
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

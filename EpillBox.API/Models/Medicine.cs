@@ -8,6 +8,7 @@ namespace EpillBox.API.Models
     {
         public int MedicineID { get; set; }
         public string Name { get; set; }
+        public int QuantityInPackage { get; set; }
 
         public ICollection<FirstAidKitMedicine> FirstAidKitMedicines { get; set; }
        

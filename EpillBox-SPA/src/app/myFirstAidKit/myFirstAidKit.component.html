@@ -1,14 +1,26 @@
 <div class="container-fluid">
   <div class="row mt-3">
     <div class="col">
-      <h1 class="text-center">Moja apteczka</h1>
+      <h1 class="text-center">Moje apteczki</h1>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col text-center">
+      <mat-form-field>
+        <mat-select [(value)]="defaultOption">
+            <mat-option value="" (click)="onFirstAidKitClick(0)">Wybierz...</mat-option>
+            <mat-option *ngFor="let firstAidKit of firstAidKits" value="{{firstAidKit.firstAidKitID}}" (click)="onFirstAidKitClick(firstAidKit.firstAidKitID)">{{firstAidKit.name | titlecase}}</mat-option>
+            <mat-option value="Wszystkie apteczki" (click)="getUserMedicines()">Wszystkie apteczki</mat-option>
+        </mat-select>
+      </mat-form-field>
+
     </div>
   </div>
   <div class="row">
     <div class="col">
       <div class="col-4">
         
-          <app-tableForMedicine [medicines]="medicines"></app-tableForMedicine>
+          <app-tableForMedicine *ngIf="isChosen" [medicines]="medicines"></app-tableForMedicine>
           
       </div>
       

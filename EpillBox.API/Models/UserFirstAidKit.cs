@@ -13,5 +13,6 @@ namespace EpillBox.API.Models
 
         public User User { get; set; }
         public FirstAidKit FirstAidKit { get; set; }
+        public string Name { get; set; }
     }
 }

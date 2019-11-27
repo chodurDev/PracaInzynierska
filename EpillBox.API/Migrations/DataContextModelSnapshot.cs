@@ -35,7 +35,11 @@ namespace EpillBox.API.Migrations
 
                     b.Property<int>("FirstAidKitID");
 
+                    b.Property<bool>("IsTaken");
+
                     b.Property<int>("MedicineID");
+
+                    b.Property<int>("RemainingQuantity");
 
                     b.HasKey("FirstAidKitMedicineID");
 
@@ -52,6 +56,8 @@ namespace EpillBox.API.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
+
+                    b.Property<int>("QuantityInPackage");
 
                     b.HasKey("MedicineID");
 
@@ -84,6 +90,8 @@ namespace EpillBox.API.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("FirstAidKitID");
+
+                    b.Property<string>("Name");
 
                     b.Property<int>("UserID");
 

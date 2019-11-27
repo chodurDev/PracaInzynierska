@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EpillBox.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191121152146_AddedExpirationDateToMedicine")]
-    partial class AddedExpirationDateToMedicine
+    [Migration("20191125111916_ExtendFirstAidKitMedicine")]
+    partial class ExtendFirstAidKitMedicine
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,7 +37,11 @@ namespace EpillBox.API.Migrations
 
                     b.Property<int>("FirstAidKitID");
 
+                    b.Property<bool>("IsTaken");
+
                     b.Property<int>("MedicineID");
+
+                    b.Property<int>("RemainingQuantity");
 
                     b.HasKey("FirstAidKitMedicineID");
 
@@ -54,6 +58,8 @@ namespace EpillBox.API.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
+
+                    b.Property<int>("QuantityInPackage");
 
                     b.HasKey("MedicineID");
 
@@ -86,6 +92,8 @@ namespace EpillBox.API.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("FirstAidKitID");
+
+                    b.Property<string>("Name");
 
                     b.Property<int>("UserID");
 

@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input, AfterViewInit, OnChanges } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { Medicine } from '../_model/Medicine';
+import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
 
 @Component({
   selector: 'app-tableForMedicine',
@@ -8,10 +8,10 @@ import { Medicine } from '../_model/Medicine';
   styleUrls: ['./tableForMedicine.component.css']
 })
 export class TableForMedicineComponent implements AfterViewInit,OnChanges {
-  @Input() medicines: Medicine[];
+  @Input() medicines: FirstAidKitMedicine[];
 
-  displayedColumns: string[] = ['name'];
-  dataSource = new MatTableDataSource<Medicine>();
+  displayedColumns: string[] = ['medicine', 'remainingQuantity'];
+  dataSource = new MatTableDataSource<FirstAidKitMedicine>();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -19,7 +19,7 @@ export class TableForMedicineComponent implements AfterViewInit,OnChanges {
   constructor() {}
 
 
-  
+
   ngOnChanges() {
     console.log(this.medicines);
     this.dataSource.data = this.medicines;

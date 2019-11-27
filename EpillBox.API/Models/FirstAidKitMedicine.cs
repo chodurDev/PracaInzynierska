@@ -17,5 +17,7 @@ namespace EpillBox.API.Models
         public FirstAidKit FirstAidKit { get; set; }
 
         public DateTime ExpirationDate { get; set; }
+        public bool IsTaken { get; set; }
+        public int RemainingQuantity { get; set; }
     }
 }

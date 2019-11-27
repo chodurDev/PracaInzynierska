@@ -31,10 +31,38 @@ namespace EpillBox.API.Controllers
             
         }
         [AllowAnonymous]
+        [HttpGet("getUserChosenFirstAidKitMedicines/{id}")]
+        public async Task<IActionResult> GetUserChosenFirstAidKitMedicines(int id)
+        {
+            var userMedicines = await _fakRepo.GetUserChosenFirstAidKitMedicines(id);
+
+            return Ok(userMedicines);
+            
+        }
+        [AllowAnonymous]
+        [HttpGet("getUserTakenMedicines/{id}")]
+        public async Task<IActionResult> GetUserTakenMedicines(int id)
+        {
+            var userMedicines = await _fakRepo.GetUserTakenMedicines(id);
+
+            return Ok(userMedicines);
+            
+        }
+        [AllowAnonymous]
         [Route("expiredMedicines/{id}")]
         public async Task<IActionResult> GetExpiredMedicines(int id)
         {
             var expiredMedicines = await _fakRepo.GetExpiredMedicines(id);
+
+            return Ok(expiredMedicines);
+            
+        }
+
+        [AllowAnonymous]
+        [Route("getUserFirstAidKits/{id}")]
+        public async Task<IActionResult> GetUserFirstAidKits(int id)
+        {
+            var expiredMedicines = await _fakRepo.GetUserFirstAidKits(id);
 
             return Ok(expiredMedicines);
             
