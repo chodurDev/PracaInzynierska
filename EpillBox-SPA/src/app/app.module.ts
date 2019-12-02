@@ -31,7 +31,8 @@ import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedic
       SideBarContentComponent,
       CurrentlyUsedComponent,
       TableForMedicineComponent,
-      ShortTermMedicinesComponent
+      ShortTermMedicinesComponent,
+      
    ],
    imports: [
       BrowserModule,

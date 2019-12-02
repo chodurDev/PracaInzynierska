@@ -8,7 +8,7 @@
     <div class="col text-center">
       <mat-form-field>
         <mat-select [(value)]="defaultOption">
-            <mat-option value="" (click)="onFirstAidKitClick(0)">Wybierz...</mat-option>
+            <mat-option value="">Wybierz...</mat-option>
             <mat-option *ngFor="let firstAidKit of firstAidKits" value="{{firstAidKit.firstAidKitID}}" (click)="onFirstAidKitClick(firstAidKit.firstAidKitID)">{{firstAidKit.name | titlecase}}</mat-option>
             <mat-option value="Wszystkie apteczki" (click)="getUserMedicines()">Wszystkie apteczki</mat-option>
         </mat-select>
@@ -18,13 +18,9 @@
   </div>
   <div class="row">
     <div class="col">
-      <div class="col-4">
-        
+            
           <app-tableForMedicine *ngIf="isChosen" [medicines]="medicines"></app-tableForMedicine>
-          
-      </div>
-      
-    
+  
     </div>
     <div class="col">
       <div class="row">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Medicine } from '../_model/Medicine';
 import { FirstAidKitService } from '../_services/firstAidKit.service';
 import { AuthService } from '../_services/auth.service';
+import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
 
 @Component({
   selector: 'app-shortTermMedicines',
@@ -10,7 +11,7 @@ import { AuthService } from '../_services/auth.service';
 })
 export class ShortTermMedicinesComponent implements OnInit {
 
-  medicines: Medicine[] = [];
+  medicines: FirstAidKitMedicine[] = [];
   
   constructor(
     private fakService: FirstAidKitService,
@@ -26,7 +27,7 @@ export class ShortTermMedicinesComponent implements OnInit {
 
     this.fakService
       .GetExpiredMedicines(actualUserId)
-      .subscribe((values: Medicine[]) => {
+      .subscribe((values: FirstAidKitMedicine[]) => {
         this.medicines = values;
       });
   }

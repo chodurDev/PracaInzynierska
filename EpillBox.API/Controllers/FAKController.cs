@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using EpillBox.API.Data;
+using EpillBox.API.Dtos;
 using EpillBox.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +16,13 @@ namespace EpillBox.API.Controllers
     {
 
         private readonly IFAKRepository _fakRepo;
+        private readonly IMapper _mapper;
 
-        public FAKController(IFAKRepository fakRepo)
+        public FAKController(IFAKRepository fakRepo, IMapper mapper)
         {
+            _mapper = mapper;
             _fakRepo = fakRepo;
-            
+
         }
 
         // GET api/fak/5
@@ -26,36 +31,38 @@ namespace EpillBox.API.Controllers
         public async Task<IActionResult> GetUserMedicines(int id)
         {
             var userMedicines = await _fakRepo.GetUserMedicines(id);
+            var medicinesToReturn = _mapper.Map<IEnumerable<UserMedicinesToViewDto>>(userMedicines);
 
-            return Ok(userMedicines);
-            
+            return Ok(medicinesToReturn);
+
         }
         [AllowAnonymous]
         [HttpGet("getUserChosenFirstAidKitMedicines/{id}")]
         public async Task<IActionResult> GetUserChosenFirstAidKitMedicines(int id)
         {
             var userMedicines = await _fakRepo.GetUserChosenFirstAidKitMedicines(id);
+            var medicinesToReturn = _mapper.Map<IEnumerable<UserMedicinesToViewDto>>(userMedicines);
+            return Ok(medicinesToReturn);
 
-            return Ok(userMedicines);
-            
         }
         [AllowAnonymous]
         [HttpGet("getUserTakenMedicines/{id}")]
         public async Task<IActionResult> GetUserTakenMedicines(int id)
         {
             var userMedicines = await _fakRepo.GetUserTakenMedicines(id);
+            var medicinesToReturn = _mapper.Map<IEnumerable<UserMedicinesToViewDto>>(userMedicines);
 
-            return Ok(userMedicines);
-            
+            return Ok(medicinesToReturn);
+
         }
         [AllowAnonymous]
         [Route("expiredMedicines/{id}")]
         public async Task<IActionResult> GetExpiredMedicines(int id)
         {
             var expiredMedicines = await _fakRepo.GetExpiredMedicines(id);
+            var medicinesToReturn = _mapper.Map<IEnumerable<UserMedicinesToViewDto>>(expiredMedicines);
+            return Ok(medicinesToReturn);
 
-            return Ok(expiredMedicines);
-            
         }
 
         [AllowAnonymous]
@@ -65,10 +72,10 @@ namespace EpillBox.API.Controllers
             var expiredMedicines = await _fakRepo.GetUserFirstAidKits(id);
 
             return Ok(expiredMedicines);
-            
+
         }
 
-        
+
 
 
         // POST api/fak

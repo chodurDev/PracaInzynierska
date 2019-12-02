@@ -64,7 +64,7 @@ namespace EpillBox.API.Data
             {
                 var medicines = _context.FirstAidKitMedicines
                     .Include(fakm => fakm.Medicine)
-                    .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID  && fakm.ExpirationDate < DateTime.Today)
+                    .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID && IsShorterThanWeek(fakm.ExpirationDate))
                     .ToList();
                 foreach (var medicine in medicines)
                 {
@@ -72,6 +72,10 @@ namespace EpillBox.API.Data
                 }
             }
             return expiredMedicines;
+        }
+        private bool IsShorterThanWeek(DateTime expirationDate)
+        {
+            return (int)((expirationDate - DateTime.Today).TotalDays) <= 7 && (int)((expirationDate - DateTime.Today).TotalDays) >= 0;
         }
         public async Task<IEnumerable<FirstAidKitMedicine>> GetUserTakenMedicines(int id)
         {
@@ -83,7 +87,7 @@ namespace EpillBox.API.Data
             {
                 var medicines = _context.FirstAidKitMedicines
                     .Include(fakm => fakm.Medicine)
-                    .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID  && fakm.IsTaken == true)
+                    .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID && fakm.IsTaken == true)
                     .ToList();
                 foreach (var medicine in medicines)
                 {

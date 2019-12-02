@@ -45,6 +45,6 @@ export class NavComponent implements OnInit {
     this.router.navigate(['/home']);
   }
   showSideBar() {
-    this.toggleSideBar.emit();
+    this.toggleSideBar.emit(true);
   }
 }

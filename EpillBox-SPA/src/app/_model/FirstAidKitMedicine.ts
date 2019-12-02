@@ -2,11 +2,11 @@ import { Medicine } from './Medicine';
 
 export interface FirstAidKitMedicine {
   expirationDate: Date;
-  firstAidKit?: any;
   firstAidKitID: number;
   firstAidKitMedicineID: number;
   isTaken: boolean;
-  medicine: Medicine;
+  name: string;
   medicineID: number;
   remainingQuantity: number;
+  quantityInPackage: number;
 }
