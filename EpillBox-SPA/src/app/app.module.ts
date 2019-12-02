@@ -18,7 +18,7 @@ import { SideBarContentComponent } from './sideBarContent/sideBarContent.compone
 import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component';
 import { AngularMaterialsModule } from './angular-materials.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.component';
+import { TableForFAKMedicineComponent } from './tableForFAKMedicine/tableForFAKMedicine.component';
 import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedicines.component';
 
 @NgModule({
@@ -30,7 +30,7 @@ import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedic
       MyFirstAidKitComponent,
       SideBarContentComponent,
       CurrentlyUsedComponent,
-      TableForMedicineComponent,
+      TableForFAKMedicineComponent,
       ShortTermMedicinesComponent,
       
    ],

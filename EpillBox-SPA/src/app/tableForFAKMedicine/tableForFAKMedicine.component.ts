@@ -12,11 +12,11 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-tableForMedicine',
-  templateUrl: './tableForMedicine.component.html',
-  styleUrls: ['./tableForMedicine.component.css']
+  selector: 'app-tableForFAKMedicine',
+  templateUrl: './tableForFAKMedicine.component.html',
+  styleUrls: ['./tableForFAKMedicine.component.css']
 })
-export class TableForMedicineComponent
+export class TableForFAKMedicineComponent
   implements AfterViewInit, OnChanges, OnInit {
   @Input() medicines: FirstAidKitMedicine[];
 
