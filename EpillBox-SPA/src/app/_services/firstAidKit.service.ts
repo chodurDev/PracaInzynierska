@@ -40,4 +40,7 @@ export class FirstAidKitService {
       )
       .subscribe();
   }
+  DeleteFAKMedicine(id: number) {
+    return this.http.delete(this.baseUrl + '/fak/' + id).subscribe();
+  }
 }

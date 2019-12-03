@@ -116,5 +116,10 @@ namespace EpillBox.API.Data
             var firstAidKitMedicine = await _context.FirstAidKitMedicines.FirstOrDefaultAsync(x => x.FirstAidKitMedicineID == id);
             firstAidKitMedicine.IsTaken = value.IsTaken;
         }
+
+        public async Task<FirstAidKitMedicine> Search(int id)
+        {
+            return  await _context.FirstAidKitMedicines.FirstOrDefaultAsync(x=>x.FirstAidKitMedicineID==id);
+        }
     }
 }

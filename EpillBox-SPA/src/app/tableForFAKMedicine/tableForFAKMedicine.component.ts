@@ -4,7 +4,9 @@ import {
   Input,
   AfterViewInit,
   OnChanges,
-  OnInit
+  OnInit,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
@@ -72,11 +74,17 @@ export class TableForFAKMedicineComponent
     row.isTaken = !row.isTaken;
     this.fakService.UpdateFirstAidKitMedicine(row);
   }
-  AreYouSure() {
-    if (confirm('czy na pewno?')) {
-      
-    } else {
-      console.log('nacisnal nie');
+  AreYouSure(row: FirstAidKitMedicine) {
+    if (confirm(`Czy na pewno chcesz usunąć ${row.name} ze swojej apteczki ?`))
+    {
+      this.fakService.DeleteFAKMedicine(row.firstAidKitMedicineID);
+      this.deleteRowFromTable(row);
     }
+  }
+
+  private deleteRowFromTable(row: FirstAidKitMedicine) {
+    const index = this.dataSource.data.indexOf(row);
+    this.dataSource.data.splice(index, 1);
+    this.dataSource._updateChangeSubscription();
   }
 }

@@ -98,9 +98,17 @@ namespace EpillBox.API.Controllers
         }
 
         // DELETE api/fak/5
+        [AllowAnonymous]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var fakMedicineToRemove = await _fakRepo.Search(id);
+            _fakRepo.Delete(fakMedicineToRemove);
+            if(await _fakRepo.SaveAll())
+                return NoContent();
+           
+           throw new System.Exception($"Deleting FakMedicine {id} failed on save");
+
         }
     }
 }

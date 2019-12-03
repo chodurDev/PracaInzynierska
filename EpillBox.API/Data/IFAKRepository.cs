@@ -17,5 +17,6 @@ namespace EpillBox.API.Data
         Task<IEnumerable<FirstAidKitMedicine>> GetExpiredMedicines(int id);
         Task<IEnumerable<FirstAidKitMedicine>> GetUserTakenMedicines(int id);
         Task<IEnumerable<UserFirstAidKit>> GetUserFirstAidKits(int id);
+        Task<FirstAidKitMedicine> Search(int id);
     }
 }
