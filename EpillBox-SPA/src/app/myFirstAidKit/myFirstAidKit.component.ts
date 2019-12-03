@@ -23,13 +23,21 @@ export class MyFirstAidKitComponent implements OnInit {
 
   ngOnInit() {
     this.getUserFirstAidKits();
+    if (localStorage.getItem('chosenFAK')) {
+      this.defaultOption = localStorage.getItem('chosenFAK');
+      if (parseInt(this.defaultOption) === -1) {
+        this.getUserMedicines();
+      } else {
+        // tslint:disable-next-line: radix
+        this.onFirstAidKitClick(parseInt(this.defaultOption));
+      }
+    }
   }
 
   getUserFirstAidKits() {
     this.actualUserId = this.authService.decodedToken.nameid;
 
     this.fakService.GetUserFirstAidKits(this.actualUserId).subscribe(values => {
-      console.log(values);
       this.firstAidKits = values;
     });
   }
@@ -38,7 +46,6 @@ export class MyFirstAidKitComponent implements OnInit {
     this.fakService
       .GetuserMedicines(this.actualUserId)
       .subscribe((values: FirstAidKitMedicine[]) => {
-        console.log(values);
         this.medicines = values.slice(0);
         this.isChosen = true;
       });
@@ -48,7 +55,12 @@ export class MyFirstAidKitComponent implements OnInit {
     if (id === 0) {
       this.isChosen = false;
     }
-    this.getUserChosenFirstAidKitMedicines(id);
+    localStorage.setItem('chosenFAK', id.toString());
+    if (id === -1) {
+      this.getUserMedicines();
+    } else {
+      this.getUserChosenFirstAidKitMedicines(id);
+    }
   }
 
   getUserChosenFirstAidKitMedicines(id: number) {

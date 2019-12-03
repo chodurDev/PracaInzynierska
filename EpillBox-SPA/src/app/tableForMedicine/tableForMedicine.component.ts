@@ -1,47 +1,31 @@
-import {
-  Component,
-  ViewChild,
-  Input,
-  AfterViewInit,
-  OnChanges,
-  OnInit
-} from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Component, OnInit, AfterViewInit, OnChanges, Input, ViewChild } from '@angular/core';
 import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
-import { SelectionModel } from '@angular/cdk/collections';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { FirstAidKitService } from '../_services/firstAidKit.service';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tableForFAKMedicine',
-  templateUrl: './tableForFAKMedicine.component.html',
-  styleUrls: ['./tableForFAKMedicine.component.css']
+  selector: 'app-tableForMedicine',
+  templateUrl: './tableForMedicine.component.html',
+  styleUrls: ['./tableForMedicine.component.css']
 })
-export class TableForFAKMedicineComponent
-  implements AfterViewInit, OnChanges, OnInit {
+export class TableForMedicineComponent implements AfterViewInit, OnChanges, OnInit {
   @Input() medicines: FirstAidKitMedicine[];
 
   displayedColumns: string[] = [
     'name',
     'remainingQuantity',
-    'expirationDate',
-    'isTaken',
-    'delete'
+    'expirationDate'
   ];
   dataSource = new MatTableDataSource<FirstAidKitMedicine>(this.medicines);
-  selection = new SelectionModel<FirstAidKitMedicine>(true, []);
   nameFilter = new FormControl('');
   filterValues = {
     name: ''
   };
-  checked = false;
-  routePath = ['/myFirstAidKit'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private fakService: FirstAidKitService, private router: Router) {
+  constructor() {
     this.dataSource.filterPredicate = this.createFilter();
   }
   ngOnInit() {
@@ -61,22 +45,10 @@ export class TableForFAKMedicineComponent
   }
 
   createFilter(): (data: any, filter: string) => boolean {
-    const filterFunction = (data, filter): boolean => {
+    const filterFunction = (data, filter): boolean =>{
       const searchTerms = JSON.parse(filter);
       return data.name.toLowerCase().indexOf(searchTerms.name) !== -1;
     };
     return filterFunction;
-  }
-
-  IsClicked(row: FirstAidKitMedicine) {
-    row.isTaken = !row.isTaken;
-    this.fakService.UpdateFirstAidKitMedicine(row);
-  }
-  AreYouSure() {
-    if (confirm('czy na pewno?')) {
-      
-    } else {
-      console.log('nacisnal nie');
-    }
   }
 }

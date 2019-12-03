@@ -12,7 +12,6 @@ export class FirstAidKitService {
   constructor(private http: HttpClient) {}
 
   GetuserMedicines(id: number) {
-    console.log('GetuserMedicines');
     return this.http.get<FirstAidKitMedicine[]>(this.baseUrl + '/fak/' + id);
   }
   GetExpiredMedicines(id: number) {
@@ -32,5 +31,13 @@ export class FirstAidKitService {
     return this.http.get<FirstAidKitMedicine[]>(
       this.baseUrl + '/fak/getUserTakenMedicines/' + id
     );
+  }
+  UpdateFirstAidKitMedicine(fakMedicine: FirstAidKitMedicine) {
+    return this.http
+      .put(
+        this.baseUrl + '/fak/' + fakMedicine.firstAidKitMedicineID,
+        fakMedicine
+      )
+      .subscribe();
   }
 }

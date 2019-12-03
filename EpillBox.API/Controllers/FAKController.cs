@@ -79,15 +79,22 @@ namespace EpillBox.API.Controllers
 
 
         // POST api/fak
+        [AllowAnonymous]
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
         // PUT api/fak/5
+        [AllowAnonymous]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, UserMedicinesToViewDto value)
         {
+            await _fakRepo.Update(id,value);
+            if(await _fakRepo.SaveAll())
+                return NoContent();
+           
+           throw new System.Exception($"Updating FakMedicine {id} failed on save");
         }
 
         // DELETE api/fak/5

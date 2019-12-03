@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EpillBox.API.Dtos;
 using EpillBox.API.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EpillBox.API.Data
 {
@@ -8,6 +10,7 @@ namespace EpillBox.API.Data
     {
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
+        Task Update(int id, UserMedicinesToViewDto value);
         Task<bool> SaveAll();
         Task<IEnumerable<FirstAidKitMedicine>> GetUserMedicines(int id);
         Task<IEnumerable<FirstAidKitMedicine>> GetUserChosenFirstAidKitMedicines(int id);

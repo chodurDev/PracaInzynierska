@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EpillBox.API.Dtos;
 using EpillBox.API.Models;
 using EpillBox.API.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EpillBox.API.Data
@@ -85,10 +87,10 @@ namespace EpillBox.API.Data
                                                     .ToListAsync();
             foreach (var item in userFirstAidKits)
             {
-                var medicines = _context.FirstAidKitMedicines
+                var medicines = await _context.FirstAidKitMedicines
                     .Include(fakm => fakm.Medicine)
                     .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID && fakm.IsTaken == true)
-                    .ToList();
+                    .ToListAsync();
                 foreach (var medicine in medicines)
                 {
                     takenMedicines.Add(medicine);
@@ -104,9 +106,15 @@ namespace EpillBox.API.Data
 
         }
 
-        public Task<bool> SaveAll()
+        public async Task<bool> SaveAll()
         {
-            throw new System.NotImplementedException();
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task Update(int id, UserMedicinesToViewDto value)
+        {
+            var firstAidKitMedicine = await _context.FirstAidKitMedicines.FirstOrDefaultAsync(x => x.FirstAidKitMedicineID == id);
+            firstAidKitMedicine.IsTaken = value.IsTaken;
         }
     }
 }

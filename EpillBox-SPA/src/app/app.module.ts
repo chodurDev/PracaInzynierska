@@ -20,6 +20,7 @@ import { AngularMaterialsModule } from './angular-materials.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TableForFAKMedicineComponent } from './tableForFAKMedicine/tableForFAKMedicine.component';
 import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedicines.component';
+import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.component';
 
 @NgModule({
    declarations: [
@@ -32,7 +33,7 @@ import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedic
       CurrentlyUsedComponent,
       TableForFAKMedicineComponent,
       ShortTermMedicinesComponent,
-      
+      TableForMedicineComponent
    ],
    imports: [
       BrowserModule,
