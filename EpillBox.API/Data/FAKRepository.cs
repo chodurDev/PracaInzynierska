@@ -121,5 +121,14 @@ namespace EpillBox.API.Data
         {
             return  await _context.FirstAidKitMedicines.FirstOrDefaultAsync(x=>x.FirstAidKitMedicineID==id);
         }
+
+        public async Task AddUFAK(UserFirstAidKit uFAK)
+        { 
+            Add(new FirstAidKit { });
+            await SaveAll();
+            var lastFAK = await _context.FirstAidKits.LastOrDefaultAsync();
+            uFAK.FirstAidKitID = lastFAK.FirstAidKitID;
+            Add(uFAK);
+        }
     }
 }

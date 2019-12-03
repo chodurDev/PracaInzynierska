@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { FirstAidKitService } from '../_services/firstAidKit.service';
-import { Medicine } from '../_model/Medicine';
 import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogAddUserFAKComponent } from '../dialogAddUserFAK/dialogAddUserFAK.component';
+import { UserFirstAidKit } from '../_model/UserFirstAidKit';
 
 @Component({
   selector: 'app-myFirstAidKit',
@@ -18,7 +20,8 @@ export class MyFirstAidKitComponent implements OnInit {
 
   constructor(
     private fakService: FirstAidKitService,
-    private authService: AuthService
+    private authService: AuthService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -39,6 +42,7 @@ export class MyFirstAidKitComponent implements OnInit {
 
     this.fakService.GetUserFirstAidKits(this.actualUserId).subscribe(values => {
       this.firstAidKits = values;
+      console.log(values);
     });
   }
 
@@ -72,5 +76,23 @@ export class MyFirstAidKitComponent implements OnInit {
         this.medicines = values.slice(0);
         this.isChosen = true;
       });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddUserFAKComponent, {
+      width: '250px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      const uFAK: UserFirstAidKit = {
+        firstAidKitID: 0,
+        userID: this.actualUserId,
+        name: result
+      };
+      this.fakService.AddUFAK(uFAK).subscribe(() => {
+        this.getUserFirstAidKits();
+      });
+    });
   }
 }

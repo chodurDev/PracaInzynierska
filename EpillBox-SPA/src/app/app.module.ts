@@ -21,6 +21,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TableForFAKMedicineComponent } from './tableForFAKMedicine/tableForFAKMedicine.component';
 import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedicines.component';
 import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.component';
+import { DialogAddUserFAKComponent } from './dialogAddUserFAK/dialogAddUserFAK.component';
 
 @NgModule({
    declarations: [
@@ -33,7 +34,8 @@ import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.c
       CurrentlyUsedComponent,
       TableForFAKMedicineComponent,
       ShortTermMedicinesComponent,
-      TableForMedicineComponent
+      TableForMedicineComponent,
+      DialogAddUserFAKComponent
    ],
    imports: [
       BrowserModule,
@@ -50,6 +52,7 @@ import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.c
    exports: [
       AngularMaterialsModule
    ],
+   entryComponents: [DialogAddUserFAKComponent],
    providers: [
       ErrorInterceptorProvider,
       AuthService

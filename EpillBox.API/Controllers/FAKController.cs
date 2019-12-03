@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EpillBox.API.Data;
 using EpillBox.API.Dtos;
+using EpillBox.API.Models;
 using EpillBox.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace EpillBox.API.Controllers
         }
 
         // GET api/fak/5
-        [AllowAnonymous]
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserMedicines(int id)
         {
@@ -36,7 +37,7 @@ namespace EpillBox.API.Controllers
             return Ok(medicinesToReturn);
 
         }
-        [AllowAnonymous]
+
         [HttpGet("getUserChosenFirstAidKitMedicines/{id}")]
         public async Task<IActionResult> GetUserChosenFirstAidKitMedicines(int id)
         {
@@ -45,7 +46,7 @@ namespace EpillBox.API.Controllers
             return Ok(medicinesToReturn);
 
         }
-        [AllowAnonymous]
+
         [HttpGet("getUserTakenMedicines/{id}")]
         public async Task<IActionResult> GetUserTakenMedicines(int id)
         {
@@ -55,7 +56,7 @@ namespace EpillBox.API.Controllers
             return Ok(medicinesToReturn);
 
         }
-        [AllowAnonymous]
+
         [Route("expiredMedicines/{id}")]
         public async Task<IActionResult> GetExpiredMedicines(int id)
         {
@@ -65,7 +66,7 @@ namespace EpillBox.API.Controllers
 
         }
 
-        [AllowAnonymous]
+
         [Route("getUserFirstAidKits/{id}")]
         public async Task<IActionResult> GetUserFirstAidKits(int id)
         {
@@ -80,34 +81,38 @@ namespace EpillBox.API.Controllers
 
         // POST api/fak
         [AllowAnonymous]
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("addUFAK")]
+        public async Task<IActionResult> Post([FromBody] UserFirstAidKit uFAK)
         {
+            await _fakRepo.AddUFAK(uFAK);
+            if (await _fakRepo.SaveAll())
+                return Ok();
+            throw new System.Exception($"Adding ufak failed on save");
         }
 
         // PUT api/fak/5
-        [AllowAnonymous]
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, UserMedicinesToViewDto value)
         {
-            await _fakRepo.Update(id,value);
-            if(await _fakRepo.SaveAll())
+            await _fakRepo.Update(id, value);
+            if (await _fakRepo.SaveAll())
                 return NoContent();
-           
-           throw new System.Exception($"Updating FakMedicine {id} failed on save");
+
+            throw new System.Exception($"Updating FakMedicine {id} failed on save");
         }
 
         // DELETE api/fak/5
-        [AllowAnonymous]
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var fakMedicineToRemove = await _fakRepo.Search(id);
             _fakRepo.Delete(fakMedicineToRemove);
-            if(await _fakRepo.SaveAll())
+            if (await _fakRepo.SaveAll())
                 return NoContent();
-           
-           throw new System.Exception($"Deleting FakMedicine {id} failed on save");
+
+            throw new System.Exception($"Deleting FakMedicine {id} failed on save");
 
         }
     }
