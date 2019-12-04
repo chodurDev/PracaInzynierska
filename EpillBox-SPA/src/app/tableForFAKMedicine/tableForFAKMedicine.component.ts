@@ -75,8 +75,9 @@ export class TableForFAKMedicineComponent
     this.fakService.UpdateFirstAidKitMedicine(row);
   }
   AreYouSure(row: FirstAidKitMedicine) {
-    if (confirm(`Czy na pewno chcesz usunąć ${row.name} ze swojej apteczki ?`))
-    {
+    if (
+      confirm(`Czy na pewno chcesz usunąć ${row.name} ze swojej apteczki ?`)
+    ) {
       this.fakService.DeleteFAKMedicine(row.firstAidKitMedicineID);
       this.deleteRowFromTable(row);
     }

@@ -21,44 +21,39 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TableForFAKMedicineComponent } from './tableForFAKMedicine/tableForFAKMedicine.component';
 import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedicines.component';
 import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.component';
-import { DialogAddUserFAKComponent } from './dialogAddUserFAK/dialogAddUserFAK.component';
+import { DialogAddUserFAKComponent } from './dialogs/dialogAddUserFAK/dialogAddUserFAK.component';
+import { DialogDeleteUserFAKComponent } from './dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      NavComponent,
-      HomeComponent,
-      RegisterComponent,
-      MyFirstAidKitComponent,
-      SideBarContentComponent,
-      CurrentlyUsedComponent,
-      TableForFAKMedicineComponent,
-      ShortTermMedicinesComponent,
-      TableForMedicineComponent,
-      DialogAddUserFAKComponent
-   ],
-   imports: [
-      BrowserModule,
-      BrowserAnimationsModule,
-      AngularMaterialsModule,
-      FlexLayoutModule,
-      AppRoutingModule,
-      HttpClientModule,
-      FormsModule,
-      ReactiveFormsModule,
-      BsDropdownModule.forRoot(),
-      SidebarModule.forRoot()
-   ],
-   exports: [
-      AngularMaterialsModule
-   ],
-   entryComponents: [DialogAddUserFAKComponent],
-   providers: [
-      ErrorInterceptorProvider,
-      AuthService
-   ],
-   bootstrap: [
-      AppComponent
-   ]
+  declarations: [
+    AppComponent,
+    NavComponent,
+    HomeComponent,
+    RegisterComponent,
+    MyFirstAidKitComponent,
+    SideBarContentComponent,
+    CurrentlyUsedComponent,
+    TableForFAKMedicineComponent,
+    ShortTermMedicinesComponent,
+    TableForMedicineComponent,
+    DialogAddUserFAKComponent,
+    DialogDeleteUserFAKComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AngularMaterialsModule,
+    FlexLayoutModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BsDropdownModule.forRoot(),
+    SidebarModule.forRoot()
+  ],
+  exports: [AngularMaterialsModule],
+  entryComponents: [DialogAddUserFAKComponent, DialogDeleteUserFAKComponent],
+  providers: [ErrorInterceptorProvider, AuthService],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

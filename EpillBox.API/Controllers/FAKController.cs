@@ -84,7 +84,7 @@ namespace EpillBox.API.Controllers
         [HttpPost("addUFAK")]
         public async Task<IActionResult> Post([FromBody] UserFirstAidKit uFAK)
         {
-            await _fakRepo.AddUFAK(uFAK);
+            _fakRepo.AddUFAK(uFAK);
             if (await _fakRepo.SaveAll())
                 return Ok();
             throw new System.Exception($"Adding ufak failed on save");
@@ -102,14 +102,26 @@ namespace EpillBox.API.Controllers
             throw new System.Exception($"Updating FakMedicine {id} failed on save");
         }
 
-        // DELETE api/fak/5
-
-        [HttpDelete("{id}")]
+        // DELETE api/fak/deleteFAKMedicine/5
+        [AllowAnonymous]
+        [HttpDelete("deleteFAKMedicine/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var fakMedicineToRemove = await _fakRepo.Search(id);
+            var fakMedicineToRemove = new FirstAidKitMedicine { FirstAidKitMedicineID = id };
             _fakRepo.Delete(fakMedicineToRemove);
             if (await _fakRepo.SaveAll())
+                return NoContent();
+
+            throw new System.Exception($"Deleting FakMedicine {id} failed on save");
+
+        }
+        // DELETE api/fak/deleteFAK/5
+        [AllowAnonymous]
+        [HttpDelete("deleteFAK/{id}")]
+        public async Task<IActionResult> DeleteFAK(int id)
+        {
+
+            if (await _fakRepo.DeleteFirstAidKit(id))
                 return NoContent();
 
             throw new System.Exception($"Deleting FakMedicine {id} failed on save");

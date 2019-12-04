@@ -3,8 +3,9 @@ import { AuthService } from '../_services/auth.service';
 import { FirstAidKitService } from '../_services/firstAidKit.service';
 import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogAddUserFAKComponent } from '../dialogAddUserFAK/dialogAddUserFAK.component';
+import { DialogAddUserFAKComponent } from '../dialogs/dialogAddUserFAK/dialogAddUserFAK.component';
 import { UserFirstAidKit } from '../_model/UserFirstAidKit';
+import { DialogDeleteUserFAKComponent } from '../dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
 
 @Component({
   selector: 'app-myFirstAidKit',
@@ -14,7 +15,7 @@ import { UserFirstAidKit } from '../_model/UserFirstAidKit';
 export class MyFirstAidKitComponent implements OnInit {
   medicines: FirstAidKitMedicine[] = [];
   defaultOption = '';
-  firstAidKits: any = [];
+  firstAidKits: UserFirstAidKit[] = [];
   isChosen = false;
   actualUserId: number;
 
@@ -42,7 +43,6 @@ export class MyFirstAidKitComponent implements OnInit {
 
     this.fakService.GetUserFirstAidKits(this.actualUserId).subscribe(values => {
       this.firstAidKits = values;
-      console.log(values);
     });
   }
 
@@ -78,21 +78,41 @@ export class MyFirstAidKitComponent implements OnInit {
       });
   }
 
-  openDialog(): void {
+  addUFAK(): void {
     const dialogRef = this.dialog.open(DialogAddUserFAKComponent, {
       width: '250px',
-      data: {}
+      data: { name: '' }
     });
 
     dialogRef.afterClosed().subscribe((result: string) => {
-      const uFAK: UserFirstAidKit = {
-        firstAidKitID: 0,
-        userID: this.actualUserId,
-        name: result
-      };
-      this.fakService.AddUFAK(uFAK).subscribe(() => {
-        this.getUserFirstAidKits();
-      });
+      if (result !== '') {
+        const uFAK: UserFirstAidKit = {
+          firstAidKitID: 0,
+          userID: this.actualUserId,
+          name: result
+        };
+        this.fakService.AddUFAK(uFAK).subscribe(() => {
+          this.getUserFirstAidKits();
+        });
+      }
+    });
+  }
+  deleteUFAK(): void {
+    const dialogRef = this.dialog.open(DialogDeleteUserFAKComponent, {
+      width: '250px',
+      data: this.firstAidKits
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // result it's userFirstAidKitID to delete or just empty string
+      if (result !== '') {
+        localStorage.setItem('chosenFAK', '');
+        this.defaultOption = '';
+        this.isChosen = false;
+        this.fakService.DeleteFAK(result).subscribe(() => {
+          this.getUserFirstAidKits();
+        });
+      }
     });
   }
 }

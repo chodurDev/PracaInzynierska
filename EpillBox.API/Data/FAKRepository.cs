@@ -117,18 +117,19 @@ namespace EpillBox.API.Data
             firstAidKitMedicine.IsTaken = value.IsTaken;
         }
 
-        public async Task<FirstAidKitMedicine> Search(int id)
-        {
-            return  await _context.FirstAidKitMedicines.FirstOrDefaultAsync(x=>x.FirstAidKitMedicineID==id);
-        }
 
-        public async Task AddUFAK(UserFirstAidKit uFAK)
-        { 
-            Add(new FirstAidKit { });
-            await SaveAll();
-            var lastFAK = await _context.FirstAidKits.LastOrDefaultAsync();
-            uFAK.FirstAidKitID = lastFAK.FirstAidKitID;
-            Add(uFAK);
+        public void AddUFAK(UserFirstAidKit uFAK)
+        {
+            var fak = new FirstAidKit() { UserFirstAidKits = new List<UserFirstAidKit> { uFAK } };
+            Add(fak);
+
+        }
+        public async Task<bool> DeleteFirstAidKit(int firstAidKitID)
+        {
+
+            var fak = new FirstAidKit { FirstAidKitID = firstAidKitID };
+            Delete(fak);
+            return await SaveAll();
         }
     }
 }
