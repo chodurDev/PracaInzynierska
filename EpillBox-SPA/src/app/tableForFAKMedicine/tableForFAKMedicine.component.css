@@ -1,12 +1,8 @@
-div.table-responsive {
-  width: 50%;
-  text-align: center;
-}
-
 th.mat-sort-header-sorted {
   color: black;
 }
-table {
+table,
+mat-paginator {
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;

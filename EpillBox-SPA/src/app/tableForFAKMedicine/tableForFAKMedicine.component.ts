@@ -23,6 +23,7 @@ import { Router } from '@angular/router';
 export class TableForFAKMedicineComponent
   implements AfterViewInit, OnChanges, OnInit {
   @Input() medicines: FirstAidKitMedicine[];
+  @Output() addMedicines = new EventEmitter();
 
   displayedColumns: string[] = [
     'name',
@@ -88,4 +89,9 @@ export class TableForFAKMedicineComponent
     this.dataSource.data.splice(index, 1);
     this.dataSource._updateChangeSubscription();
   }
+
+  OnAddMedicinesToFAK(){
+    this.addMedicines.emit();
+  }
+
 }

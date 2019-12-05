@@ -15,7 +15,7 @@ export class DialogDeleteUserFAKComponent implements OnInit {
   ) {}
 
   onNoClick(): void {
-    this.dialogRef.close('');
+    this.dialogRef.close();
   }
   ngOnInit() {
   }

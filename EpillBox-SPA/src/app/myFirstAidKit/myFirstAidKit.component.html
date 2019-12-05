@@ -6,7 +6,7 @@
   </div>
   <div class="row mt-3">
     <div class="col text-center">
-        <button class="btn btn-outline-danger" title="Usuń Apteczkę" mat-raised-button (click)="deleteUFAK()"> <i class="fa fa-minus" aria-hidden="true"></i></button>
+        <button class="btn btn-outline-danger" title="Usuń Apteczkę" mat-raised-button (click)="deleteUFAK()"> <i class="fa fa-trash" aria-hidden="true"></i></button>
       <mat-form-field class="ml-2 mr-2">
         <mat-select [(value)]="defaultOption">
             <mat-option value="">Wybierz...</mat-option>
@@ -19,14 +19,14 @@
   </div>
   <div class="row">
     <div class="col">
-            
-          <app-tableForFAKMedicine *ngIf="isChosen" [medicines]="medicines"></app-tableForFAKMedicine>
-  
+        
+          
+          <app-tableForFAKMedicine *ngIf="isChosen" [medicines]="medicines" (addMedicines)="OnAddMedicinesToFAK()"></app-tableForFAKMedicine>
     </div>
     <div class="col">
       <div class="row">
         <div class="col  d-flex justify-content-end">
-            <button class="btn btn-outline-info text-uppercase  mr-5" mat-raised-button> <i class="fa fa-plus" aria-hidden="true"></i> Dodaj Lek</button>
+            <!-- <button class="btn btn-outline-info text-uppercase  mr-5" mat-raised-button> <i class="fa fa-plus" aria-hidden="true"></i> Dodaj Lek</button> -->
           <!-- <a class=" btn btn-light text-uppercase font-weight-bold mr-5" [routerLink]="['/myFirstAidKit']" routerLinkActive="router-link-active"  >
             <img src="https://img.icons8.com/material-two-tone/64/000000/plus.png">Dodaj Lek
           </a> -->

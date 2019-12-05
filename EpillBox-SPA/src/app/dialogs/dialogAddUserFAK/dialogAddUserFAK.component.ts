@@ -8,14 +8,11 @@ import { UserFirstAidKit } from '../../_model/UserFirstAidKit';
   styleUrls: ['./dialogAddUserFAK.component.css']
 })
 export class DialogAddUserFAKComponent implements OnInit {
-  constructor(
-    public dialogRef: MatDialogRef<DialogAddUserFAKComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: UserFirstAidKit
-  ) {}
+  nameFAK: string;
+  constructor(public dialogRef: MatDialogRef<DialogAddUserFAKComponent>) {}
 
   onNoClick(): void {
-    this.data.name = '';
-    this.dialogRef.close(this.data);
+    this.dialogRef.close();
   }
 
   ngOnInit() {}

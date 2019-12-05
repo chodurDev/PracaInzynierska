@@ -1,6 +1,11 @@
-<mat-form-field >
-    <input matInput type="text" [formControl]="nameFilter" placeholder="Szukaj...">
-  </mat-form-field>
+  
+    <button class="btn btn-outline-info text-uppercase mr-5" mat-raised-button (click)="OnAddMedicinesToFAK()"> <i class="fa fa-plus" aria-hidden="true"></i> Dodaj Lek</button>
+    <mat-form-field class="justify-content-center">
+      <input matInput type="text" [formControl]="nameFilter" placeholder="Szukaj...">
+    </mat-form-field>
+  
+  
+    
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>

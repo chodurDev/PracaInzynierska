@@ -80,12 +80,11 @@ export class MyFirstAidKitComponent implements OnInit {
 
   addUFAK(): void {
     const dialogRef = this.dialog.open(DialogAddUserFAKComponent, {
-      width: '250px',
-      data: { name: '' }
+      width: '250px'
     });
 
-    dialogRef.afterClosed().subscribe((result: string) => {
-      if (result !== '') {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
         const uFAK: UserFirstAidKit = {
           firstAidKitID: 0,
           userID: this.actualUserId,
@@ -96,6 +95,7 @@ export class MyFirstAidKitComponent implements OnInit {
         });
       }
     });
+    
   }
   deleteUFAK(): void {
     const dialogRef = this.dialog.open(DialogDeleteUserFAKComponent, {
@@ -103,9 +103,9 @@ export class MyFirstAidKitComponent implements OnInit {
       data: this.firstAidKits
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => { 
       // result it's userFirstAidKitID to delete or just empty string
-      if (result !== '') {
+      if (result) {
         localStorage.setItem('chosenFAK', '');
         this.defaultOption = '';
         this.isChosen = false;
@@ -114,5 +114,12 @@ export class MyFirstAidKitComponent implements OnInit {
         });
       }
     });
+  }
+
+  OnAddMedicinesToFAK(){
+    console.log('choose medicines to add');
+    console.log(this.firstAidKits);
+    console.log(this.medicines);
+    this.deleteUFAK();
   }
 }
