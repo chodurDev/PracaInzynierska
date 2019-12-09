@@ -6,9 +6,9 @@
         <i class="fa fa-bars fa-lg"></i>
       </button>
       <button class="btn text-light" [routerLink]="['/myFirstAidKit']" >E-PillBox</button>
-
+      
     </div>
-
+    <h1 class="text-light">{{routeName}}</h1>
       <div *ngIf="loggedIn()" class="dropdown mr-5" dropdown>
         <a class="dropdown-toggle text-light" dropdownToggle>
           Cześć {{authService.decodedToken?.unique_name | titlecase}}
