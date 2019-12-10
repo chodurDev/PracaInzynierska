@@ -23,7 +23,7 @@
       
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngStyle]="{'background-color':IsMedicineExpired(row.expirationDate) ? '#ffadad' : ''  }" title="{{IsMedicineExpired(row.expirationDate) ? 'Lek przeterminowany' : '' }}"></tr>
   </table>
 
   <mat-paginator [pageSize]="10" ></mat-paginator>

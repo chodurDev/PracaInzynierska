@@ -16,7 +16,7 @@ namespace EpillBox.API.Dtos
         public int QuantityInPackage { get; set; }
         
 
-        public DateTime ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
         public bool IsTaken { get; set; }
         public int RemainingQuantity { get; set; }
     }

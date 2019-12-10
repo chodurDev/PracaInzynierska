@@ -23,6 +23,7 @@ import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedic
 import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.component';
 import { DialogAddUserFAKComponent } from './dialogs/dialogAddUserFAK/dialogAddUserFAK.component';
 import { DialogDeleteUserFAKComponent } from './dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
+import { DialogAddMedicineToFAKComponent } from './dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { DialogDeleteUserFAKComponent } from './dialogs/dialogDeleteUserFAK/dial
     ShortTermMedicinesComponent,
     TableForMedicineComponent,
     DialogAddUserFAKComponent,
-    DialogDeleteUserFAKComponent
+    DialogDeleteUserFAKComponent,
+    DialogAddMedicineToFAKComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,7 @@ import { DialogDeleteUserFAKComponent } from './dialogs/dialogDeleteUserFAK/dial
     SidebarModule.forRoot()
   ],
   exports: [AngularMaterialsModule],
-  entryComponents: [DialogAddUserFAKComponent, DialogDeleteUserFAKComponent],
+  entryComponents: [DialogAddUserFAKComponent, DialogDeleteUserFAKComponent, DialogAddMedicineToFAKComponent],
   providers: [ErrorInterceptorProvider, AuthService],
   bootstrap: [AppComponent]
 })

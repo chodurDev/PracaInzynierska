@@ -49,18 +49,17 @@ export class FirstAidKitService {
     );
   }
   UpdateFirstAidKitMedicine(fakMedicine: FirstAidKitMedicine) {
-    return this.http
-      .put(
-        this.baseUrl + '/fak/' + fakMedicine.firstAidKitMedicineID,
-        fakMedicine,
-        httpOptions
-      )
-      .subscribe();
+    return this.http.put(
+      this.baseUrl + '/fak/' + fakMedicine.firstAidKitMedicineID,
+      fakMedicine,
+      httpOptions
+    );
   }
   DeleteFAKMedicine(id: number) {
-    return this.http
-      .delete(this.baseUrl + '/fak/deleteFAKMedicine/' + id, httpOptions)
-      .subscribe();
+    return this.http.delete(
+      this.baseUrl + '/fak/deleteFAKMedicine/' + id,
+      httpOptions
+    );
   }
   AddUFAK(uFAK: UserFirstAidKit) {
     return this.http.post<UserFirstAidKit>(this.baseUrl + '/fak/addUFAK', uFAK);

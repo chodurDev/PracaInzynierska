@@ -64,9 +64,10 @@ namespace EpillBox.API.Data
                                                     .ToListAsync();
             foreach (var item in userFirstAidKits)
             {
+
                 var medicines = _context.FirstAidKitMedicines
                     .Include(fakm => fakm.Medicine)
-                    .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID && IsShorterThanWeek(fakm.ExpirationDate))
+                    .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID && IsShorterThanWeek(fakm.ExpirationDate ?? DateTime.Now.AddDays(8)))
                     .ToList();
                 foreach (var medicine in medicines)
                 {
@@ -130,6 +131,11 @@ namespace EpillBox.API.Data
             var fak = new FirstAidKit { FirstAidKitID = firstAidKitID };
             Delete(fak);
             return await SaveAll();
+        }
+
+        public async Task<IEnumerable<Medicine>> GetAllMedicines()
+        {
+            return await _context.Medicines.ToListAsync();
         }
     }
 }

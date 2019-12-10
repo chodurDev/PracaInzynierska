@@ -51,4 +51,9 @@ export class TableForMedicineComponent implements AfterViewInit, OnChanges, OnIn
     };
     return filterFunction;
   }
+
+  IsMedicineExpired(expirationDate: string): boolean {
+    const currentDate: Date = new Date();
+    return currentDate > new Date(expirationDate) ? true : false;
+  }
 }

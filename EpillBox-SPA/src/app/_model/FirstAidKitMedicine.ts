@@ -1,7 +1,7 @@
 import { Medicine } from './Medicine';
 
 export interface FirstAidKitMedicine {
-  expirationDate: Date;
+  expirationDate?: Date | null;
   firstAidKitID: number;
   firstAidKitMedicineID: number;
   isTaken: boolean;

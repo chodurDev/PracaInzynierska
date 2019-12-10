@@ -13,6 +13,7 @@ namespace EpillBox.API.Data
         Task Update(int id, UserMedicinesToViewDto value);
         Task<bool> SaveAll();
         Task<IEnumerable<FirstAidKitMedicine>> GetUserMedicines(int id);
+        Task<IEnumerable<Medicine>> GetAllMedicines();
         Task<IEnumerable<FirstAidKitMedicine>> GetUserChosenFirstAidKitMedicines(int id);
         Task<IEnumerable<FirstAidKitMedicine>> GetExpiredMedicines(int id);
         Task<IEnumerable<FirstAidKitMedicine>> GetUserTakenMedicines(int id);

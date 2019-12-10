@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EpillBox.API.Migrations
 {
-    public partial class ExtendFirstAidKitMedicine : Migration
+    public partial class ChangedFirstAidKitMedicine : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,8 +21,7 @@ namespace EpillBox.API.Migrations
             migrationBuilder.AddColumn<DateTime>(
                 name: "ExpirationDate",
                 table: "FirstAidKitMedicines",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                nullable: true);
 
             migrationBuilder.AddColumn<bool>(
                 name: "IsTaken",

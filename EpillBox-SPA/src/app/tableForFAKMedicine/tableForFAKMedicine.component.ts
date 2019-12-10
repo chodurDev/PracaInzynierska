@@ -13,7 +13,6 @@ import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
 import { FirstAidKitService } from '../_services/firstAidKit.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tableForFAKMedicine',
@@ -39,12 +38,11 @@ export class TableForFAKMedicineComponent
     name: ''
   };
   checked = false;
-  routePath = ['/myFirstAidKit'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private fakService: FirstAidKitService, private router: Router) {
+  constructor(private fakService: FirstAidKitService) {
     this.dataSource.filterPredicate = this.createFilter();
   }
   ngOnInit() {
@@ -73,13 +71,13 @@ export class TableForFAKMedicineComponent
 
   IsClicked(row: FirstAidKitMedicine) {
     row.isTaken = !row.isTaken;
-    this.fakService.UpdateFirstAidKitMedicine(row);
+    this.fakService.UpdateFirstAidKitMedicine(row).subscribe();
   }
   AreYouSure(row: FirstAidKitMedicine) {
     if (
       confirm(`Czy na pewno chcesz usunąć ${row.name} ze swojej apteczki ?`)
     ) {
-      this.fakService.DeleteFAKMedicine(row.firstAidKitMedicineID);
+      this.fakService.DeleteFAKMedicine(row.firstAidKitMedicineID).subscribe();
       this.deleteRowFromTable(row);
     }
   }
@@ -90,8 +88,16 @@ export class TableForFAKMedicineComponent
     this.dataSource._updateChangeSubscription();
   }
 
-  OnAddMedicinesToFAK(){
+  OnAddMedicinesToFAK() {
     this.addMedicines.emit();
   }
 
+  IsMedicineExpired(expirationDate: string | null): boolean {
+    const currentDate: Date = new Date();
+    if (expirationDate === null) {
+      return false;
+    } else {
+      return currentDate > new Date(expirationDate) ? true : false;
+    }
+  }
 }

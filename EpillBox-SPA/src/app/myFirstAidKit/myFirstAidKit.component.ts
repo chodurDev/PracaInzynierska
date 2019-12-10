@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { FirstAidKitService } from '../_services/firstAidKit.service';
 import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogAddUserFAKComponent } from '../dialogs/dialogAddUserFAK/dialogAddUserFAK.component';
 import { UserFirstAidKit } from '../_model/UserFirstAidKit';
 import { DialogDeleteUserFAKComponent } from '../dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
+import { DialogAddMedicineToFAKComponent } from '../dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
+import { MedicineService } from '../_services/medicine.service';
+import { Medicine } from '../_model/Medicine';
 
 @Component({
   selector: 'app-myFirstAidKit',
@@ -22,7 +25,8 @@ export class MyFirstAidKitComponent implements OnInit {
   constructor(
     private fakService: FirstAidKitService,
     private authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private medService: MedicineService
   ) {}
 
   ngOnInit() {
@@ -52,6 +56,7 @@ export class MyFirstAidKitComponent implements OnInit {
       .subscribe((values: FirstAidKitMedicine[]) => {
         this.medicines = values.slice(0);
         this.isChosen = true;
+        console.log(this.medicines);
       });
   }
 
@@ -95,7 +100,6 @@ export class MyFirstAidKitComponent implements OnInit {
         });
       }
     });
-    
   }
   deleteUFAK(): void {
     const dialogRef = this.dialog.open(DialogDeleteUserFAKComponent, {
@@ -103,7 +107,7 @@ export class MyFirstAidKitComponent implements OnInit {
       data: this.firstAidKits
     });
 
-    dialogRef.afterClosed().subscribe(result => { 
+    dialogRef.afterClosed().subscribe(result => {
       // result it's userFirstAidKitID to delete or just empty string
       if (result) {
         localStorage.setItem('chosenFAK', '');
@@ -116,10 +120,18 @@ export class MyFirstAidKitComponent implements OnInit {
     });
   }
 
-  OnAddMedicinesToFAK(){
-    console.log('choose medicines to add');
-    console.log(this.firstAidKits);
-    console.log(this.medicines);
-    this.deleteUFAK();
+  OnAddMedicinesToFAK() {
+    this.medService.GetAllMedicines().subscribe(values => {
+      const dialogRef = this.dialog.open(DialogAddMedicineToFAKComponent, {
+        width: '400px',
+        data: values
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        // result it's userFirstAidKitID to delete or just empty string
+        if (!result) {
+          console.log('dodanie leku do apteczki');
+        }
+      });
+    });
   }
 }

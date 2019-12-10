@@ -31,7 +31,7 @@ namespace EpillBox.API.Migrations
                     b.Property<int>("FirstAidKitMedicineID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("ExpirationDate");
+                    b.Property<DateTime?>("ExpirationDate");
 
                     b.Property<int>("FirstAidKitID");
 

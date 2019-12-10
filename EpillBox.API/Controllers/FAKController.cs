@@ -46,6 +46,13 @@ namespace EpillBox.API.Controllers
             return Ok(medicinesToReturn);
 
         }
+        [HttpGet("getAllMedicines")]
+        public async Task<IActionResult> GetAllMedicines()
+        {
+            var medicinesToReturn = await _fakRepo.GetAllMedicines();
+            return Ok(medicinesToReturn);
+
+        }
 
         [HttpGet("getUserTakenMedicines/{id}")]
         public async Task<IActionResult> GetUserTakenMedicines(int id)
@@ -80,7 +87,7 @@ namespace EpillBox.API.Controllers
 
 
         // POST api/fak
-        [AllowAnonymous]
+
         [HttpPost("addUFAK")]
         public async Task<IActionResult> Post([FromBody] UserFirstAidKit uFAK)
         {
@@ -103,7 +110,7 @@ namespace EpillBox.API.Controllers
         }
 
         // DELETE api/fak/deleteFAKMedicine/5
-        [AllowAnonymous]
+
         [HttpDelete("deleteFAKMedicine/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -116,7 +123,7 @@ namespace EpillBox.API.Controllers
 
         }
         // DELETE api/fak/deleteFAK/5
-        [AllowAnonymous]
+
         [HttpDelete("deleteFAK/{id}")]
         public async Task<IActionResult> DeleteFAK(int id)
         {
