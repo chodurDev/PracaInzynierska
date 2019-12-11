@@ -18,6 +18,14 @@ namespace EpillBox.API.Helpers
             medicinesToReturn.ForMember(x=>x.QuantityInPackage,y=>y.MapFrom(j=>j.Medicine.QuantityInPackage));
             medicinesToReturn.ForMember(x=>x.MedicineID,y=>y.MapFrom(j=>j.MedicineID));
             medicinesToReturn.ForMember(x=>x.RemainingQuantity,y=>y.MapFrom(j=>j.RemainingQuantity));
+
+            // var newFakMedicine = new FirstAidKitMedicine();
+            // var fakMedicineToAdd = CreateMap<FirstAidKitMedicineToAddDto,FirstAidKitMedicine>();
+            // fakMedicineToAdd.ForMember(x=>x.ExpirationDate,y=>y.MapFrom(j=>j.ExpirationDate));
+            // fakMedicineToAdd.ForMember(x=>x.FirstAidKitID,y=>y.MapFrom(j=>j.FirstAidKitID));
+            // fakMedicineToAdd.ForMember(x=>newFakMedicine.FirstAidKitMedicineID);
+           
+
         }
     }
 }

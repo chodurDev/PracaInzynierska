@@ -86,15 +86,26 @@ namespace EpillBox.API.Controllers
 
 
 
-        // POST api/fak
+        // POST api/fak/addUFAK
 
         [HttpPost("addUFAK")]
         public async Task<IActionResult> Post([FromBody] UserFirstAidKit uFAK)
         {
+
             _fakRepo.AddUFAK(uFAK);
             if (await _fakRepo.SaveAll())
                 return Ok();
             throw new System.Exception($"Adding ufak failed on save");
+        }
+
+        [HttpPost("addFAKMedicine")]
+        public async Task<IActionResult> AddFAKMedicine([FromBody] FirstAidKitMedicineToAddDto fakMedicine)
+        {
+            var fakMedicineToAdd = _mapper.Map<FirstAidKitMedicineToAddDto>(fakMedicine);
+           _fakRepo.Add(fakMedicine);    
+           if (await _fakRepo.SaveAll())
+                return Ok();
+            throw new System.Exception($"Adding fakMedicine failed on save");
         }
 
         // PUT api/fak/5

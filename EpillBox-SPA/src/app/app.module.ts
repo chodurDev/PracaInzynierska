@@ -26,36 +26,47 @@ import { DialogDeleteUserFAKComponent } from './dialogs/dialogDeleteUserFAK/dial
 import { DialogAddMedicineToFAKComponent } from './dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    HomeComponent,
-    RegisterComponent,
-    MyFirstAidKitComponent,
-    SideBarContentComponent,
-    CurrentlyUsedComponent,
-    TableForFAKMedicineComponent,
-    ShortTermMedicinesComponent,
-    TableForMedicineComponent,
-    DialogAddUserFAKComponent,
-    DialogDeleteUserFAKComponent,
-    DialogAddMedicineToFAKComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AngularMaterialsModule,
-    FlexLayoutModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BsDropdownModule.forRoot(),
-    SidebarModule.forRoot()
-  ],
-  exports: [AngularMaterialsModule],
-  entryComponents: [DialogAddUserFAKComponent, DialogDeleteUserFAKComponent, DialogAddMedicineToFAKComponent],
-  providers: [ErrorInterceptorProvider, AuthService],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      NavComponent,
+      HomeComponent,
+      RegisterComponent,
+      MyFirstAidKitComponent,
+      SideBarContentComponent,
+      CurrentlyUsedComponent,
+      TableForFAKMedicineComponent,
+      ShortTermMedicinesComponent,
+      TableForMedicineComponent,
+      DialogAddUserFAKComponent,
+      DialogDeleteUserFAKComponent,
+      DialogAddMedicineToFAKComponent
+   ],
+   imports: [
+      BrowserModule,
+      BrowserAnimationsModule,
+      AngularMaterialsModule,
+      FlexLayoutModule,
+      AppRoutingModule,
+      HttpClientModule,
+      FormsModule,
+      ReactiveFormsModule,
+      BsDropdownModule.forRoot(),
+      SidebarModule.forRoot()
+   ],
+   exports: [
+      AngularMaterialsModule
+   ],
+   entryComponents: [
+      DialogAddUserFAKComponent,
+      DialogDeleteUserFAKComponent,
+      DialogAddMedicineToFAKComponent
+   ],
+   providers: [
+      ErrorInterceptorProvider,
+      AuthService
+   ],
+   bootstrap: [
+      AppComponent
+   ]
 })
 export class AppModule {}

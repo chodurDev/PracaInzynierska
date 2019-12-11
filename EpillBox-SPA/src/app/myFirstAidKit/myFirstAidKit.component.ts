@@ -121,17 +121,17 @@ export class MyFirstAidKitComponent implements OnInit {
   }
 
   OnAddMedicinesToFAK() {
-    this.medService.GetAllMedicines().subscribe(values => {
-      const dialogRef = this.dialog.open(DialogAddMedicineToFAKComponent, {
-        width: '400px',
-        data: values
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        // result it's userFirstAidKitID to delete or just empty string
-        if (!result) {
-          console.log('dodanie leku do apteczki');
-        }
-      });
+    const dialogRef = this.dialog.open(DialogAddMedicineToFAKComponent, {
+      width: '400px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // result it's userFirstAidKitID to delete or just empty string
+      if (result) {
+        console.log(result);
+        const fakMedicineToSend: FirstAidKitMedicine = result;
+        fakMedicineToSend.firstAidKitID = +this.defaultOption;
+        this.fakService.AddFAKMedicine(fakMedicineToSend).subscribe();
+      }
     });
   }
 }

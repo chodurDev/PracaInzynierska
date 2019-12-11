@@ -70,4 +70,8 @@ export class FirstAidKitService {
       httpOptions
     );
   }
+  AddFAKMedicine(fakMedicine: FirstAidKitMedicine) {
+    console.log(fakMedicine);
+    return this.http.post(this.baseUrl + '/fak/addFAKMedicine', fakMedicine, httpOptions);
+  }
 }
