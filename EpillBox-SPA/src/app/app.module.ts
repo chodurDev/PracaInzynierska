@@ -18,12 +18,13 @@ import { SideBarContentComponent } from './sideBarContent/sideBarContent.compone
 import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component';
 import { AngularMaterialsModule } from './angular-materials.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TableForFAKMedicineComponent } from './tableForFAKMedicine/tableForFAKMedicine.component';
+import { TableForFAKMedicineComponent } from './tables/tableForFAKMedicine/tableForFAKMedicine.component';
 import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedicines.component';
-import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.component';
+import { TableForMedicineComponent } from './tables/tableForMedicine/tableForMedicine.component';
 import { DialogAddUserFAKComponent } from './dialogs/dialogAddUserFAK/dialogAddUserFAK.component';
 import { DialogDeleteUserFAKComponent } from './dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
 import { DialogAddMedicineToFAKComponent } from './dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
+import { TableCurrentlyUsedComponent } from './tables/tableCurrentlyUsed/tableCurrentlyUsed.component';
 
 @NgModule({
    declarations: [
@@ -39,7 +40,8 @@ import { DialogAddMedicineToFAKComponent } from './dialogs/dialogAddMedicineToFA
       TableForMedicineComponent,
       DialogAddUserFAKComponent,
       DialogDeleteUserFAKComponent,
-      DialogAddMedicineToFAKComponent
+      DialogAddMedicineToFAKComponent,
+      TableCurrentlyUsedComponent
    ],
    imports: [
       BrowserModule,

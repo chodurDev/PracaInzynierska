@@ -20,5 +20,6 @@ namespace EpillBox.API.Data
         Task<IEnumerable<UserFirstAidKit>> GetUserFirstAidKits(int id);
         void AddUFAK(UserFirstAidKit uFAK);
         Task<bool> DeleteFirstAidKit(int firstAidKitID);
+        void AddMedicineToAllFAK(int id,FirstAidKitMedicine medicine);
     }
 }

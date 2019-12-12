@@ -71,7 +71,17 @@ export class FirstAidKitService {
     );
   }
   AddFAKMedicine(fakMedicine: FirstAidKitMedicine) {
-    console.log(fakMedicine);
-    return this.http.post(this.baseUrl + '/fak/addFAKMedicine', fakMedicine, httpOptions);
+    return this.http.post(
+      this.baseUrl + '/fak/addFAKMedicine',
+      fakMedicine,
+      httpOptions
+    );
+  }
+  AddMedicineToAllFAK(fakMedicine: FirstAidKitMedicine, id: number) {
+    return this.http.post(
+      this.baseUrl + '/fak/addMedicineToAllFAK/' + id,
+      fakMedicine,
+      httpOptions
+    );
   }
 }

@@ -9,10 +9,10 @@ import {
   EventEmitter
 } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
+import { FirstAidKitMedicine } from '../../_model/FirstAidKitMedicine';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
-import { FirstAidKitService } from '../_services/firstAidKit.service';
+import { FirstAidKitService } from '../../_services/firstAidKit.service';
 
 @Component({
   selector: 'app-tableForFAKMedicine',

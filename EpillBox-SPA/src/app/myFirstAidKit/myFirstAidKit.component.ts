@@ -56,7 +56,6 @@ export class MyFirstAidKitComponent implements OnInit {
       .subscribe((values: FirstAidKitMedicine[]) => {
         this.medicines = values.slice(0);
         this.isChosen = true;
-        console.log(this.medicines);
       });
   }
 
@@ -76,8 +75,6 @@ export class MyFirstAidKitComponent implements OnInit {
     this.fakService
       .GetUserChosenFirstAidKitMedicines(id)
       .subscribe((values: FirstAidKitMedicine[]) => {
-        console.log(values);
-
         this.medicines = values.slice(0);
         this.isChosen = true;
       });
@@ -127,10 +124,19 @@ export class MyFirstAidKitComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // result it's userFirstAidKitID to delete or just empty string
       if (result) {
-        console.log(result);
         const fakMedicineToSend: FirstAidKitMedicine = result;
-        fakMedicineToSend.firstAidKitID = +this.defaultOption;
-        this.fakService.AddFAKMedicine(fakMedicineToSend).subscribe();
+        if (+this.defaultOption === -1) {
+          this.fakService
+            .AddMedicineToAllFAK(fakMedicineToSend, this.actualUserId)
+            .subscribe(() => {
+              this.getUserMedicines();
+            });
+        } else {
+          fakMedicineToSend.firstAidKitID = +this.defaultOption;
+          this.fakService.AddFAKMedicine(fakMedicineToSend).subscribe(() => {
+            this.onFirstAidKitClick(parseInt(this.defaultOption));
+          });
+        }
       }
     });
   }

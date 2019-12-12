@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnChanges, Input, ViewChild } from '@angular/core';
-import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
+import { FirstAidKitMedicine } from '../../_model/FirstAidKitMedicine';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { FormControl } from '@angular/forms';
 

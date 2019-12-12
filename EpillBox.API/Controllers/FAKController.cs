@@ -101,8 +101,23 @@ namespace EpillBox.API.Controllers
         [HttpPost("addFAKMedicine")]
         public async Task<IActionResult> AddFAKMedicine([FromBody] FirstAidKitMedicineToAddDto fakMedicine)
         {
-            var fakMedicineToAdd = _mapper.Map<FirstAidKitMedicineToAddDto>(fakMedicine);
-           _fakRepo.Add(fakMedicine);    
+            // if(fakMedicine.FirstAidKitID==-1){
+
+            // }
+            var fakMedicineToAdd = _mapper.Map<FirstAidKitMedicine>(fakMedicine);
+           _fakRepo.Add(fakMedicineToAdd);    
+           if (await _fakRepo.SaveAll())
+                return Ok();
+            throw new System.Exception($"Adding fakMedicine failed on save");
+        }
+        [HttpPost("addMedicineToAllFAK/{id}")]
+        public async Task<IActionResult> AddMedicineToAllFAK([FromBody] FirstAidKitMedicineToAddDto fakMedicine,int id)
+        {
+            // if(fakMedicine.FirstAidKitID==-1){
+
+            // }
+            var fakMedicineToAdd = _mapper.Map<FirstAidKitMedicine>(fakMedicine);
+           _fakRepo.AddMedicineToAllFAK(id,fakMedicineToAdd);   
            if (await _fakRepo.SaveAll())
                 return Ok();
             throw new System.Exception($"Adding fakMedicine failed on save");

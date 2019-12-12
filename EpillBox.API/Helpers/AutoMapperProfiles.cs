@@ -19,13 +19,14 @@ namespace EpillBox.API.Helpers
             medicinesToReturn.ForMember(x=>x.MedicineID,y=>y.MapFrom(j=>j.MedicineID));
             medicinesToReturn.ForMember(x=>x.RemainingQuantity,y=>y.MapFrom(j=>j.RemainingQuantity));
 
-            // var newFakMedicine = new FirstAidKitMedicine();
-            // var fakMedicineToAdd = CreateMap<FirstAidKitMedicineToAddDto,FirstAidKitMedicine>();
-            // fakMedicineToAdd.ForMember(x=>x.ExpirationDate,y=>y.MapFrom(j=>j.ExpirationDate));
-            // fakMedicineToAdd.ForMember(x=>x.FirstAidKitID,y=>y.MapFrom(j=>j.FirstAidKitID));
-            // fakMedicineToAdd.ForMember(x=>newFakMedicine.FirstAidKitMedicineID);
-           
+            var medicinesToAdd = CreateMap<FirstAidKitMedicineToAddDto,FirstAidKitMedicine>();
 
+            medicinesToAdd.ForMember(x=>x.FirstAidKitID,y=>y.MapFrom(j=>j.FirstAidKitID));
+            medicinesToAdd.ForMember(x=>x.IsTaken,y=>y.MapFrom(j=>j.IsTaken));
+            medicinesToAdd.ForMember(x=>x.MedicineID,y=>y.MapFrom(j=>j.MedicineID));
+            medicinesToAdd.ForMember(x=>x.RemainingQuantity,y=>y.MapFrom(j=>j.RemainingQuantity));
+            medicinesToAdd.ForMember(x=>x.ExpirationDate,y=>y.MapFrom(j=>j.ExpirationDate));
+         
         }
     }
 }

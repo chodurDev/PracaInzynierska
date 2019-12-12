@@ -1,0 +1,26 @@
+div.table-responsive {
+    width: 50%;
+    text-align: center;
+  }
+  
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+  table {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  
+  th.mat-header-cell {
+    text-align: left;
+    max-width: 300px;
+  }
+  
+  .PillImageGreen{
+    filter: invert(47%) sepia(88%) saturate(402%) hue-rotate(82deg) brightness(94%) contrast(89%);
+ }
+ .PillImageWhite{
+  filter: invert(0%) sepia(74%) saturate(12%) hue-rotate(320deg) brightness(104%) contrast(100%);
+}
+ 

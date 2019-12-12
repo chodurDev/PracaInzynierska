@@ -135,7 +135,18 @@ namespace EpillBox.API.Data
 
         public async Task<IEnumerable<Medicine>> GetAllMedicines()
         {
+            
             return await _context.Medicines.ToListAsync();
         }
+        public void AddMedicineToAllFAK(int id,FirstAidKitMedicine medicine)
+        {
+            var user = _context.Users.Include(x=>x.UserFirstAidKits).ThenInclude(y=>y.FirstAidKit).ThenInclude(X=>X.FirstAidKitMedicines).FirstOrDefault(x=>x.UserID==id);
+            foreach (var apteczka in user.UserFirstAidKits)
+            {
+                apteczka.FirstAidKit.FirstAidKitMedicines.Add( new FirstAidKitMedicine{MedicineID = medicine.MedicineID, RemainingQuantity=medicine.RemainingQuantity, ExpirationDate=medicine.ExpirationDate});
+            }
+            
+        }
+
     }
 }

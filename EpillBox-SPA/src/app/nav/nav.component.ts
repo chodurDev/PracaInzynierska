@@ -56,7 +56,6 @@ export class NavComponent implements OnInit {
   }
 
   changeNavTitle() {
-    console.log(this.router.url);
     switch (this.router.url) {
       case '/myFirstAidKit':
         this.routeName = 'Moje Apteczki';
