@@ -24,6 +24,12 @@ export class FirstAidKitService {
       httpOptions
     );
   }
+  GetShortTermMedicines(id: number) {
+    return this.http.get<FirstAidKitMedicine[]>(
+      this.baseUrl + '/fak/shortTermMedicines/' + id,
+      httpOptions
+    );
+  }
   GetExpiredMedicines(id: number) {
     return this.http.get<FirstAidKitMedicine[]>(
       this.baseUrl + '/fak/expiredMedicines/' + id,
@@ -50,7 +56,7 @@ export class FirstAidKitService {
   }
   UpdateFirstAidKitMedicine(fakMedicine: FirstAidKitMedicine) {
     return this.http.put(
-      this.baseUrl + '/fak/' + fakMedicine.firstAidKitMedicineID,
+      this.baseUrl + '/fak',
       fakMedicine,
       httpOptions
     );

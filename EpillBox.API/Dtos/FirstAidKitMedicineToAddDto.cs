@@ -5,7 +5,7 @@ namespace EpillBox.API.Dtos
 {
     public class FirstAidKitMedicineToAddDto
     {
-        // public int? FirstAidKitMedicineID { get; set; }
+        public int? FirstAidKitMedicineID { get; set; }
 
         public int MedicineID { get; set; }
 

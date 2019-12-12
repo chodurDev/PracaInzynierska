@@ -2,10 +2,18 @@
     <div class="row">
       <div class="col">
         
-            <app-tableForMedicine [medicines]="medicines"></app-tableForMedicine>
+            <app-tableForMedicine [medicines]="shortTermMedicines"></app-tableForMedicine>
        
       </div>
-      
+    </div>
+    <div class="row">
+      <h1>przeterminowane</h1>
+      <div class="col">
+        
+            <app-tableForMedicine [medicines]="expiredMedicines"></app-tableForMedicine>
+       
+      </div>
+    </div> 
         <!-- <div class="row">
           <div class="col  d-flex justify-content-end">
             <a class=" btn btn-light text-uppercase font-weight-bold mr-5" [routerLink]="['/myFirstAidKit']" routerLinkActive="router-link-active"  >
@@ -19,7 +27,7 @@
           </div>
         </div> -->
       
-    </div>
+    
     
   
   </div>

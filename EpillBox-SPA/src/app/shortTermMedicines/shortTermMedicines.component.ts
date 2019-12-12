@@ -10,9 +10,9 @@ import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
   styleUrls: ['./shortTermMedicines.component.css']
 })
 export class ShortTermMedicinesComponent implements OnInit {
+  expiredMedicines: FirstAidKitMedicine[] = [];
+  shortTermMedicines: FirstAidKitMedicine[] = [];
 
-  medicines: FirstAidKitMedicine[] = [];
-  
   constructor(
     private fakService: FirstAidKitService,
     private authService: AuthService
@@ -26,9 +26,14 @@ export class ShortTermMedicinesComponent implements OnInit {
     const actualUserId = this.authService.decodedToken.nameid;
 
     this.fakService
+      .GetShortTermMedicines(actualUserId)
+      .subscribe((values: FirstAidKitMedicine[]) => {
+        this.shortTermMedicines = values;
+      });
+    this.fakService
       .GetExpiredMedicines(actualUserId)
       .subscribe((values: FirstAidKitMedicine[]) => {
-        this.medicines = values;
+        this.expiredMedicines = values;
       });
   }
 }

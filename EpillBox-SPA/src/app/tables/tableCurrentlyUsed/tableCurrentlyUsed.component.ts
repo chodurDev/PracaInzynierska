@@ -39,7 +39,8 @@ export class TableCurrentlyUsedComponent
   color: string = 'PillImageGreen';
 
   changeStyle($event) {
-    this.color = $event.type == 'mouseover' ? 'PillImageWhite' : 'PillImageGreen';
+    this.color =
+      $event.type == 'mouseover' ? 'PillImageWhite' : 'PillImageGreen';
   }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -76,9 +77,20 @@ export class TableCurrentlyUsedComponent
       confirm(`Czy na pewno chcesz usunąć ${row.name} z Aktualnie zażywanych?`)
     ) {
       row.isTaken = !row.isTaken;
-      this.fakService.UpdateFirstAidKitMedicine(row).subscribe();
+      this.updateRow(row);
       this.deleteRowFromTable(row);
     }
+  }
+
+  isClicked(row: FirstAidKitMedicine) {
+    if (row.remainingQuantity > 0) {
+      row.remainingQuantity -= 1;
+      this.updateRow(row);
+    }
+  }
+
+  private updateRow(row) {
+    this.fakService.UpdateFirstAidKitMedicine(row).subscribe();
   }
 
   private deleteRowFromTable(row: FirstAidKitMedicine) {

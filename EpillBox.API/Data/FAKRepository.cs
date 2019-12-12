@@ -67,6 +67,26 @@ namespace EpillBox.API.Data
 
                 var medicines = _context.FirstAidKitMedicines
                     .Include(fakm => fakm.Medicine)
+                    .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID && fakm.ExpirationDate< DateTime.Now)
+                    .ToList();
+                foreach (var medicine in medicines)
+                {
+                    expiredMedicines.Add(medicine);
+                }
+            }
+            return expiredMedicines;
+        }
+        public async Task<IEnumerable<FirstAidKitMedicine>> GetShortTermMedicines(int id)
+        {
+            var expiredMedicines = new List<FirstAidKitMedicine>();
+            var userFirstAidKits = await _context.UserFirstAidKits
+                                                    .Where(ufak => ufak.UserID == id)
+                                                    .ToListAsync();
+            foreach (var item in userFirstAidKits)
+            {
+
+                var medicines = _context.FirstAidKitMedicines
+                    .Include(fakm => fakm.Medicine)
                     .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID && IsShorterThanWeek(fakm.ExpirationDate ?? DateTime.Now.AddDays(8)))
                     .ToList();
                 foreach (var medicine in medicines)
@@ -112,10 +132,10 @@ namespace EpillBox.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task Update(int id, UserMedicinesToViewDto value)
+        public void Update<T>(T entity) where T : class
         {
-            var firstAidKitMedicine = await _context.FirstAidKitMedicines.FirstOrDefaultAsync(x => x.FirstAidKitMedicineID == id);
-            firstAidKitMedicine.IsTaken = value.IsTaken;
+            
+            _context.Update(entity);
         }
 
 

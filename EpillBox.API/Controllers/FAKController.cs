@@ -64,6 +64,14 @@ namespace EpillBox.API.Controllers
 
         }
 
+        [Route("shortTermMedicines/{id}")]
+        public async Task<IActionResult> GetShortTermMedicines(int id)
+        {
+            var expiredMedicines = await _fakRepo.GetShortTermMedicines(id);
+            var medicinesToReturn = _mapper.Map<IEnumerable<UserMedicinesToViewDto>>(expiredMedicines);
+            return Ok(medicinesToReturn);
+
+        }
         [Route("expiredMedicines/{id}")]
         public async Task<IActionResult> GetExpiredMedicines(int id)
         {
@@ -125,14 +133,15 @@ namespace EpillBox.API.Controllers
 
         // PUT api/fak/5
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, UserMedicinesToViewDto value)
+        [HttpPut]
+        public async Task<IActionResult> Put(FirstAidKitMedicineToAddDto value)
         {
-            await _fakRepo.Update(id, value);
+            var fakMedicineToUpdate = _mapper.Map<FirstAidKitMedicine>(value);
+            _fakRepo.Update(fakMedicineToUpdate);
             if (await _fakRepo.SaveAll())
                 return NoContent();
 
-            throw new System.Exception($"Updating FakMedicine {id} failed on save");
+            throw new System.Exception("Updating FakMedicine failed on save");
         }
 
         // DELETE api/fak/deleteFAKMedicine/5

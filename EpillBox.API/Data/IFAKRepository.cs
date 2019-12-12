@@ -10,12 +10,13 @@ namespace EpillBox.API.Data
     {
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
-        Task Update(int id, UserMedicinesToViewDto value);
+         void Update<T>(T entity) where T : class;
         Task<bool> SaveAll();
         Task<IEnumerable<FirstAidKitMedicine>> GetUserMedicines(int id);
         Task<IEnumerable<Medicine>> GetAllMedicines();
         Task<IEnumerable<FirstAidKitMedicine>> GetUserChosenFirstAidKitMedicines(int id);
         Task<IEnumerable<FirstAidKitMedicine>> GetExpiredMedicines(int id);
+        Task<IEnumerable<FirstAidKitMedicine>> GetShortTermMedicines(int id);
         Task<IEnumerable<FirstAidKitMedicine>> GetUserTakenMedicines(int id);
         Task<IEnumerable<UserFirstAidKit>> GetUserFirstAidKits(int id);
         void AddUFAK(UserFirstAidKit uFAK);
