@@ -1,0 +1,15 @@
+th.mat-sort-header-sorted {
+    color: black;
+  }
+  table,
+  mat-paginator {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  
+  th.mat-header-cell {
+    text-align: left;
+    max-width: 300px;
+  }
+  

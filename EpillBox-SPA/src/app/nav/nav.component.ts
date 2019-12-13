@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav',
@@ -10,14 +11,19 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   model: any = {};
-
   @Output() toggleSideBar = new EventEmitter();
-
+  routeName: string;
   constructor(
     public authService: AuthService,
     private alertify: AlertifyService,
     private router: Router
-  ) {}
+  ) {
+    router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.changeNavTitle();
+      });
+  }
 
   ngOnInit() {}
 
@@ -41,10 +47,28 @@ export class NavComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('chosenFAK');
     this.alertify.message('logged out');
     this.router.navigate(['/home']);
   }
   showSideBar() {
-    this.toggleSideBar.emit();
+    this.toggleSideBar.emit(true);
+  }
+
+  changeNavTitle() {
+    switch (this.router.url) {
+      case '/myFirstAidKit':
+        this.routeName = 'Moje Apteczki';
+        break;
+      case '/currentlyUsed':
+        this.routeName = 'Aktualnie zażywane lekarstwa';
+        break;
+      case '/shortTermMedicines':
+        this.routeName = 'Lekarstwa z krótką datą przydatności';
+        break;
+      default:
+        this.routeName = '';
+        break;
+    }
   }
 }

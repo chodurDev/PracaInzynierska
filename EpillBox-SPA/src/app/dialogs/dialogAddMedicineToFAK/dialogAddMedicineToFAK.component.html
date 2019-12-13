@@ -1,0 +1,44 @@
+<div class="text-center mt-5" mat-dialog-content>
+  <div class="mat-elevation-z8">
+    <mat-form-field>
+        <input matInput type="text" [formControl]="nameFilter" placeholder="Wyszukaj lek...">
+    </mat-form-field>
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa leku </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="quantityInPackage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Ilość w opakowaniu </th>
+          <td mat-cell *matCellDef="let element">{{element.quantityInPackage}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>Dodaj</th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)" [ngStyle]="{'background-color':selection.isSelected(row) ? '#ffadad' : ''  }"></tr>
+    </table>
+  
+    <mat-paginator [pageSize]="4"></mat-paginator>
+  
+  </div>
+  <mat-form-field color="primary" class="mt-3">
+      <mat-label>Ustaw datę ważności</mat-label>
+      <input [(ngModel)]="chosenDate" matInput  [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker color="primary" startView="multi-year"></mat-datepicker>
+    </mat-form-field>
+</div>
+<div class="justify-content-center" mat-dialog-actions>
+      <button class="btn btn-success" mat-button [mat-dialog-close]="onAddClick()">Dodaj</button> 
+</div>

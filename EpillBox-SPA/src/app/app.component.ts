@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onToggleSideBar() {
-    this.opened = true;
+  onToggleSideBar(value: boolean) {
+    this.opened = value;
   }
 
   loggedIn() {

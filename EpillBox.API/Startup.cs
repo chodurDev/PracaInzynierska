@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using EpillBox.API.Data;
 using EpillBox.API.Helpers;
 using EpillBox.API.Services;
@@ -53,12 +54,13 @@ namespace EpillBox.API
             });
 
 
-            // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMvc()
                         .AddJsonOptions(
                             options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                         );
             services.AddCors();
+            services.AddAutoMapper(typeof(FAKRepository).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

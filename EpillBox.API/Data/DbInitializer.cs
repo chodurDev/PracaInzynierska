@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using EpillBox.API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -49,13 +50,13 @@ namespace EpillBox.API.Data
             context.SaveChanges();
 
             var userFirstAidKits = new UserFirstAidKit[]{
-                new UserFirstAidKit{UserID=1,FirstAidKitID=1},
+                new UserFirstAidKit{UserID=1,FirstAidKitID=1,Name="apteczka dom"},
 
-                new UserFirstAidKit{UserID=2,FirstAidKitID=2},
+                new UserFirstAidKit{UserID=1,FirstAidKitID=2,Name="apteczka biuro"},
 
-                new UserFirstAidKit{UserID=3,FirstAidKitID=3},
+                new UserFirstAidKit{UserID=3,FirstAidKitID=3,Name="apteczka dom"},
 
-                new UserFirstAidKit{UserID=4,FirstAidKitID=4},
+                new UserFirstAidKit{UserID=4,FirstAidKitID=4,Name="apteczka dom"},
             };
 
             foreach (UserFirstAidKit ufak in userFirstAidKits)
@@ -65,10 +66,10 @@ namespace EpillBox.API.Data
             context.SaveChanges();
 
             var medicines = new Medicine[]{
-               new Medicine{Name="Apap"},
-               new Medicine{Name="Ketonal"},
-               new Medicine{Name="Ibuprom"},
-               new Medicine{Name="No-Spa"},
+               new Medicine{Name="Apap",QuantityInPackage=10},
+               new Medicine{Name="Ketonal",QuantityInPackage=10},
+               new Medicine{Name="Ibuprom",QuantityInPackage=10},
+               new Medicine{Name="No-Spa",QuantityInPackage=10},
             };
 
             foreach (Medicine m in medicines)
@@ -77,16 +78,19 @@ namespace EpillBox.API.Data
             }
 
             context.SaveChanges();
+            var currentDayMinus7 = DateTime.Today.AddDays(-7);
+           
 
             var firstAidKitMedicines = new FirstAidKitMedicine[]{
-                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=1},
-                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=2},
-                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=3},
-                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=4}
+                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=1,ExpirationDate=currentDayMinus7,IsTaken=true},
+                new FirstAidKitMedicine{FirstAidKitID=1,MedicineID=2,ExpirationDate=currentDayMinus7,IsTaken=true},
+                new FirstAidKitMedicine{FirstAidKitID=2,MedicineID=3,ExpirationDate=currentDayMinus7,IsTaken=false},
+                new FirstAidKitMedicine{FirstAidKitID=2,MedicineID=4,ExpirationDate=DateTime.Today.AddDays(7),IsTaken=false}
             };
 
             foreach (FirstAidKitMedicine fakm in firstAidKitMedicines)
             {
+                fakm.RemainingQuantity=context.Medicines.FirstOrDefault(x=>x.MedicineID==fakm.MedicineID).QuantityInPackage;
                 context.FirstAidKitMedicines.Add(fakm);
             }
 

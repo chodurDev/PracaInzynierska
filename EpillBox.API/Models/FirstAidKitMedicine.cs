@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EpillBox.API.Models
@@ -14,5 +15,9 @@ namespace EpillBox.API.Models
 
         public Medicine Medicine { get; set; }
         public FirstAidKit FirstAidKit { get; set; }
+
+        public DateTime? ExpirationDate { get; set; }
+        public bool IsTaken { get; set; }
+        public int RemainingQuantity { get; set; }
     }
 }

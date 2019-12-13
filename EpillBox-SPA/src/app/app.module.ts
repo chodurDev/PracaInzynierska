@@ -18,8 +18,13 @@ import { SideBarContentComponent } from './sideBarContent/sideBarContent.compone
 import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component';
 import { AngularMaterialsModule } from './angular-materials.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TableForMedicineComponent } from './tableForMedicine/tableForMedicine.component';
+import { TableForFAKMedicineComponent } from './tables/tableForFAKMedicine/tableForFAKMedicine.component';
 import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedicines.component';
+import { TableForMedicineComponent } from './tables/tableForMedicine/tableForMedicine.component';
+import { DialogAddUserFAKComponent } from './dialogs/dialogAddUserFAK/dialogAddUserFAK.component';
+import { DialogDeleteUserFAKComponent } from './dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
+import { DialogAddMedicineToFAKComponent } from './dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
+import { TableCurrentlyUsedComponent } from './tables/tableCurrentlyUsed/tableCurrentlyUsed.component';
 
 @NgModule({
    declarations: [
@@ -30,8 +35,13 @@ import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedic
       MyFirstAidKitComponent,
       SideBarContentComponent,
       CurrentlyUsedComponent,
+      TableForFAKMedicineComponent,
+      ShortTermMedicinesComponent,
       TableForMedicineComponent,
-      ShortTermMedicinesComponent
+      DialogAddUserFAKComponent,
+      DialogDeleteUserFAKComponent,
+      DialogAddMedicineToFAKComponent,
+      TableCurrentlyUsedComponent
    ],
    imports: [
       BrowserModule,
@@ -47,6 +57,11 @@ import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedic
    ],
    exports: [
       AngularMaterialsModule
+   ],
+   entryComponents: [
+      DialogAddUserFAKComponent,
+      DialogDeleteUserFAKComponent,
+      DialogAddMedicineToFAKComponent
    ],
    providers: [
       ErrorInterceptorProvider,

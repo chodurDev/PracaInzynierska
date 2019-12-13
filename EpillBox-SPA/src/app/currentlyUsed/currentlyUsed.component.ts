@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Medicine } from '../_model/Medicine';
 import { FirstAidKitService } from '../_services/firstAidKit.service';
 import { AuthService } from '../_services/auth.service';
+import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
 
 @Component({
   selector: 'app-currentlyUsed',
@@ -9,7 +10,7 @@ import { AuthService } from '../_services/auth.service';
   styleUrls: ['./currentlyUsed.component.css']
 })
 export class CurrentlyUsedComponent implements OnInit {
-  medicines: Medicine[] = [];
+  medicines: FirstAidKitMedicine[] = [];
   constructor(
     private fakService: FirstAidKitService,
     private authService: AuthService
@@ -23,8 +24,8 @@ export class CurrentlyUsedComponent implements OnInit {
     const actualUserId = this.authService.decodedToken.nameid;
 
     this.fakService
-      .GetuserMedicines(actualUserId)
-      .subscribe((values: Medicine[]) => {
+      .GetUserTakenMedicines(actualUserId)
+      .subscribe((values: FirstAidKitMedicine[]) => {
         this.medicines = values;
       });
   }

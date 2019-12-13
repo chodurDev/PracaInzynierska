@@ -1,7 +1,12 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { FirstAidKitService } from '../_services/firstAidKit.service';
-import { Medicine } from '../_model/Medicine';
+import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DialogAddUserFAKComponent } from '../dialogs/dialogAddUserFAK/dialogAddUserFAK.component';
+import { UserFirstAidKit } from '../_model/UserFirstAidKit';
+import { DialogDeleteUserFAKComponent } from '../dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
+import { DialogAddMedicineToFAKComponent } from '../dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
 
 @Component({
   selector: 'app-myFirstAidKit',
@@ -9,24 +14,128 @@ import { Medicine } from '../_model/Medicine';
   styleUrls: ['./myFirstAidKit.component.css']
 })
 export class MyFirstAidKitComponent implements OnInit {
-  medicines: Medicine[] = [];
+  medicines: FirstAidKitMedicine[] = [];
+  defaultOption = '';
+  firstAidKits: UserFirstAidKit[] = [];
+  isChosen = false;
+  actualUserId: number;
+
   constructor(
     private fakService: FirstAidKitService,
-    private authService: AuthService
+    private authService: AuthService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.getUserMedicines();
+    this.getUserFirstAidKits();
+    if (localStorage.getItem('chosenFAK')) {
+      this.defaultOption = localStorage.getItem('chosenFAK');
+      if (parseInt(this.defaultOption) === -1) {
+        this.getUserMedicines();
+      } else {
+        // tslint:disable-next-line: radix
+        this.onFirstAidKitClick(parseInt(this.defaultOption));
+      }
+    }
+  }
+
+  getUserFirstAidKits() {
+    this.actualUserId = this.authService.decodedToken.nameid;
+
+    this.fakService.GetUserFirstAidKits(this.actualUserId).subscribe(values => {
+      this.firstAidKits = values;
+    });
   }
 
   getUserMedicines() {
-    const actualUserId = this.authService.decodedToken.nameid;
-
     this.fakService
-      .GetuserMedicines(actualUserId)
-      .subscribe((values: Medicine[]) => {
-        this.medicines = values;
+      .GetuserMedicines(this.actualUserId)
+      .subscribe((values: FirstAidKitMedicine[]) => {
+        this.medicines = values.slice(0);
+        this.isChosen = true;
       });
   }
 
+  onFirstAidKitClick(id: number) {
+    if (id === 0) {
+      this.isChosen = false;
+    } else {
+      localStorage.setItem('chosenFAK', id.toString());
+      if (id === -1) {
+        this.getUserMedicines();
+      } else {
+        this.getUserChosenFirstAidKitMedicines(id);
+      }
+    }
+  }
+
+  getUserChosenFirstAidKitMedicines(id: number) {
+    this.fakService
+      .GetUserChosenFirstAidKitMedicines(id)
+      .subscribe((values: FirstAidKitMedicine[]) => {
+        this.medicines = values.slice(0);
+        this.isChosen = true;
+      });
+  }
+
+  addUFAK(): void {
+    const dialogRef = this.dialog.open(DialogAddUserFAKComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const uFAK: UserFirstAidKit = {
+          firstAidKitID: 0,
+          userID: this.actualUserId,
+          name: result
+        };
+        this.fakService.AddUFAK(uFAK).subscribe(() => {
+          this.getUserFirstAidKits();
+        });
+      }
+    });
+  }
+  deleteUFAK(): void {
+    const dialogRef = this.dialog.open(DialogDeleteUserFAKComponent, {
+      width: '250px',
+      data: this.firstAidKits
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // result it's userFirstAidKitID to delete or just empty string
+      if (result) {
+        localStorage.setItem('chosenFAK', '');
+        this.defaultOption = '0';
+        this.isChosen = false;
+        this.fakService.DeleteFAK(result).subscribe(() => {
+          this.getUserFirstAidKits();
+        });
+      }
+    });
+  }
+
+  OnAddMedicinesToFAK() {
+    const dialogRef = this.dialog.open(DialogAddMedicineToFAKComponent, {
+      width: '400px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // result it's userFirstAidKitID to delete or just empty string
+      if (result) {
+        const fakMedicineToSend: FirstAidKitMedicine = result;
+        if (+this.defaultOption === -1) {
+          this.fakService
+            .AddMedicineToAllFAK(fakMedicineToSend, this.actualUserId)
+            .subscribe(() => {
+              this.getUserMedicines();
+            });
+        } else {
+          fakMedicineToSend.firstAidKitID = +this.defaultOption;
+          this.fakService.AddFAKMedicine(fakMedicineToSend).subscribe(() => {
+            this.onFirstAidKitClick(parseInt(this.defaultOption));
+          });
+        }
+      }
+    });
+  }
 }
