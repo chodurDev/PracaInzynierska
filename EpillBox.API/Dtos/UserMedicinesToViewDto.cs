@@ -11,6 +11,7 @@ namespace EpillBox.API.Dtos
 
        
         public int FirstAidKitID { get; set; }
+        public string FakName { get; set; }
 
         public string Name { get; set; }
         public int QuantityInPackage { get; set; }

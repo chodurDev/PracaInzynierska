@@ -34,7 +34,7 @@ namespace EpillBox.API.Data
             foreach (var item in userFirstAidKits)
             {
                 var medicines = _context.FirstAidKitMedicines
-                    .Include(fakm => fakm.Medicine)
+                    .Include(fakm => fakm.Medicine).Include(x=>x.FirstAidKit).ThenInclude(y=>y.UserFirstAidKits)
                     .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID)
                     .ToList();
                 foreach (var medicine in medicines)

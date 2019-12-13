@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using EpillBox.API.Dtos;
 using EpillBox.API.Models;
+using System.Linq;
 
 namespace EpillBox.API.Helpers
 {
@@ -18,6 +19,7 @@ namespace EpillBox.API.Helpers
             medicinesToReturn.ForMember(x=>x.QuantityInPackage,y=>y.MapFrom(j=>j.Medicine.QuantityInPackage));
             medicinesToReturn.ForMember(x=>x.MedicineID,y=>y.MapFrom(j=>j.MedicineID));
             medicinesToReturn.ForMember(x=>x.RemainingQuantity,y=>y.MapFrom(j=>j.RemainingQuantity));
+            medicinesToReturn.ForMember(x=>x.FakName,y=>y.MapFrom(j=>j.FirstAidKit.UserFirstAidKits.FirstOrDefault().Name));
 
             var medicinesToAdd = CreateMap<FirstAidKitMedicineToAddDto,FirstAidKitMedicine>();
 

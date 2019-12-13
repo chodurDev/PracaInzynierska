@@ -7,8 +7,6 @@ import { DialogAddUserFAKComponent } from '../dialogs/dialogAddUserFAK/dialogAdd
 import { UserFirstAidKit } from '../_model/UserFirstAidKit';
 import { DialogDeleteUserFAKComponent } from '../dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
 import { DialogAddMedicineToFAKComponent } from '../dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
-import { MedicineService } from '../_services/medicine.service';
-import { Medicine } from '../_model/Medicine';
 
 @Component({
   selector: 'app-myFirstAidKit',
@@ -25,8 +23,7 @@ export class MyFirstAidKitComponent implements OnInit {
   constructor(
     private fakService: FirstAidKitService,
     private authService: AuthService,
-    public dialog: MatDialog,
-    private medService: MedicineService
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -62,12 +59,13 @@ export class MyFirstAidKitComponent implements OnInit {
   onFirstAidKitClick(id: number) {
     if (id === 0) {
       this.isChosen = false;
-    }
-    localStorage.setItem('chosenFAK', id.toString());
-    if (id === -1) {
-      this.getUserMedicines();
     } else {
-      this.getUserChosenFirstAidKitMedicines(id);
+      localStorage.setItem('chosenFAK', id.toString());
+      if (id === -1) {
+        this.getUserMedicines();
+      } else {
+        this.getUserChosenFirstAidKitMedicines(id);
+      }
     }
   }
 
@@ -108,7 +106,7 @@ export class MyFirstAidKitComponent implements OnInit {
       // result it's userFirstAidKitID to delete or just empty string
       if (result) {
         localStorage.setItem('chosenFAK', '');
-        this.defaultOption = '';
+        this.defaultOption = '0';
         this.isChosen = false;
         this.fakService.DeleteFAK(result).subscribe(() => {
           this.getUserFirstAidKits();

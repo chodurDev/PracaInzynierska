@@ -9,7 +9,7 @@
       
     <mat-form-field class="ml-2 mr-2">
       <mat-select [(value)]="defaultOption">
-          <mat-option value="" (click)="onFirstAidKitClick(0)">Wybierz...</mat-option>
+          <mat-option value="0" (click)="onFirstAidKitClick(0)">Wybierz...</mat-option>
           <mat-option *ngFor="let firstAidKit of firstAidKits" value="{{firstAidKit.firstAidKitID}}" (click)="onFirstAidKitClick(firstAidKit.firstAidKitID)">{{firstAidKit.name | titlecase}}</mat-option>
           <mat-option value="-1" (click)="onFirstAidKitClick(-1)">Wszystkie apteczki</mat-option>
       </mat-select>

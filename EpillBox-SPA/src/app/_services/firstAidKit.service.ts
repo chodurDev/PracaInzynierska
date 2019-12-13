@@ -55,11 +55,7 @@ export class FirstAidKitService {
     );
   }
   UpdateFirstAidKitMedicine(fakMedicine: FirstAidKitMedicine) {
-    return this.http.put(
-      this.baseUrl + '/fak',
-      fakMedicine,
-      httpOptions
-    );
+    return this.http.put(this.baseUrl + '/fak', fakMedicine, httpOptions);
   }
   DeleteFAKMedicine(id: number) {
     return this.http.delete(
@@ -68,7 +64,11 @@ export class FirstAidKitService {
     );
   }
   AddUFAK(uFAK: UserFirstAidKit) {
-    return this.http.post<UserFirstAidKit>(this.baseUrl + '/fak/addUFAK', uFAK);
+    return this.http.post<UserFirstAidKit>(
+      this.baseUrl + '/fak/addUFAK',
+      uFAK,
+      httpOptions
+    );
   }
   DeleteFAK(firstAidKitID: number) {
     return this.http.delete(

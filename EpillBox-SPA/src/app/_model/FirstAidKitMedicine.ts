@@ -9,4 +9,5 @@ export interface FirstAidKitMedicine {
   medicineID: number;
   remainingQuantity?: number;
   quantityInPackage?: number;
+  fakName: string;
 }

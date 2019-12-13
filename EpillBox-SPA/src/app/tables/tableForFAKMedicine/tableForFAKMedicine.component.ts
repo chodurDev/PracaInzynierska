@@ -24,13 +24,7 @@ export class TableForFAKMedicineComponent
   @Input() medicines: FirstAidKitMedicine[];
   @Output() addMedicines = new EventEmitter();
 
-  displayedColumns: string[] = [
-    'name',
-    'remainingQuantity',
-    'expirationDate',
-    'isTaken',
-    'delete'
-  ];
+  displayedColumns: string[] = [];
   dataSource = new MatTableDataSource<FirstAidKitMedicine>(this.medicines);
   selection = new SelectionModel<FirstAidKitMedicine>(true, []);
   nameFilter = new FormControl('');
@@ -53,7 +47,29 @@ export class TableForFAKMedicineComponent
   }
 
   ngOnChanges() {
+    this.ColumntoDisplay(this.medicines[0].fakName);
     this.dataSource.data = this.medicines;
+  }
+
+  ColumntoDisplay(column: string) {
+    if (column === null) {
+      this.displayedColumns = [
+        'name',
+        'remainingQuantity',
+        'expirationDate',
+        'isTaken',
+        'delete'
+      ];
+    } else {
+      this.displayedColumns = [
+        'name',
+        'remainingQuantity',
+        'expirationDate',
+        'isTaken',
+        'fakName',
+        'delete'
+      ];
+    }
   }
 
   ngAfterViewInit(): void {
