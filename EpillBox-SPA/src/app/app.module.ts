@@ -25,6 +25,8 @@ import { DialogAddUserFAKComponent } from './dialogs/dialogAddUserFAK/dialogAddU
 import { DialogDeleteUserFAKComponent } from './dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
 import { DialogAddMedicineToFAKComponent } from './dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
 import { TableCurrentlyUsedComponent } from './tables/tableCurrentlyUsed/tableCurrentlyUsed.component';
+import { MedicineDatabaseComponent } from './medicineDatabase/medicineDatabase.component';
+import { TableMedicineDatabaseComponent } from './tables/tableMedicineDatabase/tableMedicineDatabase.component';
 
 @NgModule({
    declarations: [
@@ -41,7 +43,9 @@ import { TableCurrentlyUsedComponent } from './tables/tableCurrentlyUsed/tableCu
       DialogAddUserFAKComponent,
       DialogDeleteUserFAKComponent,
       DialogAddMedicineToFAKComponent,
-      TableCurrentlyUsedComponent
+      TableCurrentlyUsedComponent,
+      MedicineDatabaseComponent,
+      TableMedicineDatabaseComponent
    ],
    imports: [
       BrowserModule,

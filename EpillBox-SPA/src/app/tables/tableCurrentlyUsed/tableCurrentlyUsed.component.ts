@@ -82,10 +82,21 @@ export class TableCurrentlyUsedComponent
     }
   }
 
-  isClicked(row: FirstAidKitMedicine) {
+  takeMedicine(row: FirstAidKitMedicine) {
     if (row.remainingQuantity > 0) {
-      row.remainingQuantity -= 1;
-      this.updateRow(row);
+      if (confirm(`Czy na pewno chcesz zażyć ${row.name}?`)) {
+        if (row.remainingQuantity === 1) {
+          if (
+            confirm(
+              `Została ci ostatnia porcja ${row.name}.\nCzy chcesz zamówić następne opakowanie?`
+            )
+          ) {
+            console.log('zamówić kolejne opakowanie ' + row.name);
+          }
+        }
+        row.remainingQuantity -= 1;
+        this.updateRow(row);
+      }
     }
   }
 

@@ -15,7 +15,7 @@ import { DialogAddMedicineToFAKComponent } from '../dialogs/dialogAddMedicineToF
 })
 export class MyFirstAidKitComponent implements OnInit {
   medicines: FirstAidKitMedicine[] = [];
-  defaultOption = '';
+  defaultOption = '0';
   firstAidKits: UserFirstAidKit[] = [];
   isChosen = false;
   actualUserId: number;

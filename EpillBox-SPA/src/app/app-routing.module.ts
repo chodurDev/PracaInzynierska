@@ -5,6 +5,7 @@ import { MyFirstAidKitComponent } from './myFirstAidKit/myFirstAidKit.component'
 import { AuthGuard } from './_guards/auth.guard';
 import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component';
 import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedicines.component';
+import { MedicineDatabaseComponent } from './medicineDatabase/medicineDatabase.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'myFirstAidKit', component: MyFirstAidKitComponent },
       { path: 'currentlyUsed', component: CurrentlyUsedComponent },
       { path: 'shortTermMedicines', component: ShortTermMedicinesComponent },
+      { path: 'medicineDatabase', component: MedicineDatabaseComponent },
     ]
   },
 
