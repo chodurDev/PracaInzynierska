@@ -14,7 +14,8 @@ namespace EpillBox.API.Models
         public byte[] PasswordSalt { get; set; }
 
         public ICollection<UserFirstAidKit> UserFirstAidKits { get; set; }
+        public ICollection<UsersAllergies> UsersAllergies { get; set; }
+        public ShoppingBasket ShoppingBasket { get; set; }
 
-       
     }
 }

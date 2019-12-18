@@ -16,9 +16,9 @@ namespace EpillBox.API.Data
             }
             
             
-
+//users---------------------------------------------------------------------------------
             var users = new User[]{
-                new User{Name="Bogdan",Surname="Bogdanowicz",Email="bogdan@test.pl"},
+                new User{Name="Bogdan",Surname="Bogdanowicz",Email="bogdan@test.pl",},
                 new User{Name="Jan",Surname="Kowalski",Email="jan@test.pl"},
                 new User{Name="Tomasz",Surname="Nowak",Email="tomasz@test.pl"},
                 new User{Name="Kamil",Surname="Limak",Email="kamil@test.pl"},
@@ -35,6 +35,31 @@ namespace EpillBox.API.Data
                 context.Users.Add(u);
             }
             context.SaveChanges();
+//allergies---------------------------------------------------------------------------------
+            var allergies = new Allergies[]{
+                new Allergies{Name="ibuprofen"},
+                new Allergies{Name = "paracetamol"}
+            };
+
+            foreach (Allergies allergy in allergies)
+            {
+                context.Allergies.Add(allergy);
+            }
+
+            context.SaveChanges();
+//userAllergies---------------------------------------------------------------------------------
+            var userAllergies = new UsersAllergies[]{
+                new UsersAllergies{UserID=1,AllergiesID=1},
+                new UsersAllergies{UserID=1,AllergiesID=2}
+            };
+            foreach (UsersAllergies userAllergy in userAllergies)
+            {
+                context.UsersAllergies.Add(userAllergy);
+            }
+
+            context.SaveChanges();
+
+//firstAidKits---------------------------------------------------------------------------------
 
             var firstAidKits = new FirstAidKit[]{
                     new FirstAidKit{},
@@ -48,7 +73,7 @@ namespace EpillBox.API.Data
             }
 
             context.SaveChanges();
-
+//userFAK---------------------------------------------------------------------------------
             var userFirstAidKits = new UserFirstAidKit[]{
                 new UserFirstAidKit{UserID=1,FirstAidKitID=1,Name="apteczka dom"},
 
@@ -64,12 +89,48 @@ namespace EpillBox.API.Data
                 context.UserFirstAidKits.Add(ufak);
             }
             context.SaveChanges();
+//formMedicine---------------------------------------------------------------------------------
+            var forms = new MedicineForm[]{
+                new MedicineForm{FormName="tabletka"},
+                new MedicineForm{FormName="syrop"}
+            };
 
+            foreach (MedicineForm form in forms)
+            {
+                context.MedicineForms.Add(form);
+            }
+
+            context.SaveChanges();
+
+//producer---------------------------------------------------------------------------------
+            var producers = new Producer[]{
+                new Producer{Name="USP Zdrowie"},
+                new Producer{Name="Bayer"},
+            };
+            foreach (Producer producer in producers)
+            {
+                context.Producers.Add(producer);
+            }
+
+            context.SaveChanges();
+//ActiveSubstance-------------------------------------------------------------------------
+            var activeSubstances = new ActiveSubstance[]{
+                new ActiveSubstance{Name="ibuprofen"},
+                new ActiveSubstance{Name="paracetamol"},
+                new ActiveSubstance{Name="kwas askorbowy"}
+            };
+            foreach (ActiveSubstance activeSubstance in activeSubstances)
+            {
+                context.ActiveSubstances.Add(activeSubstance);
+            }
+
+            context.SaveChanges();
+//medicines---------------------------------------------------------------------------------
             var medicines = new Medicine[]{
-               new Medicine{Name="Apap",QuantityInPackage=10},
-               new Medicine{Name="Ketonal",QuantityInPackage=10},
-               new Medicine{Name="Ibuprom",QuantityInPackage=10},
-               new Medicine{Name="No-Spa",QuantityInPackage=10},
+               new Medicine{Name="Apap",QuantityInPackage=10,ProducerID=1,MedicineFormID=1},
+               new Medicine{Name="Ketonal",QuantityInPackage=10 ,ProducerID=1,MedicineFormID=1},
+               new Medicine{Name="Ibuprom",QuantityInPackage=10 ,ProducerID=1,MedicineFormID=1},
+               new Medicine{Name="No-Spa",QuantityInPackage=10 ,ProducerID=1,MedicineFormID=1}
             };
 
             foreach (Medicine m in medicines)
@@ -78,6 +139,23 @@ namespace EpillBox.API.Data
             }
 
             context.SaveChanges();
+//ActiveSubstanceMedicine-------------------------------------------------------------------------
+var activeSubstanceMedicines = new ActiveSubstanceMedicine[]{
+                new ActiveSubstanceMedicine{ActiveSubstanceID=1,MedicineID=1},
+                new ActiveSubstanceMedicine{ActiveSubstanceID=2,MedicineID=2},
+                new ActiveSubstanceMedicine{ActiveSubstanceID=3,MedicineID=3},
+                new ActiveSubstanceMedicine{ActiveSubstanceID=1,MedicineID=1},
+              
+            };
+            foreach (ActiveSubstanceMedicine activeSubstanceMedicine in activeSubstanceMedicines)
+            {
+                context.ActiveSubstanceMedicines.Add(activeSubstanceMedicine);
+            }
+
+            context.SaveChanges();
+
+
+//fakMedicines---------------------------------------------------------------------------------
             var currentDayMinus7 = DateTime.Today.AddDays(-7);
            
 

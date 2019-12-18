@@ -14,8 +14,7 @@ export class TableMedicineDatabaseComponent implements OnInit,AfterViewInit,OnCh
 
   displayedColumns: string[] = [
     'name',
-    'remainingQuantity',
-    'expirationDate'
+    'quantityInPackage'
   ];
   dataSource = new MatTableDataSource<FirstAidKitMedicine>(this.medicines);
   nameFilter = new FormControl('');
