@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace EpillBox.API.Dtos
 {
@@ -20,5 +21,8 @@ namespace EpillBox.API.Dtos
         public DateTime? ExpirationDate { get; set; }
         public bool IsTaken { get; set; }
         public int RemainingQuantity { get; set; }
+        public string Form { get; set; }
+        public string Producer { get; set; }
+        public List<string> ActiveSubstance { get; set; }
     }
 }

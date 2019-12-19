@@ -10,4 +10,7 @@ export interface FirstAidKitMedicine {
   remainingQuantity?: number;
   quantityInPackage?: number;
   fakName?: string;
+  form?: string;
+  producer?: string;
+  activeSubstance?: string[];
 }

@@ -14,6 +14,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
 import { FirstAidKitService } from '../../_services/firstAidKit.service';
 
+const TOOLTIP_PANEL_CLASS = 'expiredMedicineTooltip';
+
 @Component({
   selector: 'app-tableForFAKMedicine',
   templateUrl: './tableForFAKMedicine.component.html',
@@ -47,6 +49,7 @@ export class TableForFAKMedicineComponent
   }
 
   ngOnChanges() {
+    console.log(this.medicines);
     this.ColumntoDisplay(this.medicines[0].fakName);
     this.dataSource.data = this.medicines;
   }
@@ -58,7 +61,8 @@ export class TableForFAKMedicineComponent
         'remainingQuantity',
         'expirationDate',
         'isTaken',
-        'delete'
+        'delete',
+        'info'
       ];
     } else {
       this.displayedColumns = [
@@ -67,7 +71,8 @@ export class TableForFAKMedicineComponent
         'expirationDate',
         'isTaken',
         'fakName',
-        'delete'
+        'delete',
+        'info'
       ];
     }
   }
@@ -115,5 +120,19 @@ export class TableForFAKMedicineComponent
     } else {
       return currentDate > new Date(expirationDate) ? true : false;
     }
+  }
+
+  medicineDescription(row: FirstAidKitMedicine): string {
+    const activeSubstance: string[] = [];
+    row.activeSubstance.forEach(x => activeSubstance.push( x ));
+
+    const returnText =
+      '<span class="medicineDetails">Producent: </span>' +
+      row.producer +
+      '<br>' +
+      '<span class="medicineDetails">Substancje aktywne: </span><br>' +
+      activeSubstance;
+
+    return returnText;
   }
 }

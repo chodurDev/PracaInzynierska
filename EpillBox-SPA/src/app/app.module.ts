@@ -27,6 +27,7 @@ import { DialogAddMedicineToFAKComponent } from './dialogs/dialogAddMedicineToFA
 import { TableCurrentlyUsedComponent } from './tables/tableCurrentlyUsed/tableCurrentlyUsed.component';
 import { MedicineDatabaseComponent } from './medicineDatabase/medicineDatabase.component';
 import { TableMedicineDatabaseComponent } from './tables/tableMedicineDatabase/tableMedicineDatabase.component';
+import {NgxPopperModule} from 'ngx-popper';
 
 @NgModule({
    declarations: [
@@ -57,7 +58,8 @@ import { TableMedicineDatabaseComponent } from './tables/tableMedicineDatabase/t
       FormsModule,
       ReactiveFormsModule,
       BsDropdownModule.forRoot(),
-      SidebarModule.forRoot()
+      SidebarModule.forRoot(),
+      NgxPopperModule.forRoot()
    ],
    exports: [
       AngularMaterialsModule

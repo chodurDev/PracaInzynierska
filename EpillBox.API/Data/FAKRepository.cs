@@ -34,7 +34,16 @@ namespace EpillBox.API.Data
             foreach (var item in userFirstAidKits)
             {
                 var medicines = _context.FirstAidKitMedicines
-                    .Include(fakm => fakm.Medicine).Include(x=>x.FirstAidKit).ThenInclude(y=>y.UserFirstAidKits)
+                    .Include(fakm => fakm.Medicine)
+                            .ThenInclude(m=>m.Producer)
+                    .Include(fakm => fakm.Medicine)
+                            .ThenInclude(m=>m.MedicineForm)  
+                    .Include(fakm => fakm.Medicine)
+                            .ThenInclude(m=>m.ActiveSubstanceMedicines)
+                            .ThenInclude(asm=>asm.ActiveSubstance)   
+                    .Include(x=>x.FirstAidKit)
+                            .ThenInclude(y=>y.UserFirstAidKits)
+
                     .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID)
                     .ToList();
                 foreach (var medicine in medicines)

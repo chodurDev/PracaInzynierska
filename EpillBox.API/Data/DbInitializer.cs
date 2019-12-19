@@ -144,7 +144,7 @@ var activeSubstanceMedicines = new ActiveSubstanceMedicine[]{
                 new ActiveSubstanceMedicine{ActiveSubstanceID=1,MedicineID=1},
                 new ActiveSubstanceMedicine{ActiveSubstanceID=2,MedicineID=2},
                 new ActiveSubstanceMedicine{ActiveSubstanceID=3,MedicineID=3},
-                new ActiveSubstanceMedicine{ActiveSubstanceID=1,MedicineID=1},
+                new ActiveSubstanceMedicine{ActiveSubstanceID=2,MedicineID=1},
               
             };
             foreach (ActiveSubstanceMedicine activeSubstanceMedicine in activeSubstanceMedicines)

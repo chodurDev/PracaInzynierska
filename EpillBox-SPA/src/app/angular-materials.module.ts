@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatTooltipModule, TOOLTIP_PANEL_CLASS} from '@angular/material/tooltip';
 
 @NgModule({
   exports: [
@@ -20,7 +21,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatCheckboxModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTooltipModule
   ],
   imports: [
     MatTableModule,
@@ -33,6 +35,7 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatTooltipModule,
     CommonModule
   ],
   declarations: []

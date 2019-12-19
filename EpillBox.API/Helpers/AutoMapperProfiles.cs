@@ -11,6 +11,7 @@ namespace EpillBox.API.Helpers
         public AutoMapperProfiles()
         {
             
+            
             var medicinesToReturn = CreateMap<FirstAidKitMedicine,UserMedicinesToViewDto>();
             medicinesToReturn.ForMember(x=>x.ExpirationDate,y=>y.MapFrom(j=>j.ExpirationDate));
             medicinesToReturn.ForMember(x=>x.FirstAidKitID,y=>y.MapFrom(j=>j.FirstAidKitID));
@@ -20,6 +21,11 @@ namespace EpillBox.API.Helpers
             medicinesToReturn.ForMember(x=>x.MedicineID,y=>y.MapFrom(j=>j.MedicineID));
             medicinesToReturn.ForMember(x=>x.RemainingQuantity,y=>y.MapFrom(j=>j.RemainingQuantity));
             medicinesToReturn.ForMember(x=>x.FakName,y=>y.MapFrom(j=>j.FirstAidKit.UserFirstAidKits.FirstOrDefault().Name));
+            medicinesToReturn.ForMember(x=>x.Form,y=>y.MapFrom(j=>j.Medicine.MedicineForm.FormName));
+            medicinesToReturn.ForMember(x=>x.Producer,y=>y.MapFrom(j=>j.Medicine.Producer.Name));
+            medicinesToReturn.ForMember(x=>x.ActiveSubstance,y=>y.MapFrom(j=>j.Medicine.ActiveSubstanceMedicines.Select(x=>x.ActiveSubstance.Name)));
+
+
 
             var medicinesToAdd = CreateMap<FirstAidKitMedicineToAddDto,FirstAidKitMedicine>();
 
