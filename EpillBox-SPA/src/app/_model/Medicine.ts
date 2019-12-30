@@ -1,6 +1,8 @@
+import { FirstAidKitMedicine } from './FirstAidKitMedicine';
+
 export interface Medicine {
   medicineID: number;
   name: string;
-  firstAidKitMedicines?: any;
+  firstAidKitMedicines?: FirstAidKitMedicine[];
   quantityInPackage: number;
 }

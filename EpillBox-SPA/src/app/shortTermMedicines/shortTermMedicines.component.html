@@ -1,11 +1,25 @@
 <div class="container">
-  <div *ngIf="shortTermMedicines.length>0" class="row">
+  <div class="row mt-2">
+    <div class="col text-center">
+      <mat-form-field>
+        <mat-select [(value)]="defaultValue">
+            <mat-option value="0" >Data ważna przez...</mat-option>
+            <mat-option value="7" (click)="getShortTerm()">1 Tydzień</mat-option>
+            <mat-option value="30" (click)="getShortTerm()">1 Miesiąc</mat-option>
+            <mat-option value="90" (click)="getShortTerm()">3 miesiące</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div *ngIf="shortTermMedicines.length>0; else elseBlock" class="row">
     <div class="col">
+      
       <app-tableForMedicine 
         [medicines]="shortTermMedicines"
       ></app-tableForMedicine>
     </div>
   </div>
+  <ng-template #elseBlock><h4 class="text-center">Brak leków z wybranego przedziału czasowego</h4></ng-template>
   <div *ngIf="expiredMedicines.length>0" class="row mt-5">
     <div class="col text-center">
       <h1>LEKI PRZETERMINOWANE</h1>

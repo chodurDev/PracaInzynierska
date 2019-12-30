@@ -7,6 +7,7 @@ import { DialogAddUserFAKComponent } from '../dialogs/dialogAddUserFAK/dialogAdd
 import { UserFirstAidKit } from '../_model/UserFirstAidKit';
 import { DialogDeleteUserFAKComponent } from '../dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
 import { DialogAddMedicineToFAKComponent } from '../dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-myFirstAidKit',
@@ -28,23 +29,28 @@ export class MyFirstAidKitComponent implements OnInit {
 
   ngOnInit() {
     this.getUserFirstAidKits();
-    if (localStorage.getItem('chosenFAK')) {
-      this.defaultOption = localStorage.getItem('chosenFAK');
-      if (parseInt(this.defaultOption) === -1) {
-        this.getUserMedicines();
-      } else {
-        // tslint:disable-next-line: radix
-        this.onFirstAidKitClick(parseInt(this.defaultOption));
-      }
-    }
   }
 
   getUserFirstAidKits() {
     this.actualUserId = this.authService.decodedToken.nameid;
 
-    this.fakService.GetUserFirstAidKits(this.actualUserId).subscribe(values => {
-      this.firstAidKits = values;
-    });
+    this.fakService.GetUserFirstAidKits(this.actualUserId).subscribe(
+      values => {
+        this.firstAidKits = values;
+      },
+      null,
+      () => {
+        if (localStorage.getItem('chosenFAK')) {
+          this.defaultOption = localStorage.getItem('chosenFAK');
+          if (parseInt(this.defaultOption) === -1) {
+            this.getUserMedicines();
+          } else {
+            // tslint:disable-next-line: radix
+            this.onFirstAidKitClick(parseInt(this.defaultOption));
+          }
+        }
+      }
+    );
   }
 
   getUserMedicines() {

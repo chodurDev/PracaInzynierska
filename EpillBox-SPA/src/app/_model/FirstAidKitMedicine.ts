@@ -1,16 +1,14 @@
-import { Medicine } from './Medicine';
-
 export interface FirstAidKitMedicine {
   expirationDate?: Date | null;
-  firstAidKitID?: number;
-  firstAidKitMedicineID?: number;
-  isTaken?: boolean;
+  firstAidKitID?: number | null;
+  firstAidKitMedicineID?: number | null;
+  isTaken?: boolean | null;
   name: string;
   medicineID: number;
-  remainingQuantity?: number;
-  quantityInPackage?: number;
-  fakName?: string;
-  form?: string;
-  producer?: string;
-  activeSubstance?: string[];
+  remainingQuantity?: number | null;
+  quantityInPackage?: number | null;
+  fakName?: string | null;
+  form?: string | null;
+  producer?: string | null;
+  activeSubstance?: string[] | null;
 }

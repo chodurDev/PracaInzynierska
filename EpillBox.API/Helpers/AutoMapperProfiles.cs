@@ -35,6 +35,20 @@ namespace EpillBox.API.Helpers
             medicinesToAdd.ForMember(x=>x.RemainingQuantity,y=>y.MapFrom(j=>j.RemainingQuantity));
             medicinesToAdd.ForMember(x=>x.ExpirationDate,y=>y.MapFrom(j=>j.ExpirationDate));
          
+
+            var medicinesToBuy = CreateMap<ShoppingBasketMedicine,MedicineToViewDto>();
+            medicinesToBuy.ForMember(x=>x.MedicineID,y=>y.MapFrom(j=>j.MedicineID));
+            medicinesToBuy.ForMember(x=>x.Name,y=>y.MapFrom(j=>j.Medicine.Name));
+            medicinesToBuy.ForMember(x=>x.QuantityInPackage,y=>y.MapFrom(j=>j.Medicine.QuantityInPackage));
+            medicinesToBuy.ForMember(x=>x.Producer,y=>y.MapFrom(j=>j.Medicine.Producer.Name));
+            medicinesToBuy.ForMember(x=>x.Form,y=>y.MapFrom(j=>j.Medicine.MedicineForm.FormName));
+            medicinesToBuy.ForMember(x=>x.ActiveSubstance,y=>y.MapFrom(j=>j.Medicine.ActiveSubstanceMedicines.Select(x=>x.ActiveSubstance.Name)));
+
+            var medicineToView = CreateMap<Medicine,MedicineToViewDto>();
+            medicineToView.ForMember(x=>x.Producer,y=>y.MapFrom(j=>j.Producer.Name));
+            medicineToView.ForMember(x=>x.Form,y=>y.MapFrom(j=>j.MedicineForm.FormName));
+            medicineToView.ForMember(x=>x.ActiveSubstance,y=>y.MapFrom(j=>j.ActiveSubstanceMedicines.Select(x=>x.ActiveSubstance.Name)));
+            
         }
     }
 }

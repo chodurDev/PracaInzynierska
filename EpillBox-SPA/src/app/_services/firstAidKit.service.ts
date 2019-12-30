@@ -24,9 +24,9 @@ export class FirstAidKitService {
       httpOptions
     );
   }
-  GetShortTermMedicines(id: number) {
+  GetShortTermMedicines(id: number, days: number) {
     return this.http.get<FirstAidKitMedicine[]>(
-      this.baseUrl + '/fak/shortTermMedicines/' + id,
+      this.baseUrl + '/fak/shortTermMedicines/' + id + '/' + days,
       httpOptions
     );
   }

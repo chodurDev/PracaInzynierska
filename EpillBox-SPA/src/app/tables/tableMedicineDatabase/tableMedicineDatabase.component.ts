@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  AfterViewInit,
+  OnChanges
+} from '@angular/core';
 import { FirstAidKitMedicine } from 'src/app/_model/FirstAidKitMedicine';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { FormControl } from '@angular/forms';
@@ -8,13 +15,16 @@ import { FormControl } from '@angular/forms';
   templateUrl: './tableMedicineDatabase.component.html',
   styleUrls: ['./tableMedicineDatabase.component.css']
 })
-export class TableMedicineDatabaseComponent implements OnInit,AfterViewInit,OnChanges {
-
+export class TableMedicineDatabaseComponent
+  implements OnInit, AfterViewInit, OnChanges {
   @Input() medicines: FirstAidKitMedicine[];
 
   displayedColumns: string[] = [
     'name',
-    'quantityInPackage'
+    'producer',
+    'quantityInPackage',
+    'form',
+    'activeSubstance'
   ];
   dataSource = new MatTableDataSource<FirstAidKitMedicine>(this.medicines);
   nameFilter = new FormControl('');
@@ -36,6 +46,7 @@ export class TableMedicineDatabaseComponent implements OnInit,AfterViewInit,OnCh
   }
 
   ngOnChanges() {
+    console.log(this.medicines);
     this.dataSource.data = this.medicines;
   }
 
@@ -45,11 +56,10 @@ export class TableMedicineDatabaseComponent implements OnInit,AfterViewInit,OnCh
   }
 
   createFilter(): (data: any, filter: string) => boolean {
-    const filterFunction = (data, filter): boolean =>{
+    const filterFunction = (data, filter): boolean => {
       const searchTerms = JSON.parse(filter);
       return data.name.toLowerCase().indexOf(searchTerms.name) !== -1;
     };
     return filterFunction;
   }
-
 }

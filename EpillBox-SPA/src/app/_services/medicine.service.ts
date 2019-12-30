@@ -18,7 +18,24 @@ export class MedicineService {
   constructor(private http: HttpClient) {}
 
   GetAllMedicines() {
-    return this.http
-      .get<Medicine[]>(this.baseUrl + '/fak/getAllMedicines', httpOptions);
+    return this.http.get(
+      this.baseUrl + '/fak/getAllMedicines',
+      httpOptions
+    );
+  }
+
+  AddMedicineToShoppingBasket(userID: number, medicineID: number) {
+    return this.http.post(
+      this.baseUrl + '/fak/addMedicineToBuy/' + userID,
+      medicineID,
+      httpOptions
+    );
+  }
+
+  GetMedicinesToShoppingBasket(userID: number) {
+    return this.http.get(
+      this.baseUrl + '/fak/getMedicinesToBuy/' + userID,
+      httpOptions
+    );
   }
 }

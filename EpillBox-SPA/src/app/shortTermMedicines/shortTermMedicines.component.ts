@@ -12,26 +12,30 @@ import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
 export class ShortTermMedicinesComponent implements OnInit {
   expiredMedicines: FirstAidKitMedicine[] = [];
   shortTermMedicines: FirstAidKitMedicine[] = [];
-
+  defaultValue = '7';
+  actualUserId: any;
   constructor(
     private fakService: FirstAidKitService,
     private authService: AuthService
-  ) {}
-
-  ngOnInit() {
-    this.getMedicines();
+  ) {
+    this.actualUserId = this.authService.decodedToken.nameid;
   }
 
-  getMedicines() {
-    const actualUserId = this.authService.decodedToken.nameid;
+  ngOnInit() {
+    this.getShortTerm();
+    this.getExpired();
+  }
 
+  getShortTerm() {
     this.fakService
-      .GetShortTermMedicines(actualUserId)
+      .GetShortTermMedicines(this.actualUserId, +this.defaultValue)
       .subscribe((values: FirstAidKitMedicine[]) => {
-        this.shortTermMedicines = values;
+        this.shortTermMedicines = values.slice(0);
       });
+  }
+  getExpired() {
     this.fakService
-      .GetExpiredMedicines(actualUserId)
+      .GetExpiredMedicines(this.actualUserId)
       .subscribe((values: FirstAidKitMedicine[]) => {
         this.expiredMedicines = values;
       });

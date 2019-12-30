@@ -49,13 +49,14 @@ export class TableForFAKMedicineComponent
   }
 
   ngOnChanges() {
-    console.log(this.medicines);
-    this.ColumntoDisplay(this.medicines[0].fakName);
+    this.ColumntoDisplay(this.medicines);
     this.dataSource.data = this.medicines;
   }
 
-  ColumntoDisplay(column: string) {
-    if (column === null) {
+  ColumntoDisplay(medicines: FirstAidKitMedicine[]) {
+    if (
+      medicines[0].firstAidKitID === medicines[medicines.length - 1].firstAidKitID
+    ) {
       this.displayedColumns = [
         'name',
         'remainingQuantity',
@@ -124,7 +125,11 @@ export class TableForFAKMedicineComponent
 
   medicineDescription(row: FirstAidKitMedicine): string {
     const activeSubstance: string[] = [];
-    row.activeSubstance.forEach(x => activeSubstance.push( x ));
+    if (row.activeSubstance.length === 0) {
+      activeSubstance.push('brak substancji aktywnych');
+    } else {
+      row.activeSubstance.forEach(x => activeSubstance.push(x));
+    }
 
     const returnText =
       '<span class="medicineDetails">Producent: </span>' +

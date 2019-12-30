@@ -11,6 +11,9 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FirstAidKitService } from 'src/app/_services/firstAidKit.service';
+import { MedicineService } from 'src/app/_services/medicine.service';
+import { AuthService } from 'src/app/_services/auth.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 @Component({
   selector: 'app-tableCurrentlyUsed',
@@ -20,7 +23,7 @@ import { FirstAidKitService } from 'src/app/_services/firstAidKit.service';
 export class TableCurrentlyUsedComponent
   implements AfterViewInit, OnChanges, OnInit {
   @Input() medicines: FirstAidKitMedicine[];
-
+  actualUserId: number;
   selection = new SelectionModel<FirstAidKitMedicine>(true, []);
 
   displayedColumns: string[] = [
@@ -46,10 +49,16 @@ export class TableCurrentlyUsedComponent
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private fakService: FirstAidKitService) {
+  constructor(
+    private fakService: FirstAidKitService,
+    private medService: MedicineService,
+    private authService: AuthService,
+    private alertify: AlertifyService
+  ) {
     this.dataSource.filterPredicate = this.createFilter();
   }
   ngOnInit() {
+    this.actualUserId = this.authService.decodedToken.nameid;
     this.nameFilter.valueChanges.subscribe(name => {
       this.filterValues.name = name;
       this.dataSource.filter = JSON.stringify(this.filterValues);
@@ -91,7 +100,11 @@ export class TableCurrentlyUsedComponent
               `Została ci ostatnia porcja ${row.name}.\nCzy chcesz zamówić następne opakowanie?`
             )
           ) {
-            console.log('zamówić kolejne opakowanie ' + row.name);
+            this.medService
+              .AddMedicineToShoppingBasket(this.actualUserId, row.medicineID)
+              .subscribe(null, null, () => {
+                this.alertify.message('Lek został dodany do zamówienia');
+              });
           }
         }
         row.remainingQuantity -= 1;

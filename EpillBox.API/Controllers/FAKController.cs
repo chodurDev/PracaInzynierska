@@ -49,8 +49,11 @@ namespace EpillBox.API.Controllers
         [HttpGet("getAllMedicines")]
         public async Task<IActionResult> GetAllMedicines()
         {
-            var medicinesToReturn = await _fakRepo.GetAllMedicines();
+            //make dto to get this medicines
+            var medicines = await _fakRepo.GetAllMedicines();
+            var medicinesToReturn =_mapper.Map<IEnumerable<MedicineToViewDto>>(medicines);
             return Ok(medicinesToReturn);
+            // return Ok();
 
         }
 
@@ -64,10 +67,10 @@ namespace EpillBox.API.Controllers
 
         }
 
-        [Route("shortTermMedicines/{id}")]
-        public async Task<IActionResult> GetShortTermMedicines(int id)
+        [Route("shortTermMedicines/{id}/{days}")]
+        public async Task<IActionResult> GetShortTermMedicines(int id,int days)
         {
-            var expiredMedicines = await _fakRepo.GetShortTermMedicines(id);
+            var expiredMedicines = await _fakRepo.GetShortTermMedicines(id,days);
             var medicinesToReturn = _mapper.Map<IEnumerable<UserMedicinesToViewDto>>(expiredMedicines);
             return Ok(medicinesToReturn);
 
@@ -91,6 +94,15 @@ namespace EpillBox.API.Controllers
 
         }
 
+        [Route("getMedicinesToBuy/{id}")]
+        public async Task<IActionResult> GetMedicinesToBuy(int id)
+        {
+            var medicinesToBuy = await _fakRepo.GetMedicinesToBuy(id);
+            var medicinesToReturn = _mapper.Map<IEnumerable<MedicineToViewDto>>(medicinesToBuy);
+
+            return Ok(medicinesToReturn);
+
+        }
 
 
 
@@ -98,12 +110,21 @@ namespace EpillBox.API.Controllers
 
         [HttpPost("addUFAK")]
         public async Task<IActionResult> Post([FromBody] UserFirstAidKit uFAK)
-        {
+         {
 
             _fakRepo.AddUFAK(uFAK);
             if (await _fakRepo.SaveAll())
                 return Ok();
             throw new System.Exception($"Adding ufak failed on save");
+        }
+
+        [HttpPost("addMedicineToBuy/{id}")]
+        public async Task<IActionResult> AddMedicineToBuy(int id,[FromBody]int medicineId)
+        {
+            _fakRepo.AddMedicineToBuy(id,medicineId);
+            if (await _fakRepo.SaveAll())
+                return Ok();
+            throw new System.Exception($"Adding medicine to shoppingBasket failed on save");
         }
 
         [HttpPost("addFAKMedicine")]

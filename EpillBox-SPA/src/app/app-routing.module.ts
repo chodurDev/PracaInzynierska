@@ -6,6 +6,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { CurrentlyUsedComponent } from './currentlyUsed/currentlyUsed.component';
 import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedicines.component';
 import { MedicineDatabaseComponent } from './medicineDatabase/medicineDatabase.component';
+import { MedicineToBuyComponent } from './medicineToBuy/medicineToBuy.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: 'currentlyUsed', component: CurrentlyUsedComponent },
       { path: 'shortTermMedicines', component: ShortTermMedicinesComponent },
       { path: 'medicineDatabase', component: MedicineDatabaseComponent },
+      { path: 'medicineToBuy', component: MedicineToBuyComponent },
     ]
   },
 

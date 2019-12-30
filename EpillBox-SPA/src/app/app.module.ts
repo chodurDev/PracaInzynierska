@@ -28,6 +28,7 @@ import { TableCurrentlyUsedComponent } from './tables/tableCurrentlyUsed/tableCu
 import { MedicineDatabaseComponent } from './medicineDatabase/medicineDatabase.component';
 import { TableMedicineDatabaseComponent } from './tables/tableMedicineDatabase/tableMedicineDatabase.component';
 import {NgxPopperModule} from 'ngx-popper';
+import { MedicineToBuyComponent } from './medicineToBuy/medicineToBuy.component';
 
 @NgModule({
    declarations: [
@@ -46,7 +47,8 @@ import {NgxPopperModule} from 'ngx-popper';
       DialogAddMedicineToFAKComponent,
       TableCurrentlyUsedComponent,
       MedicineDatabaseComponent,
-      TableMedicineDatabaseComponent
+      TableMedicineDatabaseComponent,
+      MedicineToBuyComponent
    ],
    imports: [
       BrowserModule,
