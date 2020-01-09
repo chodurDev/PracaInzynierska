@@ -33,6 +33,7 @@ export class MyFirstAidKitComponent implements OnInit {
 
   getUserFirstAidKits() {
     this.actualUserId = this.authService.decodedToken.nameid;
+    console.log(this.actualUserId);
 
     this.fakService.GetUserFirstAidKits(this.actualUserId).subscribe(
       values => {

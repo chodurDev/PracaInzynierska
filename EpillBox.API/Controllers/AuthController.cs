@@ -42,7 +42,7 @@ namespace EpillBox.API.Controllers
                 Email = userForRegisterDto.Email
             };
             var createdUser = await _repository.Register(userToCreate, userForRegisterDto.Password);
-            //przy rejestracji trzeba dodac rekord w tabeli FirstAidKit i UserFirstAidKit
+            //TODO przy rejestracji trzeba dodac rekord w tabeli FirstAidKit i UserFirstAidKit sprawdzic czy nie robi sie to juz automatycznie
             return StatusCode(201);
         }
 

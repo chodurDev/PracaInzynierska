@@ -54,6 +54,7 @@ export class TableForFAKMedicineComponent
   }
 
   ColumntoDisplay(medicines: FirstAidKitMedicine[]) {
+    console.log(medicines.length);
     if (
       medicines[0].firstAidKitID === medicines[medicines.length - 1].firstAidKitID
     ) {

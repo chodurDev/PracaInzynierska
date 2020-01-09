@@ -4,10 +4,8 @@ import { environment } from 'src/environments/environment';
 import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
 import { UserFirstAidKit } from '../_model/UserFirstAidKit';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    Authorization: 'Bearer ' + localStorage.getItem('token')
-  })
+let httpOptions = {
+  headers: new HttpHeaders()
 };
 
 @Injectable({
@@ -15,8 +13,14 @@ const httpOptions = {
 })
 export class FirstAidKitService {
   baseUrl = environment.urlAddress;
-
-  constructor(private http: HttpClient) {}
+  
+  constructor(private http: HttpClient) {
+    httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      })
+    };
+  }
 
   GetuserMedicines(id: number) {
     return this.http.get<FirstAidKitMedicine[]>(

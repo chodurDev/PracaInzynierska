@@ -3,10 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Medicine } from '../_model/Medicine';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    Authorization: 'Bearer ' + localStorage.getItem('token')
-  })
+let httpOptions = {
+  headers: new HttpHeaders()
 };
 
 @Injectable({
@@ -15,7 +13,13 @@ const httpOptions = {
 export class MedicineService {
   baseUrl = environment.urlAddress;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      })
+    };
+  }
 
   GetAllMedicines() {
     return this.http.get(

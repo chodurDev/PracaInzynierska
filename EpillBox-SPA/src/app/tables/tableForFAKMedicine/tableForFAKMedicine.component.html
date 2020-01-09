@@ -85,3 +85,8 @@
     <!-- <mat-paginator [pageSize]="10" showFirstLastButtons></mat-paginator> -->
 
   </div>
+  <div class="row text-center mt-3"  *ngIf="medicines.length==0">
+    <div class="col">
+      <h3>Brak leków w apteczce</h3>
+    </div>
+  </div>
