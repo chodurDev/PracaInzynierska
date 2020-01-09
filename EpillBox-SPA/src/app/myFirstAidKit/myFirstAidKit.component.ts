@@ -20,6 +20,7 @@ export class MyFirstAidKitComponent implements OnInit {
   firstAidKits: UserFirstAidKit[] = [];
   isChosen = false;
   actualUserId: number;
+  newUfakAddedFlag = false;
 
   constructor(
     private fakService: FirstAidKitService,
@@ -33,7 +34,6 @@ export class MyFirstAidKitComponent implements OnInit {
 
   getUserFirstAidKits() {
     this.actualUserId = this.authService.decodedToken.nameid;
-    console.log(this.actualUserId);
 
     this.fakService.GetUserFirstAidKits(this.actualUserId).subscribe(
       values => {
@@ -41,6 +41,15 @@ export class MyFirstAidKitComponent implements OnInit {
       },
       null,
       () => {
+        if (this.newUfakAddedFlag) {
+          localStorage.setItem(
+            'chosenFAK',
+            this.firstAidKits[
+              this.firstAidKits.length - 1
+            ].firstAidKitID.toString()
+          );
+          this.newUfakAddedFlag = false;
+        }
         if (localStorage.getItem('chosenFAK')) {
           this.defaultOption = localStorage.getItem('chosenFAK');
           if (parseInt(this.defaultOption) === -1) {
@@ -98,6 +107,7 @@ export class MyFirstAidKitComponent implements OnInit {
           name: result
         };
         this.fakService.AddUFAK(uFAK).subscribe(() => {
+          this.newUfakAddedFlag = true;
           this.getUserFirstAidKits();
         });
       }
@@ -112,9 +122,11 @@ export class MyFirstAidKitComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // result it's userFirstAidKitID to delete or just empty string
       if (result) {
-        localStorage.setItem('chosenFAK', '');
-        this.defaultOption = '0';
-        this.isChosen = false;
+        if (result === this.defaultOption) {
+          localStorage.setItem('chosenFAK', '');
+          this.defaultOption = '0';
+          this.isChosen = false;
+        }
         this.fakService.DeleteFAK(result).subscribe(() => {
           this.getUserFirstAidKits();
         });

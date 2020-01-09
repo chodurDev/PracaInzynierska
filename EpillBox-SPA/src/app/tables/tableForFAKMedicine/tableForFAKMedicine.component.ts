@@ -54,28 +54,30 @@ export class TableForFAKMedicineComponent
   }
 
   ColumntoDisplay(medicines: FirstAidKitMedicine[]) {
-    console.log(medicines.length);
-    if (
-      medicines[0].firstAidKitID === medicines[medicines.length - 1].firstAidKitID
-    ) {
-      this.displayedColumns = [
-        'name',
-        'remainingQuantity',
-        'expirationDate',
-        'isTaken',
-        'delete',
-        'info'
-      ];
-    } else {
-      this.displayedColumns = [
-        'name',
-        'remainingQuantity',
-        'expirationDate',
-        'isTaken',
-        'fakName',
-        'delete',
-        'info'
-      ];
+    if (medicines.length) {
+      if (
+        medicines[0].firstAidKitID ===
+        medicines[medicines.length - 1].firstAidKitID
+      ) {
+        this.displayedColumns = [
+          'name',
+          'remainingQuantity',
+          'expirationDate',
+          'isTaken',
+          'delete',
+          'info'
+        ];
+      } else {
+        this.displayedColumns = [
+          'name',
+          'remainingQuantity',
+          'expirationDate',
+          'isTaken',
+          'fakName',
+          'delete',
+          'info'
+        ];
+      }
     }
   }
 
