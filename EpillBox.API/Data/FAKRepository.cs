@@ -139,13 +139,13 @@ namespace EpillBox.API.Data
         public async Task<IEnumerable<ShoppingBasketMedicine>> GetMedicinesToBuy(int id)
         {
             var medicinesToBuy = await _context.ShoppingBasketMedicines
-            .Include(x=>x.Medicine)
-                .ThenInclude(y=>y.ActiveSubstanceMedicines)
-                .ThenInclude(z=>z.ActiveSubstance)
-            .Include(x=>x.Medicine)
-                .ThenInclude(y=>y.Producer)
-            .Include(x=>x.Medicine)
-                .ThenInclude(y=>y.MedicineForm)
+            .Include(x => x.Medicine)
+                .ThenInclude(y => y.ActiveSubstanceMedicines)
+                .ThenInclude(z => z.ActiveSubstance)
+            .Include(x => x.Medicine)
+                .ThenInclude(y => y.Producer)
+            .Include(x => x.Medicine)
+                .ThenInclude(y => y.MedicineForm)
             .Where(x => x.ShoppingBasket.UserID == id)
             .ToListAsync();
             return medicinesToBuy;
@@ -187,7 +187,7 @@ namespace EpillBox.API.Data
         public async Task<IEnumerable<Medicine>> GetAllMedicines()
         {
 
-            return await _context.Medicines.Include(x=>x.MedicineForm).Include(x=>x.Producer).Include(x=>x.ActiveSubstanceMedicines).ThenInclude(y=>y.ActiveSubstance).ToListAsync();
+            return await _context.Medicines.Include(x => x.MedicineForm).Include(x => x.Producer).Include(x => x.ActiveSubstanceMedicines).ThenInclude(y => y.ActiveSubstance).ToListAsync();
         }
         public void AddMedicineToAllFAK(int id, FirstAidKitMedicine medicine)
         {
@@ -201,9 +201,17 @@ namespace EpillBox.API.Data
 
         public void AddMedicineToBuy(int id, int medicineId)
         {
-            var shoppingBasketId = _context.ShoppingBaskets.FirstOrDefault(x => x.UserID == id).ShoppingBasketID;
-            var medicineToBuy = new ShoppingBasketMedicine { ShoppingBasketID = shoppingBasketId, MedicineID = medicineId };
-            Add(medicineToBuy);
+            if (_context.ShoppingBaskets.Any(x => x.UserID == id) == false)
+            {
+                Add(new ShoppingBasketMedicine { ShoppingBasket = new ShoppingBasket { UserID = id }, MedicineID = medicineId });
+            }
+            else
+            {
+                var shoppingBasketId = _context.ShoppingBaskets.FirstOrDefault(x => x.UserID == id).ShoppingBasketID;
+                var medicineToBuy = new ShoppingBasketMedicine { ShoppingBasketID = shoppingBasketId, MedicineID = medicineId };
+                Add(medicineToBuy);
+            }
+
         }
 
 
