@@ -50,27 +50,27 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Data ważności </th>
           <td mat-cell *matCellDef="let element"> {{element.expirationDate | date}} </td>
         </ng-container>
-        <ng-container matColumnDef="delete">
+        <ng-container matColumnDef="buttons">
           <th mat-header-cell *matHeaderCellDef ></th>
-          <td mat-cell *matCellDef="let row"> <a class="btn btn-sm btn-outline-danger"  href="javascript:void(0);" (click)="AreYouSure(row)"><i class="fa fa-lg fa-trash"></i></a> </td>
-        </ng-container>
+          <td mat-cell *matCellDef="let row"> 
 
-        <ng-container matColumnDef="info">
-          <th mat-header-cell *matHeaderCellDef ></th>
-          <td mat-cell *matCellDef="let row" > 
-              <a class="btn btn-sm btn-outline-primary"  href="javascript:void(0);" 
-                  popper="{{medicineDescription(row)}}" 
-                  [popperTrigger]="'click'"
-                  [popperHideOnClickOutside]="true" 
-                  [popperHideOnScroll]="true" 
-                  [popperApplyClass]="'popoverClass'"
-                  >
-                  <i class="fa fa-lg fa-info-circle"></i>
+            <div class="btn-group" role="group">
+              <a class="btn btn-sm btn-outline-danger"  href="javascript:void(0);" (click)="AreYouSure(row)" title="Usuń lek z apteczki">
+                <i class="fa fa-lg fa-trash"></i>
               </a> 
+              <a class="btn btn-sm btn-outline-primary"  href="javascript:void(0);" 
+                    popper="{{medicineDescription(row)}}" 
+                    [popperTrigger]="'click'"
+                    [popperHideOnClickOutside]="true" 
+                    [popperHideOnScroll]="true" 
+                    [popperApplyClass]="'popoverClass'"
+                    title="info"
+                    >
+                    <i class="fa fa-lg fa-info-circle"></i>
+                </a> 
+              </div>
           </td>
         </ng-container>
-
-        
   
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" 

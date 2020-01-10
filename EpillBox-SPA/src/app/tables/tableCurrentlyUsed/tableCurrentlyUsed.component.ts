@@ -30,8 +30,7 @@ export class TableCurrentlyUsedComponent
     'name',
     'remainingQuantity',
     'expirationDate',
-    'delete',
-    'take'
+    'buttons'
   ];
   dataSource = new MatTableDataSource<FirstAidKitMedicine>(this.medicines);
   nameFilter = new FormControl('');

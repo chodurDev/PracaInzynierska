@@ -64,8 +64,7 @@ export class TableForFAKMedicineComponent
           'remainingQuantity',
           'expirationDate',
           'isTaken',
-          'delete',
-          'info'
+          'buttons'
         ];
       } else {
         this.displayedColumns = [
@@ -74,8 +73,7 @@ export class TableForFAKMedicineComponent
           'expirationDate',
           'isTaken',
           'fakName',
-          'delete',
-          'info'
+          'buttons'
         ];
       }
     }
