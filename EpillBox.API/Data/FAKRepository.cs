@@ -7,7 +7,6 @@ using EpillBox.API.Models;
 using EpillBox.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace EpillBox.API.Data
 {
@@ -189,11 +188,31 @@ namespace EpillBox.API.Data
             Add(fak);
 
         }
+        public void AddAllergyToUserAllergies(int id,IEnumerable<Allergies> allergies)
+        {
+            bool temp;
+            foreach (var item in allergies)
+            {
+                temp = _context.UsersAllergies.All(x=>x.AllergiesID!=item.AllergiesID);
+
+                if(_context.UsersAllergies.Where(x=>x.UserID==id).All(x=>x.AllergiesID!=item.AllergiesID))
+                {
+                    Add(new UsersAllergies{AllergiesID=item.AllergiesID,UserID=id});
+                }
+            }
+            
+
+        }
         public async Task<bool> DeleteFirstAidKit(int firstAidKitID)
         {
 
             var fak = new FirstAidKit { FirstAidKitID = firstAidKitID };
             Delete(fak);
+            return await SaveAll();
+        }
+        public async Task<bool> DeleteUserAllergy(int allergyId,int userId)
+        {
+            Delete(await _context.UsersAllergies.Where(x=>x.UserID==userId).FirstOrDefaultAsync(x=>x.AllergiesID==allergyId));
             return await SaveAll();
         }
 

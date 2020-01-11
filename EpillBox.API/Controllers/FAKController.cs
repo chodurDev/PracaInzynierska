@@ -153,6 +153,18 @@ namespace EpillBox.API.Controllers
                 return Ok();
             throw new System.Exception($"Adding fakMedicine failed on save");
         }
+
+
+        [HttpPost("addAllergyToUserAllergies/{id}")]
+        public async Task<IActionResult> AddAllergyToUserAllergies([FromBody] IEnumerable<Allergies> allergies, int id)
+        {
+            _fakRepo.AddAllergyToUserAllergies(id,allergies);
+            await _fakRepo.SaveAll();
+            return Ok();
+           
+        }
+
+
         [HttpPost("addMedicineToAllFAK/{id}")]
         public async Task<IActionResult> AddMedicineToAllFAK([FromBody] FirstAidKitMedicineToAddDto fakMedicine,int id)
         {
@@ -202,6 +214,16 @@ namespace EpillBox.API.Controllers
                 return NoContent();
 
             throw new System.Exception($"Deleting FakMedicine {id} failed on save");
+
+        }
+        [HttpDelete("deleteUserAllergy/{allergyId}/{userId}")]
+        public async Task<IActionResult> DeleteUserAllergy(int allergyId,int userId)
+        {
+
+            if (await _fakRepo.DeleteUserAllergy(allergyId,userId))
+                return NoContent();
+
+            throw new System.Exception($"Deleting UserAllergy failed on save");
 
         }
     }

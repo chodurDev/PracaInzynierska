@@ -25,7 +25,9 @@ namespace EpillBox.API.Data
 
         void AddUFAK(UserFirstAidKit uFAK);
         Task<bool> DeleteFirstAidKit(int firstAidKitID);
+        Task<bool> DeleteUserAllergy(int allergyId,int userId);
         void AddMedicineToAllFAK(int id,FirstAidKitMedicine medicine);
         void AddMedicineToBuy(int id,int  medicineId);
+        void AddAllergyToUserAllergies(int id,IEnumerable<Allergies> allergies);
     }
 }

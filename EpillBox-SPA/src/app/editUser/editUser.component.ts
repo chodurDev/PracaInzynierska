@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import {
+  MatTableDataSource,
+  MatPaginator,
+  MatSort,
+  MatDialog
+} from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { UserService } from '../_services/user.service';
 import { AuthService } from '../_services/auth.service';
@@ -16,6 +21,7 @@ export class EditUserComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['name', 'delete'];
   dataSource = new MatTableDataSource<Allergies>();
 
+  actualUserId: number;
   nameFilter = new FormControl('');
 
   filterValues = {
@@ -34,17 +40,20 @@ export class EditUserComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    const actualUserId = this.authService.decodedToken.nameid;
-    this.userService
-      .GetUserAllergies(actualUserId)
-      .subscribe((allergies: Allergies[]) => {
-        this.dataSource.data = allergies;
-      });
+    this.GetUserAllergies();
 
     this.nameFilter.valueChanges.subscribe(name => {
       this.filterValues.name = name;
       this.dataSource.filter = JSON.stringify(this.filterValues);
     });
+  }
+  GetUserAllergies() {
+    this.actualUserId = this.authService.decodedToken.nameid;
+    this.userService
+      .GetUserAllergies(this.actualUserId)
+      .subscribe((allergies: Allergies[]) => {
+        this.dataSource.data = allergies;
+      });
   }
 
   ngAfterViewInit(): void {
@@ -60,13 +69,35 @@ export class EditUserComponent implements AfterViewInit, OnInit {
     return filterFunction;
   }
 
-  OnAddAllergies(){
-  const dialogRef = this.dialog.open(DialogAddAllergyComponent, {
-    width: '400px'
-  });
-  dialogRef.afterClosed().subscribe(result => {
-    console.log(result);
-  });
-}
+  OnAddAllergies() {
+    const dialogRef = this.dialog.open(DialogAddAllergyComponent, {
+      width: '400px'
+    });
+    dialogRef.afterClosed().subscribe((result: Allergies[]) => {
+      if (result) {
+        if (result.length > 0) {
+          this.userService
+            .AddAllergyToUserAllergies(this.actualUserId, result)
+            .subscribe(null, null, () => {
+              this.GetUserAllergies();
+            });
+        }
+      }
+    });
+  }
+  
+  OnDeleteUserAllergy(allergy: Allergies) {
+    this.userService
+      .DeleteUserAllergy(allergy.allergiesID, this.actualUserId)
+      .subscribe(null, null, () => {
+        this.GetUserAllergies();
+      });
+    this.deleteRowFromTable(allergy);
+  }
 
+  private deleteRowFromTable(row: Allergies) {
+    const index = this.dataSource.data.indexOf(row);
+    this.dataSource.data.splice(index, 1);
+    this.dataSource._updateChangeSubscription();
+  }
 }

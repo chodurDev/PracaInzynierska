@@ -30,7 +30,6 @@ import { TableMedicineDatabaseComponent } from './tables/tableMedicineDatabase/t
 import {NgxPopperModule} from 'ngx-popper';
 import { MedicineToBuyComponent } from './medicineToBuy/medicineToBuy.component';
 import { EditUserComponent } from './editUser/editUser.component';
-import { TableAllergiesComponent } from './tables/tableAllergies/tableAllergies.component';
 import { DialogAddAllergyComponent } from './dialogs/dialogAddAllergy/dialogAddAllergy.component';
 
 @NgModule({
