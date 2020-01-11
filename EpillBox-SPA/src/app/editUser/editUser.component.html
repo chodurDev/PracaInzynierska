@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col text-center">
+      <h3>Dane osobowe</h3>
+    </div>
+  </div>
+  <div class="row mt-3 d-flex  justify-content-center">
+    <div class="col-4">
+      <form #registerForm="ngForm">
+        
+        <div class="form-group">
+          <input type="text" class="form-control" required name="name"  placeholder="Imię">
+        </div>
+      
+        <div class="form-group">
+          <input type="text" class="form-control" required name="surname"   placeholder="Nazwisko">
+        </div>
+      
+        <div class="form-group">
+          <input type="text" class="form-control" required name="email"   placeholder="E-mail">
+        </div>
+      
+        <div class="form-group">
+          <input type="password" class="form-control" required name="password"   placeholder="Hasło">
+        </div>
+        
+      </form>
+    </div>
+  </div>
+  <div class="row mt-3 d-flex  justify-content-center">
+    <div class="col-4 ">
+      <h3 class="text-center">Substancje uczulające użytkownika</h3>
+
+      <div *ngIf="dataSource.data.length>0;else elseBlock" class="mat-elevation-z8">
+        <div class="row">
+          <div class="col">
+            <mat-form-field>
+              <input matInput type="text" [formControl]="nameFilter" placeholder="Wyszukaj...">
+          </mat-form-field>
+          </div>
+          <div class="col">
+            <button class="btn btn-outline-info text-uppercase" mat-raised-button (click)="OnAddAllergies()"> <i class="fa fa-plus" aria-hidden="true"></i> Dodaj Alergen</button>
+          </div>
+        </div>
+        
+        <table mat-table [dataSource]="dataSource" matSort>
+    
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazwa</th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+      
+            
+    
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let row">
+                  <a class="btn btn-sm btn-outline-danger"  href="javascript:void(0);" (click)="0" title="Usuń z listy"><i class="fa fa-lg fa-trash"></i></a> 
+
+                </td>
+              </ng-container>
+      
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+        </table>
+      
+        <mat-paginator [pageSize]="4"></mat-paginator>
+      
+      </div>
+      <ng-template #elseBlock><h4 class="text-center">Brak</h4></ng-template>
+    </div>
+  </div>
+</div>

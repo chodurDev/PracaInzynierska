@@ -7,6 +7,7 @@ using EpillBox.API.Models;
 using EpillBox.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace EpillBox.API.Data
 {
@@ -150,6 +151,18 @@ namespace EpillBox.API.Data
             .ToListAsync();
             return medicinesToBuy;
         }
+        public async Task<IEnumerable<Allergies>> GetUserAllergies(int id)
+        {
+           
+            var userAllergies = await _context.UsersAllergies
+            .Include(x=>x.User)
+            .Include(x=>x.Allergies)
+            
+            .Where(x =>x.UserID==id)
+            .Select(x=>x.Allergies)
+            .ToListAsync();
+            return userAllergies;
+        }
         public async Task<IEnumerable<UserFirstAidKit>> GetUserFirstAidKits(int id)
         {
             return await _context.UserFirstAidKits
@@ -188,6 +201,10 @@ namespace EpillBox.API.Data
         {
 
             return await _context.Medicines.Include(x => x.MedicineForm).Include(x => x.Producer).Include(x => x.ActiveSubstanceMedicines).ThenInclude(y => y.ActiveSubstance).ToListAsync();
+        }
+        public async Task<IEnumerable<Allergies>> GetAllAllergies()
+        {
+            return await _context.Allergies.ToListAsync();
         }
         public void AddMedicineToAllFAK(int id, FirstAidKitMedicine medicine)
         {

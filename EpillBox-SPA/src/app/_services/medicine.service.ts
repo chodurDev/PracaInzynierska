@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Medicine } from '../_model/Medicine';
+
 
 let httpOptions = {
   headers: new HttpHeaders()
@@ -39,6 +39,13 @@ export class MedicineService {
   GetMedicinesToShoppingBasket(userID: number) {
     return this.http.get(
       this.baseUrl + '/fak/getMedicinesToBuy/' + userID,
+      httpOptions
+    );
+  }
+
+  GetAllAllergies(){
+    return this.http.get(
+      this.baseUrl + '/fak/getAllAllergies',
       httpOptions
     );
   }

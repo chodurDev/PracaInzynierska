@@ -29,6 +29,9 @@ import { MedicineDatabaseComponent } from './medicineDatabase/medicineDatabase.c
 import { TableMedicineDatabaseComponent } from './tables/tableMedicineDatabase/tableMedicineDatabase.component';
 import {NgxPopperModule} from 'ngx-popper';
 import { MedicineToBuyComponent } from './medicineToBuy/medicineToBuy.component';
+import { EditUserComponent } from './editUser/editUser.component';
+import { TableAllergiesComponent } from './tables/tableAllergies/tableAllergies.component';
+import { DialogAddAllergyComponent } from './dialogs/dialogAddAllergy/dialogAddAllergy.component';
 
 @NgModule({
    declarations: [
@@ -48,7 +51,9 @@ import { MedicineToBuyComponent } from './medicineToBuy/medicineToBuy.component'
       TableCurrentlyUsedComponent,
       MedicineDatabaseComponent,
       TableMedicineDatabaseComponent,
-      MedicineToBuyComponent
+      MedicineToBuyComponent,
+      EditUserComponent,
+      DialogAddAllergyComponent
    ],
    imports: [
       BrowserModule,
@@ -69,7 +74,8 @@ import { MedicineToBuyComponent } from './medicineToBuy/medicineToBuy.component'
    entryComponents: [
       DialogAddUserFAKComponent,
       DialogDeleteUserFAKComponent,
-      DialogAddMedicineToFAKComponent
+      DialogAddMedicineToFAKComponent,
+      DialogAddAllergyComponent
    ],
    providers: [
       ErrorInterceptorProvider,

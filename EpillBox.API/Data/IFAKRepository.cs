@@ -14,12 +14,15 @@ namespace EpillBox.API.Data
         Task<bool> SaveAll();
         Task<IEnumerable<FirstAidKitMedicine>> GetUserMedicines(int id);
         Task<IEnumerable<Medicine>> GetAllMedicines();
+        Task<IEnumerable<Allergies>> GetAllAllergies();
         Task<IEnumerable<FirstAidKitMedicine>> GetUserChosenFirstAidKitMedicines(int id);
         Task<IEnumerable<FirstAidKitMedicine>> GetExpiredMedicines(int id);
         Task<IEnumerable<FirstAidKitMedicine>> GetShortTermMedicines(int id,int days);
         Task<IEnumerable<FirstAidKitMedicine>> GetUserTakenMedicines(int id);
         Task<IEnumerable<UserFirstAidKit>> GetUserFirstAidKits(int id);
         Task<IEnumerable<ShoppingBasketMedicine>> GetMedicinesToBuy(int id);
+        Task<IEnumerable<Allergies>> GetUserAllergies(int id);
+
         void AddUFAK(UserFirstAidKit uFAK);
         Task<bool> DeleteFirstAidKit(int firstAidKitID);
         void AddMedicineToAllFAK(int id,FirstAidKitMedicine medicine);

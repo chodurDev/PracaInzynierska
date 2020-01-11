@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { FirstAidKitService } from '../_services/firstAidKit.service';
 import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
 import { DialogAddUserFAKComponent } from '../dialogs/dialogAddUserFAK/dialogAddUserFAK.component';
 import { UserFirstAidKit } from '../_model/UserFirstAidKit';
 import { DialogDeleteUserFAKComponent } from '../dialogs/dialogDeleteUserFAK/dialogDeleteUserFAK.component';
 import { DialogAddMedicineToFAKComponent } from '../dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-myFirstAidKit',

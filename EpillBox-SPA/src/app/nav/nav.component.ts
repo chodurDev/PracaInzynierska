@@ -66,6 +66,18 @@ export class NavComponent implements OnInit {
       case '/shortTermMedicines':
         this.routeName = 'Lekarstwa z krótką datą przydatności';
         break;
+      case '/medicineDatabase':
+        this.routeName = 'Baza lekarstw';
+        break;
+      case '/medicineToBuy':
+        this.routeName = 'Lekarstwa do zamówienia';
+        break;
+      case '/editUser':
+        this.routeName = 'Profil użytkownika';
+        break;
+      case '/allergies':
+        this.routeName = 'Uczulające substancje aktywne';
+        break;
       default:
         this.routeName = '';
         break;

@@ -56,6 +56,12 @@ namespace EpillBox.API.Controllers
             // return Ok();
 
         }
+        [HttpGet("getAllAllergies")]
+        public async Task<IActionResult> GetAllAllergies()
+        {
+            var allergies = await _fakRepo.GetAllAllergies();
+            return Ok(allergies);
+        }
 
         [HttpGet("getUserTakenMedicines/{id}")]
         public async Task<IActionResult> GetUserTakenMedicines(int id)
@@ -91,6 +97,14 @@ namespace EpillBox.API.Controllers
             var expiredMedicines = await _fakRepo.GetUserFirstAidKits(id);
 
             return Ok(expiredMedicines);
+
+        }
+        [Route("getUserAllergies/{id}")]
+        public async Task<IActionResult> GetUserAllergies(int id)
+        {
+            var userAllergies = await _fakRepo.GetUserAllergies(id);
+
+            return Ok(userAllergies);
 
         }
 

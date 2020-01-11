@@ -55,10 +55,7 @@
           <td mat-cell *matCellDef="let row"> 
 
             <div class="btn-group" role="group">
-              <a class="btn btn-sm btn-outline-danger"  href="javascript:void(0);" (click)="AreYouSure(row)" title="Usuń lek z apteczki">
-                <i class="fa fa-lg fa-trash"></i>
-              </a> 
-              <a class="btn btn-sm btn-outline-primary"  href="javascript:void(0);" 
+                <a class="btn btn-sm btn-outline-info"  href="javascript:void(0);" 
                     popper="{{medicineDescription(row)}}" 
                     [popperTrigger]="'click'"
                     [popperHideOnClickOutside]="true" 
@@ -68,7 +65,13 @@
                     >
                     <i class="fa fa-lg fa-info-circle"></i>
                 </a> 
-              </div>
+                <a class="btn btn-sm btn-outline-primary"  href="javascript:void(0);" title="Ustaw harmonogram">
+                    <i class="fa fa-lg fa-clock-o"></i>
+                </a> 
+                <a class="btn btn-sm btn-outline-danger"  href="javascript:void(0);" (click)="AreYouSure(row)" title="Usuń lek z apteczki">
+                  <i class="fa fa-lg fa-trash"></i>
+                </a> 
+            </div>
           </td>
         </ng-container>
   
