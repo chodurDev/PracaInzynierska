@@ -249,6 +249,27 @@ namespace EpillBox.API.Data
             }
 
         }
+        public void AddMedicineToDatabase(MedicineToAdd medicine)
+        {
+             
+             if( _context.Medicines.All(x=>x.Name.ToLower()!=medicine.Name.ToLower())){
+             var activeSubstanceList = new List<ActiveSubstanceMedicine> ();
+             activeSubstanceList.Add(new ActiveSubstanceMedicine{ActiveSubstance=new ActiveSubstance{Name=medicine.ActiveSubstance}});
+
+             var medicineToAdd =
+                new Medicine{
+                    Name=medicine.Name,
+                    MedicineForm=_context.MedicineForms.FirstOrDefault(x=>x.MedicineFormID==medicine.Form),
+                    QuantityInPackage=medicine.QuantityInPackage,
+                    Producer= _context.Producers.Any(x=>x.Name.ToLower()==medicine.Producer.ToLower())?_context.Producers.FirstOrDefault(x=>x.Name==medicine.Producer): new Producer{Name=medicine.Producer},
+                    ActiveSubstanceMedicines=activeSubstanceList
+                    };
+                Add(medicineToAdd);
+             }
+            
+            
+            
+        }
 
 
     }

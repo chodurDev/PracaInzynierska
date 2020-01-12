@@ -29,5 +29,6 @@ namespace EpillBox.API.Data
         void AddMedicineToAllFAK(int id,FirstAidKitMedicine medicine);
         void AddMedicineToBuy(int id,int  medicineId);
         void AddAllergyToUserAllergies(int id,IEnumerable<Allergies> allergies);
+        void AddMedicineToDatabase(MedicineToAdd medicine);
     }
 }

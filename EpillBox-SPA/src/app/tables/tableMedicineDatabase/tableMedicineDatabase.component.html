@@ -1,6 +1,14 @@
-<mat-form-field >
-  <input matInput type="text" [formControl]="nameFilter" placeholder="Szukaj...">
-</mat-form-field>
+<div class="row mt-5 d-flex align-items-center justify-content-between">
+  <div class="col-auto">
+      <mat-form-field>
+          <input matInput type="text" [formControl]="nameFilter" placeholder="Szukaj...">
+        </mat-form-field>
+  </div>
+  <div class="col-auto">
+      <button class="btn btn-outline-info text-uppercase" mat-raised-button (click)=OnAddMedicineToDatabase()> <i class="fa fa-plus" aria-hidden="true"></i> Dodaj Lek do bazy</button>
+
+  </div>
+</div>
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>

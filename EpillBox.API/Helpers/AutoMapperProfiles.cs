@@ -49,6 +49,15 @@ namespace EpillBox.API.Helpers
             medicineToView.ForMember(x=>x.Form,y=>y.MapFrom(j=>j.MedicineForm.FormName));
             medicineToView.ForMember(x=>x.ActiveSubstance,y=>y.MapFrom(j=>j.ActiveSubstanceMedicines.Select(x=>x.ActiveSubstance.Name)));
             
+
+            // var medicineToDatabase = CreateMap<MedicineToAdd,Medicine>();
+            // medicineToDatabase.ForMember(x=>x.Name,y=>y.MapFrom(z=>z.Name));
+            // medicineToDatabase.ForMember(x=>x.QuantityInPackage,y=>y.MapFrom(z=>z.QuantityInPackage));
+            // medicineToDatabase.ForMember(x=>x.Producer.Name,y=>y.MapFrom(z=>z.Producer));
+            // medicineToDatabase.ForMember(x=>x.MedicineForm.MedicineFormID,y=>y.MapFrom(z=>z.Form));
+            // medicineToDatabase.ForMember(x=>x.ActiveSubstanceMedicines.Select(j=>j.ActiveSubstance.Name),y=>y.MapFrom(z=>z.ActiveSubstance));
+
+
         }
     }
 }

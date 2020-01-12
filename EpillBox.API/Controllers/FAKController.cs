@@ -178,6 +178,17 @@ namespace EpillBox.API.Controllers
             throw new System.Exception($"Adding fakMedicine failed on save");
         }
 
+        [HttpPost("addMedicine")]
+        public async Task<IActionResult> AddMedicine([FromBody] MedicineToAdd medicine)
+        {
+            _fakRepo.AddMedicineToDatabase(medicine);
+            if(await _fakRepo.SaveAll()){
+
+                return Ok();
+            }
+            return BadRequest("Dany lek już istnieje");
+        }
+
         // PUT api/fak/5
 
         [HttpPut]

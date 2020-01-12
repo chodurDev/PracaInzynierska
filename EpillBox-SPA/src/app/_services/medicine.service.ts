@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-
+import { MedicineToAdd } from '../_model/MedicineToAdd';
 
 let httpOptions = {
   headers: new HttpHeaders()
@@ -22,10 +22,7 @@ export class MedicineService {
   }
 
   GetAllMedicines() {
-    return this.http.get(
-      this.baseUrl + '/fak/getAllMedicines',
-      httpOptions
-    );
+    return this.http.get(this.baseUrl + '/fak/getAllMedicines', httpOptions);
   }
 
   AddMedicineToShoppingBasket(userID: number, medicineID: number) {
@@ -43,12 +40,16 @@ export class MedicineService {
     );
   }
 
-  GetAllAllergies(){
-    return this.http.get(
-      this.baseUrl + '/fak/getAllAllergies',
+  GetAllAllergies() {
+    return this.http.get(this.baseUrl + '/fak/getAllAllergies', httpOptions);
+  }
+
+  AddMedicineToDatabase(medicine: MedicineToAdd) {
+    console.log('weszlem');
+    return this.http.post(
+      this.baseUrl + '/fak/addMedicine',
+      medicine,
       httpOptions
     );
   }
-
-  
 }

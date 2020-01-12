@@ -15,9 +15,7 @@ import { FormControl } from '@angular/forms';
 import { UserService } from '../_services/user.service';
 import { AuthService } from '../_services/auth.service';
 import { Allergies } from '../_model/Allergies';
-import { DialogAddMedicineToFAKComponent } from '../dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
 import { DialogAddAllergyComponent } from '../dialogs/dialogAddAllergy/dialogAddAllergy.component';
-import { User } from '../_model/User';
 
 @Component({
   selector: 'app-editUser',
