@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  OnChanges
+} from '@angular/core';
 import {
   MatTableDataSource,
   MatPaginator,
@@ -11,6 +17,7 @@ import { AuthService } from '../_services/auth.service';
 import { Allergies } from '../_model/Allergies';
 import { DialogAddMedicineToFAKComponent } from '../dialogs/dialogAddMedicineToFAK/dialogAddMedicineToFAK.component';
 import { DialogAddAllergyComponent } from '../dialogs/dialogAddAllergy/dialogAddAllergy.component';
+import { User } from '../_model/User';
 
 @Component({
   selector: 'app-editUser',
@@ -85,7 +92,7 @@ export class EditUserComponent implements AfterViewInit, OnInit {
       }
     });
   }
-  
+
   OnDeleteUserAllergy(allergy: Allergies) {
     this.userService
       .DeleteUserAllergy(allergy.allergiesID, this.actualUserId)

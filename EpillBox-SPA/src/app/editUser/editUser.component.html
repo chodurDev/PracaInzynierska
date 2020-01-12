@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row mt-5">
+  <!-- <div class="row mt-5">
     <div class="col text-center">
       <h3>Dane osobowe</h3>
     </div>
@@ -9,24 +9,20 @@
       <form #registerForm="ngForm">
         
         <div class="form-group">
-          <input type="text" class="form-control" required name="name"  placeholder="Imię">
+          <input type="text" class="form-control" required name="name" [value]="user.name" >
         </div>
       
         <div class="form-group">
-          <input type="text" class="form-control" required name="surname"   placeholder="Nazwisko">
+          <input type="text" class="form-control" required name="surname"  [value]="user.surname" >
         </div>
       
         <div class="form-group">
-          <input type="text" class="form-control" required name="email"   placeholder="E-mail">
-        </div>
-      
-        <div class="form-group">
-          <input type="password" class="form-control" required name="password"   placeholder="Hasło">
+          <input type="text" class="form-control" required name="email"  [value]="user.email"  >
         </div>
         
       </form>
     </div>
-  </div>
+  </div> -->
   <div class="row mt-3 d-flex  justify-content-center">
     <div class="col-4 ">
       <h3 class="text-center">Substancje uczulające użytkownika</h3>
