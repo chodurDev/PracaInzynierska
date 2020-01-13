@@ -11,4 +11,7 @@ export interface FirstAidKitMedicine {
   form?: string | null;
   producer?: string | null;
   activeSubstance?: string[] | null;
+  firstServingAt?: Date | string;
+  numberOfServings?: number;
+  servingSize?: number;
 }

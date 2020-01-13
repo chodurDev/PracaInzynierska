@@ -1,0 +1,40 @@
+<div mat-dialog-content>
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
+        <h6>Harmonogram zażywania</h6>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-8">      
+          <span>Od której godziny chcesz zażywać lek?</span>
+      </div>
+      <div class="col-4">
+        <input class="setHour" [ngxTimepicker]="fullTime" [format]="24"  [value]="'08:00'" [(ngModel)]="scheduleSetting.firstServingAt" readonly required>
+        <ngx-material-timepicker #fullTime></ngx-material-timepicker>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-8">     
+        <span>Ile porcji leku w ciągu dnia?</span>   
+      </div>
+      <div class="col-4">
+        <input type="number" class="setHour" min="0" max="50"  [(ngModel)]="scheduleSetting.numberOfServings">
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-8">     
+        <span>Wielkość porcji</span>   
+      </div>
+      <div class="col-4">
+        <input type="number" class="setHour" min="0" max="200"  [(ngModel)]="scheduleSetting.servingSize">
+      </div>
+    </div>
+    
+      
+  </div>
+
+</div>
+<div class="justify-content-center" mat-dialog-actions>
+  <button class="btn btn-success" mat-button [mat-dialog-close]="OnSetSchedule()">Ustaw</button> 
+</div>

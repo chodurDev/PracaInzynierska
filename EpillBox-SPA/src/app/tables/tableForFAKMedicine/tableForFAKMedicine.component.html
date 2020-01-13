@@ -65,7 +65,7 @@
                     >
                     <i class="fa fa-lg fa-info-circle"></i>
                 </a> 
-                <a class="btn btn-sm btn-outline-primary"  href="javascript:void(0);" title="Ustaw harmonogram">
+                <a class="btn btn-sm btn-outline-primary" *ngIf="row.isTaken" (click)="SetSchedule(row)" href="javascript:void(0);" title="Ustaw harmonogram">
                     <i class="fa fa-lg fa-clock-o"></i>
                 </a> 
                 <a class="btn btn-sm btn-outline-danger"  href="javascript:void(0);" (click)="AreYouSure(row)" title="Usuń lek z apteczki">

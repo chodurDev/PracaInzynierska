@@ -201,6 +201,17 @@ namespace EpillBox.API.Controllers
 
             throw new System.Exception("Updating FakMedicine failed on save");
         }
+        
+        [HttpPut("setSchedule")]
+        public async Task<IActionResult> SetSchedule(UserMedicinesToViewDto value)
+        {
+            var fakMedicineToUpdate = _mapper.Map<FirstAidKitMedicine>(value);
+            _fakRepo.Update(fakMedicineToUpdate);
+            if (await _fakRepo.SaveAll())
+                return NoContent();
+
+            throw new System.Exception("Updating FakMedicine failed on save");
+        }
 
         // DELETE api/fak/deleteFAKMedicine/5
 

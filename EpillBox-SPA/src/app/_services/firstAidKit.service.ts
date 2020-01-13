@@ -13,7 +13,7 @@ let httpOptions = {
 })
 export class FirstAidKitService {
   baseUrl = environment.urlAddress;
-  
+
   constructor(private http: HttpClient) {
     httpOptions = {
       headers: new HttpHeaders({
@@ -90,6 +90,15 @@ export class FirstAidKitService {
   AddMedicineToAllFAK(fakMedicine: FirstAidKitMedicine, id: number) {
     return this.http.post(
       this.baseUrl + '/fak/addMedicineToAllFAK/' + id,
+      fakMedicine,
+      httpOptions
+    );
+  }
+
+  SetSchedule(fakMedicine: FirstAidKitMedicine) {
+    console.log(fakMedicine);
+    return this.http.put(
+      this.baseUrl + '/fak/setSchedule',
       fakMedicine,
       httpOptions
     );

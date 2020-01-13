@@ -26,6 +26,26 @@ namespace EpillBox.API.Helpers
             medicinesToReturn.ForMember(x=>x.ActiveSubstance,y=>y.MapFrom(j=>j.Medicine.ActiveSubstanceMedicines.Select(x=>x.ActiveSubstance.Name)));
 
 
+            var medicinesToUpdate = CreateMap<UserMedicinesToViewDto,FirstAidKitMedicine>();
+            // medicinesToUpdate.ForMember(x=>x.ExpirationDate,y=>y.MapFrom(j=>j.ExpirationDate));
+            // medicinesToUpdate.ForMember(x=>x.FirstAidKitID,y=>y.MapFrom(j=>j.FirstAidKitID));
+            // medicinesToUpdate.ForMember(x=>x.FirstAidKitMedicineID,y=>y.MapFrom(j=>j.FirstAidKitMedicineID));
+            medicinesToUpdate.ForPath(x=>x.Medicine.Name,y=>y.MapFrom(j=>j.Name));
+            medicinesToUpdate.ForPath(x=>x.Medicine.QuantityInPackage,y=>y.MapFrom(j=>j.QuantityInPackage));
+            medicinesToUpdate.ForPath(x=>x.MedicineID,y=>y.MapFrom(j=>j.MedicineID));
+            // medicinesToUpdate.ForMember(x=>x.RemainingQuantity,y=>y.MapFrom(j=>j.RemainingQuantity));
+            // medicinesToUpdate.ForPath(x=>x.FirstAidKit.UserFirstAidKits.Single().Name,y=>y.MapFrom(j=>j.FakName));
+            medicinesToUpdate.ForPath(x=>x.Medicine.MedicineForm.FormName,y=>y.MapFrom(j=>j.Form));
+            medicinesToUpdate.ForPath(x=>x.Medicine.Producer.Name,y=>y.MapFrom(j=>j.Producer));
+            // medicinesToUpdate.ForPath(x=>x.Medicine.ActiveSubstanceMedicines.Select(z=>z.ActiveSubstance.Name),y=>y.MapFrom(j=>j.ActiveSubstance));
+            // medicinesToUpdate.ForMember(x=>x.FirstServingAt,y=>y.MapFrom(j=>j.FirstServingAt));
+            // medicinesToUpdate.ForMember(x=>x.ServingSize,y=>y.MapFrom(j=>j.ServingSize));
+            // medicinesToUpdate.ForMember(x=>x.NumberOfServings,y=>y.MapFrom(j=>j.NumberOfServings));
+            // medicinesToUpdate.ForMember(x=>x.IsTaken,y=>y.MapFrom(j=>j.IsTaken));
+
+
+
+
 
             var medicinesToAdd = CreateMap<FirstAidKitMedicineToAddDto,FirstAidKitMedicine>();
 

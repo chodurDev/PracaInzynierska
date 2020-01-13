@@ -24,5 +24,9 @@ namespace EpillBox.API.Dtos
         public string Form { get; set; }
         public string Producer { get; set; }
         public List<string> ActiveSubstance { get; set; }
+
+        public DateTime FirstServingAt {get; set;}
+        public int NumberOfServings { get; set; }
+        public int ServingSize { get; set; }
     }
 }

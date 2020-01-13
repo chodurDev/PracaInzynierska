@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserService } from './user.service';
-import { User } from '../_model/User';
 
 @Injectable({
   providedIn: 'root'

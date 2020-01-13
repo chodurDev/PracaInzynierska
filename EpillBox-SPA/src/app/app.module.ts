@@ -32,6 +32,9 @@ import { MedicineToBuyComponent } from './medicineToBuy/medicineToBuy.component'
 import { EditUserComponent } from './editUser/editUser.component';
 import { DialogAddAllergyComponent } from './dialogs/dialogAddAllergy/dialogAddAllergy.component';
 import { DialogAddMedicineToDatabaseComponent } from './dialogs/dialogAddMedicineToDatabase/dialogAddMedicineToDatabase.component';
+import { DialogSetScheduleComponent } from './dialogs/dialogSetSchedule/dialogSetSchedule.component';
+
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
    declarations: [
@@ -54,7 +57,8 @@ import { DialogAddMedicineToDatabaseComponent } from './dialogs/dialogAddMedicin
       MedicineToBuyComponent,
       EditUserComponent,
       DialogAddAllergyComponent,
-      DialogAddMedicineToDatabaseComponent
+      DialogAddMedicineToDatabaseComponent,
+      DialogSetScheduleComponent
    ],
    imports: [
       BrowserModule,
@@ -67,7 +71,8 @@ import { DialogAddMedicineToDatabaseComponent } from './dialogs/dialogAddMedicin
       ReactiveFormsModule,
       BsDropdownModule.forRoot(),
       SidebarModule.forRoot(),
-      NgxPopperModule.forRoot()
+      NgxPopperModule.forRoot(),
+      NgxMaterialTimepickerModule
    ],
    exports: [
       AngularMaterialsModule
@@ -77,7 +82,8 @@ import { DialogAddMedicineToDatabaseComponent } from './dialogs/dialogAddMedicin
       DialogDeleteUserFAKComponent,
       DialogAddMedicineToFAKComponent,
       DialogAddAllergyComponent,
-      DialogAddMedicineToDatabaseComponent
+      DialogAddMedicineToDatabaseComponent,
+      DialogSetScheduleComponent
    ],
    providers: [
       ErrorInterceptorProvider,

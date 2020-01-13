@@ -8,11 +8,21 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import {
+  MatTableDataSource,
+  MatPaginator,
+  MatSort,
+  MatDialog
+} from '@angular/material';
 import { FirstAidKitMedicine } from '../../_model/FirstAidKitMedicine';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
 import { FirstAidKitService } from '../../_services/firstAidKit.service';
+import { DialogSetScheduleComponent } from 'src/app/dialogs/dialogSetSchedule/dialogSetSchedule.component';
+import { ScheduleSetting } from 'src/app/_model/scheduleSetting';
+import { DATE } from 'ngx-bootstrap/chronos/units/constants';
+import { error } from 'protractor';
+import { AlertifyService } from 'src/app/_services/alertify.service';
 
 const TOOLTIP_PANEL_CLASS = 'expiredMedicineTooltip';
 
@@ -38,7 +48,11 @@ export class TableForFAKMedicineComponent
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private fakService: FirstAidKitService) {
+  constructor(
+    private fakService: FirstAidKitService,
+    public dialog: MatDialog,
+    private alertify: AlertifyService
+  ) {
     this.dataSource.filterPredicate = this.createFilter();
   }
   ngOnInit() {
@@ -140,5 +154,34 @@ export class TableForFAKMedicineComponent
       activeSubstance;
 
     return returnText;
+  }
+
+  SetSchedule(row: FirstAidKitMedicine) {
+    console.log('ustawiam harmonogram dla ' + row.name);
+    const dialogRef = this.dialog.open(DialogSetScheduleComponent, {
+      width: '400px',
+      data: row
+    });
+
+    dialogRef.afterClosed().subscribe((result: ScheduleSetting) => {
+      if (result) {
+        const temp = result.firstServingAt.toString().split(':');
+        console.log(+temp[0]);
+        console.log(+temp[1]);
+        row.firstServingAt = new Date(1, 1, 1, +temp[0], +temp[1]).toLocaleString();
+        console.log(row.firstServingAt);
+        row.numberOfServings = result.numberOfServings;
+        row.servingSize = result.servingSize;
+        this.fakService.SetSchedule(row).subscribe(
+          null,
+          error => {
+            this.alertify.error(error);
+          },
+          () => {
+           this.alertify.success("harmonogram ustawiony")
+          }
+        );
+      }
+    });
   }
 }

@@ -19,5 +19,10 @@ namespace EpillBox.API.Models
         public DateTime? ExpirationDate { get; set; }
         public bool IsTaken { get; set; }
         public int RemainingQuantity { get; set; }
+       
+        public DateTime FirstServingAt {get; set;}
+        public int NumberOfServings { get; set; }
+        public int ServingSize { get; set; }
+       
     }
 }
