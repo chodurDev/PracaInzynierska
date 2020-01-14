@@ -40,7 +40,8 @@ namespace EpillBox.API
 
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IFAKRepository, FAKRepository>();
-            services.AddTransient<UserService>();
+            services.AddTransient<EmailService>();
+            services.AddScoped<SchedulerService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {

@@ -35,6 +35,7 @@ import { DialogAddMedicineToDatabaseComponent } from './dialogs/dialogAddMedicin
 import { DialogSetScheduleComponent } from './dialogs/dialogSetSchedule/dialogSetSchedule.component';
 
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { TableMedicineToBuyComponent } from './tables/tableMedicineToBuy/tableMedicineToBuy.component';
 
 @NgModule({
    declarations: [
@@ -58,7 +59,8 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
       EditUserComponent,
       DialogAddAllergyComponent,
       DialogAddMedicineToDatabaseComponent,
-      DialogSetScheduleComponent
+      DialogSetScheduleComponent,
+      TableMedicineToBuyComponent
    ],
    imports: [
       BrowserModule,

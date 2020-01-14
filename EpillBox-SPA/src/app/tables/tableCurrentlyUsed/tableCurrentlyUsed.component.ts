@@ -66,6 +66,7 @@ export class TableCurrentlyUsedComponent
 
   ngOnChanges() {
     this.dataSource.data = this.medicines;
+    console.log(this.medicines);
   }
 
   ngAfterViewInit(): void {
@@ -92,22 +93,26 @@ export class TableCurrentlyUsedComponent
 
   takeMedicine(row: FirstAidKitMedicine) {
     if (row.remainingQuantity > 0) {
-      if (confirm(`Czy na pewno chcesz zażyć ${row.name}?`)) {
-        if (row.remainingQuantity === 1) {
-          if (
-            confirm(
-              `Została ci ostatnia porcja ${row.name}.\nCzy chcesz zamówić następne opakowanie?`
-            )
-          ) {
-            this.medService
-              .AddMedicineToShoppingBasket(this.actualUserId, row.medicineID)
-              .subscribe(null, null, () => {
-                this.alertify.message('Lek został dodany do zamówienia');
-              });
+      if (row.servingSize > 0) {
+        if (confirm(`Czy na pewno chcesz zażyć ${row.name}?`)) {
+          if (row.remainingQuantity === 1) {
+            if (
+              confirm(
+                `Została ci ostatnia porcja ${row.name}.\nCzy chcesz zamówić następne opakowanie?`
+              )
+            ) {
+              this.medService
+                .AddMedicineToShoppingBasket(this.actualUserId, row.medicineID)
+                .subscribe(null, null, () => {
+                  this.alertify.message('Lek został dodany do zamówienia');
+                });
+            }
           }
+          row.remainingQuantity -= row.servingSize;
+          this.updateRow(row);
         }
-        row.remainingQuantity -= 1;
-        this.updateRow(row);
+      }else{
+        alert('ustaw harmonogram oraz ilosc przyjmowanych porcji');
       }
     }
   }

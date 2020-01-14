@@ -10,7 +10,7 @@
           <span>Od której godziny chcesz zażywać lek?</span>
       </div>
       <div class="col-4">
-        <input class="setHour" [ngxTimepicker]="fullTime" [format]="24"  [value]="'08:00'" [(ngModel)]="scheduleSetting.firstServingAt" readonly required>
+        <input class="setHour" [ngxTimepicker]="fullTime" [format]="24"   [(ngModel)]="scheduleSetting.firstServingAt" required>
         <ngx-material-timepicker #fullTime></ngx-material-timepicker>
       </div>
     </div>
@@ -27,7 +27,7 @@
         <span>Wielkość porcji</span>   
       </div>
       <div class="col-4">
-        <input type="number" class="setHour" min="0" max="200"  [(ngModel)]="scheduleSetting.servingSize">
+        <input type="number" class="setHour" min="0" [max]="data.remainingQuantity"  [(ngModel)]="scheduleSetting.servingSize">
       </div>
     </div>
     

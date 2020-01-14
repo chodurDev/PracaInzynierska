@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EpillBox.API.Data;
 using EpillBox.API.Dtos;
+using EpillBox.API.Helpers;
 using EpillBox.API.Models;
 using EpillBox.API.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -18,9 +19,11 @@ namespace EpillBox.API.Controllers
 
         private readonly IFAKRepository _fakRepo;
         private readonly IMapper _mapper;
+        private readonly EmailService _emailService;
 
-        public FAKController(IFAKRepository fakRepo, IMapper mapper)
+        public FAKController(IFAKRepository fakRepo, IMapper mapper, EmailService emailService)
         {
+            _emailService = emailService;
             _mapper = mapper;
             _fakRepo = fakRepo;
 
@@ -51,7 +54,7 @@ namespace EpillBox.API.Controllers
         {
             //make dto to get this medicines
             var medicines = await _fakRepo.GetAllMedicines();
-            var medicinesToReturn =_mapper.Map<IEnumerable<MedicineToViewDto>>(medicines);
+            var medicinesToReturn = _mapper.Map<IEnumerable<MedicineToViewDto>>(medicines);
             return Ok(medicinesToReturn);
             // return Ok();
 
@@ -74,9 +77,9 @@ namespace EpillBox.API.Controllers
         }
 
         [Route("shortTermMedicines/{id}/{days}")]
-        public async Task<IActionResult> GetShortTermMedicines(int id,int days)
+        public async Task<IActionResult> GetShortTermMedicines(int id, int days)
         {
-            var expiredMedicines = await _fakRepo.GetShortTermMedicines(id,days);
+            var expiredMedicines = await _fakRepo.GetShortTermMedicines(id, days);
             var medicinesToReturn = _mapper.Map<IEnumerable<UserMedicinesToViewDto>>(expiredMedicines);
             return Ok(medicinesToReturn);
 
@@ -118,13 +121,35 @@ namespace EpillBox.API.Controllers
 
         }
 
+        [Route("sendShoppingList/{id}")]
+        public async Task<IActionResult> SendShoppingList(int id)
+        {
+            var user = _fakRepo.GetUser(id);
+            var medicinesToBuy = await _fakRepo.GetMedicinesToBuy(id);
+            var medicinesToReturn = _mapper.Map<IEnumerable<MedicineToViewDto>>(medicinesToBuy);
+            var listOfMedicines = new List<string>();
+            foreach (var item in medicinesToReturn)
+            {
+                listOfMedicines.Add(
+                    item.Name.ToUpper() +
+                    " Producent: " + item.Producer.ToUpper() +
+                    " Forma: " + item.Form.ToUpper() +
+                    " Ilość szt. w opakowaniu: " + item.QuantityInPackage
+                    );
+            }
+            _emailService.SendEmail(user, listOfMedicines);
+
+            return Ok();
+
+
+        }
 
 
         // POST api/fak/addUFAK
 
         [HttpPost("addUFAK")]
         public async Task<IActionResult> Post([FromBody] UserFirstAidKit uFAK)
-         {
+        {
 
             _fakRepo.AddUFAK(uFAK);
             if (await _fakRepo.SaveAll())
@@ -133,9 +158,9 @@ namespace EpillBox.API.Controllers
         }
 
         [HttpPost("addMedicineToBuy/{id}")]
-        public async Task<IActionResult> AddMedicineToBuy(int id,[FromBody]int medicineId)
+        public async Task<IActionResult> AddMedicineToBuy(int id, [FromBody]int medicineId)
         {
-            _fakRepo.AddMedicineToBuy(id,medicineId);
+            _fakRepo.AddMedicineToBuy(id, medicineId);
             if (await _fakRepo.SaveAll())
                 return Ok();
             throw new System.Exception($"Adding medicine to shoppingBasket failed on save");
@@ -148,8 +173,8 @@ namespace EpillBox.API.Controllers
 
             // }
             var fakMedicineToAdd = _mapper.Map<FirstAidKitMedicine>(fakMedicine);
-           _fakRepo.Add(fakMedicineToAdd);    
-           if (await _fakRepo.SaveAll())
+            _fakRepo.Add(fakMedicineToAdd);
+            if (await _fakRepo.SaveAll())
                 return Ok();
             throw new System.Exception($"Adding fakMedicine failed on save");
         }
@@ -158,22 +183,22 @@ namespace EpillBox.API.Controllers
         [HttpPost("addAllergyToUserAllergies/{id}")]
         public async Task<IActionResult> AddAllergyToUserAllergies([FromBody] IEnumerable<Allergies> allergies, int id)
         {
-            _fakRepo.AddAllergyToUserAllergies(id,allergies);
+            _fakRepo.AddAllergyToUserAllergies(id, allergies);
             await _fakRepo.SaveAll();
             return Ok();
-           
+
         }
 
 
         [HttpPost("addMedicineToAllFAK/{id}")]
-        public async Task<IActionResult> AddMedicineToAllFAK([FromBody] FirstAidKitMedicineToAddDto fakMedicine,int id)
+        public async Task<IActionResult> AddMedicineToAllFAK([FromBody] FirstAidKitMedicineToAddDto fakMedicine, int id)
         {
             // if(fakMedicine.FirstAidKitID==-1){
 
             // }
             var fakMedicineToAdd = _mapper.Map<FirstAidKitMedicine>(fakMedicine);
-           _fakRepo.AddMedicineToAllFAK(id,fakMedicineToAdd);   
-           if (await _fakRepo.SaveAll())
+            _fakRepo.AddMedicineToAllFAK(id, fakMedicineToAdd);
+            if (await _fakRepo.SaveAll())
                 return Ok();
             throw new System.Exception($"Adding fakMedicine failed on save");
         }
@@ -182,7 +207,8 @@ namespace EpillBox.API.Controllers
         public async Task<IActionResult> AddMedicine([FromBody] MedicineToAdd medicine)
         {
             _fakRepo.AddMedicineToDatabase(medicine);
-            if(await _fakRepo.SaveAll()){
+            if (await _fakRepo.SaveAll())
+            {
 
                 return Ok();
             }
@@ -201,18 +227,31 @@ namespace EpillBox.API.Controllers
 
             throw new System.Exception("Updating FakMedicine failed on save");
         }
-        
+
         [HttpPut("setSchedule")]
         public async Task<IActionResult> SetSchedule(UserMedicinesToViewDto value)
         {
             var fakMedicineToUpdate = _mapper.Map<FirstAidKitMedicine>(value);
             _fakRepo.Update(fakMedicineToUpdate);
             if (await _fakRepo.SaveAll())
+            {
+                GetUserChosenFirstAidKitMedicines(1);
+                var interval = (24 - fakMedicineToUpdate.FirstServingAt.Hour) / fakMedicineToUpdate.NumberOfServings;
+                MyScheduler.IntervalInSeconds(fakMedicineToUpdate.FirstServingAt.Hour, fakMedicineToUpdate.FirstServingAt.Minute, interval, () =>
+                {
+                    AlertMedicine();
+                });
                 return NoContent();
+            }
 
             throw new System.Exception("Updating FakMedicine failed on save");
         }
 
+        [HttpGet("alertMedicine")]
+        public async Task<IActionResult> AlertMedicine()
+        {
+            return Ok(new {Message = "Hello" });
+        }
         // DELETE api/fak/deleteFAKMedicine/5
 
         [HttpDelete("deleteFAKMedicine/{id}")]
@@ -239,10 +278,10 @@ namespace EpillBox.API.Controllers
 
         }
         [HttpDelete("deleteUserAllergy/{allergyId}/{userId}")]
-        public async Task<IActionResult> DeleteUserAllergy(int allergyId,int userId)
+        public async Task<IActionResult> DeleteUserAllergy(int allergyId, int userId)
         {
 
-            if (await _fakRepo.DeleteUserAllergy(allergyId,userId))
+            if (await _fakRepo.DeleteUserAllergy(allergyId, userId))
                 return NoContent();
 
             throw new System.Exception($"Deleting UserAllergy failed on save");

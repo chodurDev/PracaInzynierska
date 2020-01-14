@@ -24,7 +24,11 @@ namespace EpillBox.API.Data
             _context.Remove(entity);
         }
 
-
+        public User GetUser(int id)
+        {
+            
+            return _context.Users.FirstOrDefault(x=>x.UserID==id);
+        }
         public async Task<IEnumerable<FirstAidKitMedicine>> GetUserMedicines(int id)
         {
             var firstAidKitMedicines = new List<FirstAidKitMedicine>();
@@ -152,13 +156,13 @@ namespace EpillBox.API.Data
         }
         public async Task<IEnumerable<Allergies>> GetUserAllergies(int id)
         {
-           
+
             var userAllergies = await _context.UsersAllergies
-            .Include(x=>x.User)
-            .Include(x=>x.Allergies)
-            
-            .Where(x =>x.UserID==id)
-            .Select(x=>x.Allergies)
+            .Include(x => x.User)
+            .Include(x => x.Allergies)
+
+            .Where(x => x.UserID == id)
+            .Select(x => x.Allergies)
             .ToListAsync();
             return userAllergies;
         }
@@ -188,19 +192,19 @@ namespace EpillBox.API.Data
             Add(fak);
 
         }
-        public void AddAllergyToUserAllergies(int id,IEnumerable<Allergies> allergies)
+        public void AddAllergyToUserAllergies(int id, IEnumerable<Allergies> allergies)
         {
             bool temp;
             foreach (var item in allergies)
             {
-                temp = _context.UsersAllergies.All(x=>x.AllergiesID!=item.AllergiesID);
+                temp = _context.UsersAllergies.All(x => x.AllergiesID != item.AllergiesID);
 
-                if(_context.UsersAllergies.Where(x=>x.UserID==id).All(x=>x.AllergiesID!=item.AllergiesID))
+                if (_context.UsersAllergies.Where(x => x.UserID == id).All(x => x.AllergiesID != item.AllergiesID))
                 {
-                    Add(new UsersAllergies{AllergiesID=item.AllergiesID,UserID=id});
+                    Add(new UsersAllergies { AllergiesID = item.AllergiesID, UserID = id });
                 }
             }
-            
+
 
         }
         public async Task<bool> DeleteFirstAidKit(int firstAidKitID)
@@ -210,9 +214,9 @@ namespace EpillBox.API.Data
             Delete(fak);
             return await SaveAll();
         }
-        public async Task<bool> DeleteUserAllergy(int allergyId,int userId)
+        public async Task<bool> DeleteUserAllergy(int allergyId, int userId)
         {
-            Delete(await _context.UsersAllergies.Where(x=>x.UserID==userId).FirstOrDefaultAsync(x=>x.AllergiesID==allergyId));
+            Delete(await _context.UsersAllergies.Where(x => x.UserID == userId).FirstOrDefaultAsync(x => x.AllergiesID == allergyId));
             return await SaveAll();
         }
 
@@ -251,24 +255,26 @@ namespace EpillBox.API.Data
         }
         public void AddMedicineToDatabase(MedicineToAdd medicine)
         {
-             
-             if( _context.Medicines.All(x=>x.Name.ToLower()!=medicine.Name.ToLower())){
-             var activeSubstanceList = new List<ActiveSubstanceMedicine> ();
-             activeSubstanceList.Add(new ActiveSubstanceMedicine{ActiveSubstance=new ActiveSubstance{Name=medicine.ActiveSubstance}});
 
-             var medicineToAdd =
-                new Medicine{
-                    Name=medicine.Name,
-                    MedicineForm=_context.MedicineForms.FirstOrDefault(x=>x.MedicineFormID==medicine.Form),
-                    QuantityInPackage=medicine.QuantityInPackage,
-                    Producer= _context.Producers.Any(x=>x.Name.ToLower()==medicine.Producer.ToLower())?_context.Producers.FirstOrDefault(x=>x.Name==medicine.Producer): new Producer{Name=medicine.Producer},
-                    ActiveSubstanceMedicines=activeSubstanceList
-                    };
+            if (_context.Medicines.All(x => x.Name.ToLower() != medicine.Name.ToLower()))
+            {
+                var activeSubstanceList = new List<ActiveSubstanceMedicine>();
+                activeSubstanceList.Add(new ActiveSubstanceMedicine { ActiveSubstance = new ActiveSubstance { Name = medicine.ActiveSubstance } });
+
+                var medicineToAdd =
+                   new Medicine
+                   {
+                       Name = medicine.Name,
+                       MedicineForm = _context.MedicineForms.FirstOrDefault(x => x.MedicineFormID == medicine.Form),
+                       QuantityInPackage = medicine.QuantityInPackage,
+                       Producer = _context.Producers.Any(x => x.Name.ToLower() == medicine.Producer.ToLower()) ? _context.Producers.FirstOrDefault(x => x.Name == medicine.Producer) : new Producer { Name = medicine.Producer },
+                       ActiveSubstanceMedicines = activeSubstanceList
+                   };
                 Add(medicineToAdd);
-             }
-            
-            
-            
+            }
+
+
+
         }
 
 

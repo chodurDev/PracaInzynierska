@@ -45,10 +45,16 @@ export class MedicineService {
   }
 
   AddMedicineToDatabase(medicine: MedicineToAdd) {
-    console.log('weszlem');
     return this.http.post(
       this.baseUrl + '/fak/addMedicine',
       medicine,
+      httpOptions
+    );
+  }
+
+  SendShoppingList(userID: number) {
+    return this.http.get(
+      this.baseUrl + '/fak/sendShoppingList/' + userID,
       httpOptions
     );
   }

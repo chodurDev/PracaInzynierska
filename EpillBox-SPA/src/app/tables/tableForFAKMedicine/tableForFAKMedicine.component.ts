@@ -166,10 +166,13 @@ export class TableForFAKMedicineComponent
     dialogRef.afterClosed().subscribe((result: ScheduleSetting) => {
       if (result) {
         const temp = result.firstServingAt.toString().split(':');
-        console.log(+temp[0]);
-        console.log(+temp[1]);
-        row.firstServingAt = new Date(1, 1, 1, +temp[0], +temp[1]).toLocaleString();
-        console.log(row.firstServingAt);
+        row.firstServingAt = new Date(
+          1,
+          1,
+          1,
+          +temp[0],
+          +temp[1]
+        ).toLocaleString();
         row.numberOfServings = result.numberOfServings;
         row.servingSize = result.servingSize;
         this.fakService.SetSchedule(row).subscribe(
@@ -178,7 +181,10 @@ export class TableForFAKMedicineComponent
             this.alertify.error(error);
           },
           () => {
-           this.alertify.success("harmonogram ustawiony")
+            this.alertify.success('harmonogram ustawiony');
+            this.alertify.notification().subscribe((value: any) => {
+              this.alertify.message(value.message);
+            });
           }
         );
       }

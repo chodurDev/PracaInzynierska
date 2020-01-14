@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FirstAidKitMedicine } from '../../_model/FirstAidKitMedicine';
 import { ScheduleSetting } from 'src/app/_model/scheduleSetting';
+import { Scheduler } from 'rxjs';
 
 @Component({
   selector: 'app-dialogSetSchedule',
@@ -9,16 +10,18 @@ import { ScheduleSetting } from 'src/app/_model/scheduleSetting';
   styleUrls: ['./dialogSetSchedule.component.css']
 })
 export class DialogSetScheduleComponent implements OnInit {
-  scheduleSetting: ScheduleSetting = {
-    firstAidKitMedicineID: this.data.firstAidKitMedicineID,
-    firstServingAt: this.setTime(),
-    numberOfServings: 3,
-    servingSize: 1
-  };
+  scheduleSetting: ScheduleSetting;
   constructor(
     public dialogRef: MatDialogRef<DialogSetScheduleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: FirstAidKitMedicine
-  ) {}
+  ) {
+    this.scheduleSetting = {
+      firstAidKitMedicineID: this.data.firstAidKitMedicineID,
+      firstServingAt: this.setTime(),
+      numberOfServings: this.data.numberOfServings,
+      servingSize: this.data.servingSize
+    };
+  }
 
   ngOnInit() {}
 
