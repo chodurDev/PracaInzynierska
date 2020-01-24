@@ -93,7 +93,7 @@ export class TableCurrentlyUsedComponent
 
   takeMedicine(row: FirstAidKitMedicine) {
     if (row.remainingQuantity > 0) {
-      if (row.servingSize > 0) {
+      if (row.servingSize > 1) {
         if (confirm(`Czy na pewno chcesz zażyć ${row.name}?`)) {
           if (row.remainingQuantity === 1) {
             if (
@@ -111,8 +111,8 @@ export class TableCurrentlyUsedComponent
           row.remainingQuantity -= row.servingSize;
           this.updateRow(row);
         }
-      }else{
-        alert('ustaw harmonogram oraz ilosc przyjmowanych porcji');
+      } else {
+        row.remainingQuantity -= 1;
       }
     }
   }

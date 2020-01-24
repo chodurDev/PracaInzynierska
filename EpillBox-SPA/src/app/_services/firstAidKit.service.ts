@@ -103,4 +103,11 @@ export class FirstAidKitService {
       httpOptions
     );
   }
+
+  GetMedicinesUserCantTake(userID: number) {
+    return this.http.get(
+      this.baseUrl + '/fak/getMedicinesUserCantTake/' + userID,
+      httpOptions
+    );
+  }
 }

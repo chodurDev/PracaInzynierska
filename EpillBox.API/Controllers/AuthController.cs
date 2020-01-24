@@ -32,7 +32,7 @@ namespace EpillBox.API.Controllers
             //validate request
             if (await _repository.UserExists(userForRegisterDto.Email))
             {
-                return BadRequest("Username with this email already exists");
+                return BadRequest("Użytkownik o takim adresie e-mail już istnieje");
             }
 
             var userToCreate = new User

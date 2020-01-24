@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   jwtHelper = new JwtHelperService();
   closeOnClickOutside = true;
   opened = false;
-  mode: string = 'slide';
+  mode: string = 'push';
 
   constructor(private authService: AuthService, private router: Router) {}
 

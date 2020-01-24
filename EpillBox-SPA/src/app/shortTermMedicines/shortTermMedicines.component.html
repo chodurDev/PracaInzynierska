@@ -22,7 +22,7 @@
   <ng-template #elseBlock><h4 class="text-center">Brak leków z wybranego przedziału czasowego</h4></ng-template>
   <div *ngIf="expiredMedicines.length>0" class="row mt-5">
     <div class="col text-center">
-      <h1>LEKI PRZETERMINOWANE</h1>
+      <h3>LEKI PRZETERMINOWANE</h3>
     </div>
   </div>
   <div *ngIf="expiredMedicines.length>0" class="row">
@@ -32,16 +32,4 @@
       ></app-tableForMedicine>
     </div>
   </div>
-  <!-- <div class="row">
-          <div class="col  d-flex justify-content-end">
-            <a class=" btn btn-light text-uppercase font-weight-bold mr-5" [routerLink]="['/myFirstAidKit']" routerLinkActive="router-link-active"  >
-              <img src="https://img.icons8.com/material-two-tone/64/000000/plus.png">Dodaj Lek
-            </a>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            
-          </div>
-        </div> -->
 </div>

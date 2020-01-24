@@ -23,6 +23,8 @@ namespace EpillBox.API.Data
         Task<IEnumerable<ShoppingBasketMedicine>> GetMedicinesToBuy(int id);
         Task<IEnumerable<Allergies>> GetUserAllergies(int id);
         User GetUser(int id);
+        Task<IEnumerable<ActiveSubstanceMedicine>> GetMedicinesUserCantTake(int id);
+
 
         void AddUFAK(UserFirstAidKit uFAK);
         Task<bool> DeleteFirstAidKit(int firstAidKitID);

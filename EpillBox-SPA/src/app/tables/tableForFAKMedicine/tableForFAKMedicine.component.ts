@@ -182,9 +182,6 @@ export class TableForFAKMedicineComponent
           },
           () => {
             this.alertify.success('harmonogram ustawiony');
-            this.alertify.notification().subscribe((value: any) => {
-              this.alertify.message(value.message);
-            });
           }
         );
       }

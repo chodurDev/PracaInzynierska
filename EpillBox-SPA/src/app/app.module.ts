@@ -36,6 +36,10 @@ import { DialogSetScheduleComponent } from './dialogs/dialogSetSchedule/dialogSe
 
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { TableMedicineToBuyComponent } from './tables/tableMedicineToBuy/tableMedicineToBuy.component';
+import { MedicinesUserCantTakeComponent } from './medicinesUserCantTake/medicinesUserCantTake.component';
+import { FirstAidKitService } from './_services/firstAidKit.service';
+import { MedicineService } from './_services/medicine.service';
+import { UserService } from './_services/user.service';
 
 @NgModule({
    declarations: [
@@ -60,7 +64,8 @@ import { TableMedicineToBuyComponent } from './tables/tableMedicineToBuy/tableMe
       DialogAddAllergyComponent,
       DialogAddMedicineToDatabaseComponent,
       DialogSetScheduleComponent,
-      TableMedicineToBuyComponent
+      TableMedicineToBuyComponent,
+      MedicinesUserCantTakeComponent
    ],
    imports: [
       BrowserModule,
@@ -89,7 +94,10 @@ import { TableMedicineToBuyComponent } from './tables/tableMedicineToBuy/tableMe
    ],
    providers: [
       ErrorInterceptorProvider,
-      AuthService
+      AuthService,
+      FirstAidKitService,
+      MedicineService,
+      UserService
    ],
    bootstrap: [
       AppComponent

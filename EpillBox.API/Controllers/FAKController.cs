@@ -92,6 +92,15 @@ namespace EpillBox.API.Controllers
             return Ok(medicinesToReturn);
 
         }
+        [Route("getMedicinesUserCantTake/{id}")]
+        public async Task<IActionResult> GetMedicinesUserCantTake(int id)
+        {
+            var medicinesToReturn = await _fakRepo.GetMedicinesUserCantTake(id);
+            // var medicinesToReturn = _mapper.Map<IEnumerable<UserMedicinesToViewDto>>(expiredMedicines);
+            return Ok(medicinesToReturn);
+
+        }
+
 
 
         [Route("getUserFirstAidKits/{id}")]

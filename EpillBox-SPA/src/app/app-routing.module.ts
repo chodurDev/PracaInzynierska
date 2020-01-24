@@ -8,6 +8,7 @@ import { ShortTermMedicinesComponent } from './shortTermMedicines/shortTermMedic
 import { MedicineDatabaseComponent } from './medicineDatabase/medicineDatabase.component';
 import { MedicineToBuyComponent } from './medicineToBuy/medicineToBuy.component';
 import { EditUserComponent } from './editUser/editUser.component';
+import { MedicinesUserCantTakeComponent } from './medicinesUserCantTake/medicinesUserCantTake.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'medicineDatabase', component: MedicineDatabaseComponent },
       { path: 'medicineToBuy', component: MedicineToBuyComponent },
       { path: 'editUser', component: EditUserComponent },
+      { path: 'userCantTake', component: MedicinesUserCantTakeComponent },
     ]
   },
 

@@ -1,10 +1,16 @@
 <div class="container">
-    <div class="row">
-      <div class="col">
+    <div class="row mt-5">
+      <div class="col" *ngIf="medicines.length>0; else elseBlock">
   
-            <app-tableCurrentlyUsed [medicines]="medicines"></app-tableCurrentlyUsed>
+            <app-tableCurrentlyUsed  [medicines]="medicines"></app-tableCurrentlyUsed>
         
       </div>
+      <ng-template #elseBlock>
+
+          <div class="col text-center">
+            <h4>Brak aktualnie zażywanych leków</h4>
+          </div>
+      </ng-template>
       <!-- <div class="col">
         <div class="row">
           <div class="col  d-flex justify-content-end">

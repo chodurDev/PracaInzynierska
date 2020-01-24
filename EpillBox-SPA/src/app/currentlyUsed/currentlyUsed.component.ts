@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Medicine } from '../_model/Medicine';
 import { FirstAidKitService } from '../_services/firstAidKit.service';
 import { AuthService } from '../_services/auth.service';
 import { FirstAidKitMedicine } from '../_model/FirstAidKitMedicine';

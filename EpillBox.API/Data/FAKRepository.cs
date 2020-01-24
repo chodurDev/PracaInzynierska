@@ -26,8 +26,8 @@ namespace EpillBox.API.Data
 
         public User GetUser(int id)
         {
-            
-            return _context.Users.FirstOrDefault(x=>x.UserID==id);
+
+            return _context.Users.FirstOrDefault(x => x.UserID == id);
         }
         public async Task<IEnumerable<FirstAidKitMedicine>> GetUserMedicines(int id)
         {
@@ -58,6 +58,25 @@ namespace EpillBox.API.Data
 
             return firstAidKitMedicines;
         }
+
+        public async Task<IEnumerable<ActiveSubstanceMedicine>> GetMedicinesUserCantTake(int id)
+        {
+            var userCantTake = new List<ActiveSubstanceMedicine>();
+            var userAllergies = await _context.UsersAllergies.Include(x => x.Allergies.Name).Where(x => x.UserID == id).Select(x => x.Allergies).ToListAsync();
+            var temp = await _context.ActiveSubstanceMedicines.Include(x => x.Medicine).Include(x => x.ActiveSubstance).ToListAsync();
+
+            foreach (var item in temp)
+            {
+                userAllergies.ForEach(x =>
+                {
+                    if (x.Name == item.ActiveSubstance.Name) userCantTake.Add(item);
+                });
+
+            }
+
+            return userCantTake.Distinct();
+        }
+
         public async Task<IEnumerable<FirstAidKitMedicine>> GetUserChosenFirstAidKitMedicines(int id)
         {
             var userChosenFirstAidKit = await _context.UserFirstAidKits
@@ -79,43 +98,16 @@ namespace EpillBox.API.Data
         }
         public async Task<IEnumerable<FirstAidKitMedicine>> GetExpiredMedicines(int id)
         {
-            var expiredMedicines = new List<FirstAidKitMedicine>();
-            var userFirstAidKits = await _context.UserFirstAidKits
-                                                    .Where(ufak => ufak.UserID == id)
-                                                    .ToListAsync();
-            foreach (var item in userFirstAidKits)
-            {
 
-                var medicines = _context.FirstAidKitMedicines
-                    .Include(fakm => fakm.Medicine)
-                    .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID && fakm.ExpirationDate < DateTime.Now)
-                    .ToList();
-                foreach (var medicine in medicines)
-                {
-                    expiredMedicines.Add(medicine);
-                }
-            }
-            return expiredMedicines;
+            var medicines = await GetUserMedicines(id);
+            return medicines.Where(x => x.ExpirationDate < DateTime.Now);
+            
         }
         public async Task<IEnumerable<FirstAidKitMedicine>> GetShortTermMedicines(int id, int days)
         {
-            var expiredMedicines = new List<FirstAidKitMedicine>();
-            var userFirstAidKits = await _context.UserFirstAidKits
-                                                    .Where(ufak => ufak.UserID == id)
-                                                    .ToListAsync();
-            foreach (var item in userFirstAidKits)
-            {
+            var medicines = await GetUserMedicines(id);
 
-                var medicines = _context.FirstAidKitMedicines
-                    .Include(fakm => fakm.Medicine)
-                    .Where(fakm => fakm.FirstAidKitID == item.FirstAidKitID && IsShorterThan(fakm.ExpirationDate ?? DateTime.Now.AddDays(8), days))
-                    .ToList();
-                foreach (var medicine in medicines)
-                {
-                    expiredMedicines.Add(medicine);
-                }
-            }
-            return expiredMedicines;
+            return medicines.Where(x => IsShorterThan(x.ExpirationDate ?? DateTime.Now.AddDays(100), days));
         }
         private bool IsShorterThan(DateTime expirationDate, int days)
         {
