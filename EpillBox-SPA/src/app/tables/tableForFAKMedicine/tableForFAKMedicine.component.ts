@@ -178,7 +178,7 @@ export class TableForFAKMedicineComponent
         this.fakService.SetSchedule(row).subscribe(
           null,
           error => {
-            this.alertify.error(error);
+            console.log(error);
           },
           () => {
             this.alertify.success('harmonogram ustawiony');

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './_services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import * as signalR from '@microsoft/signalr';
+import { AlertifyService } from './_services/alertify.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,11 @@ export class AppComponent implements OnInit {
   opened = false;
   mode: string = 'push';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertify: AlertifyService
+  ) {}
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -22,6 +28,16 @@ export class AppComponent implements OnInit {
       this.authService.decodedToken = this.jwtHelper.decodeToken(token);
       this.router.navigate(['/myFirstAidKit']);
     }
+
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl('http://localhost:5000/hub')
+      .build();
+
+    connection.on('messageReceived', (message: string) => {
+      this.alertify.confirm(message, () => {});
+    });
+
+    connection.start().catch(err => console.log(err));
   }
 
   onToggleSideBar(value: boolean) {

@@ -4,10 +4,14 @@ using AutoMapper;
 using EpillBox.API.Data;
 using EpillBox.API.Dtos;
 using EpillBox.API.Helpers;
+using EpillBox.API.Hubs;
 using EpillBox.API.Models;
 using EpillBox.API.Services;
+using Hangfire;
+using Hangfire.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace EpillBox.API.Controllers
 {
@@ -20,9 +24,13 @@ namespace EpillBox.API.Controllers
         private readonly IFAKRepository _fakRepo;
         private readonly IMapper _mapper;
         private readonly EmailService _emailService;
+        private readonly IHubContext<ChatHub> _hub;
+        private readonly RecurringJobManager _recurringJob;
 
-        public FAKController(IFAKRepository fakRepo, IMapper mapper, EmailService emailService)
+        public FAKController(IFAKRepository fakRepo, IMapper mapper, EmailService emailService, IHubContext<ChatHub> hub)
         {
+            _recurringJob = new RecurringJobManager();
+            _hub = hub;
             _emailService = emailService;
             _mapper = mapper;
             _fakRepo = fakRepo;
@@ -231,6 +239,13 @@ namespace EpillBox.API.Controllers
         {
             var fakMedicineToUpdate = _mapper.Map<FirstAidKitMedicine>(value);
             _fakRepo.Update(fakMedicineToUpdate);
+
+            if (!fakMedicineToUpdate.IsTaken)
+            {
+               _recurringJob.RemoveIfExists(fakMedicineToUpdate.FirstAidKitMedicineID.ToString());
+                await _hub.Clients.All.SendAsync("messageReceived", "wyłączyłeś harmonogram leku");
+            }
+
             if (await _fakRepo.SaveAll())
                 return NoContent();
 
@@ -244,23 +259,24 @@ namespace EpillBox.API.Controllers
             _fakRepo.Update(fakMedicineToUpdate);
             if (await _fakRepo.SaveAll())
             {
-                GetUserChosenFirstAidKitMedicines(1);
+                await _hub.Clients.All.SendAsync("messageReceived", "harmonogram dla " + fakMedicineToUpdate.Medicine.Name + " został ustawiony");
                 var interval = (24 - fakMedicineToUpdate.FirstServingAt.Hour) / fakMedicineToUpdate.NumberOfServings;
-                MyScheduler.IntervalInSeconds(fakMedicineToUpdate.FirstServingAt.Hour, fakMedicineToUpdate.FirstServingAt.Minute, interval, () =>
-                {
-                    AlertMedicine();
-                });
+                var cronSettings="0 "+fakMedicineToUpdate.FirstServingAt.Minute+" "+fakMedicineToUpdate.FirstServingAt.Hour+"-23/"+interval+" * * ?";
+                
+                _recurringJob.AddOrUpdate(fakMedicineToUpdate.FirstAidKitMedicineID.ToString(), ()=>ViewReminder(fakMedicineToUpdate.Medicine.Name), cronSettings);
                 return NoContent();
+
             }
 
             throw new System.Exception("Updating FakMedicine failed on save");
         }
-
-        [HttpGet("alertMedicine")]
-        public async Task<IActionResult> AlertMedicine()
+        public async Task ViewReminder(string fakMedicineName)
         {
-            return Ok(new {Message = "Hello" });
+
+            await _hub.Clients.All.SendAsync("messageReceived", "zażyj " + fakMedicineName);
+
         }
+
         // DELETE api/fak/deleteFAKMedicine/5
 
         [HttpDelete("deleteFAKMedicine/{id}")]

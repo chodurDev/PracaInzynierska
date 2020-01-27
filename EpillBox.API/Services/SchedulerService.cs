@@ -29,5 +29,8 @@ namespace EpillBox.API.Services
             }, null, timeToGo, TimeSpan.FromHours(intervalInHour));
             timers.Add(timer);
         }
+        public void Delete(){
+            _instance=null;
+        }
     }
 }

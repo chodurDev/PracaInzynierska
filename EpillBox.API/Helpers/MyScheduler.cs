@@ -24,5 +24,9 @@ namespace EpillBox.API.Helpers
             interval = interval * 24;
             SchedulerService.Instance.ScheduleTask(hour, min, interval, task);
         }
+        public static void Delete()
+        {
+            SchedulerService.Instance.Delete();
+        }
     }
 }
