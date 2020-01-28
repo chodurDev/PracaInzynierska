@@ -39,7 +39,6 @@ namespace EpillBox.API
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IFAKRepository, FAKRepository>();
             services.AddTransient<EmailService>();
-            services.AddScoped<SchedulerService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -52,7 +51,6 @@ namespace EpillBox.API
                 };
             });
 
-            // Add Hangfire services.
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                 .UseSimpleAssemblyNameTypeSerializer()
@@ -67,8 +65,8 @@ namespace EpillBox.API
                     DisableGlobalLocks = true
                 }));
 
-            // Add the processing server as IHostedService
             services.AddHangfireServer();
+            services.AddSignalR();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -84,7 +82,6 @@ namespace EpillBox.API
             services.AddCors();
             services.AddAutoMapper(typeof(FAKRepository).Assembly);
 
-            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
