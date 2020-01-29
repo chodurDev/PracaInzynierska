@@ -177,9 +177,7 @@ export class TableForFAKMedicineComponent
         row.servingSize = result.servingSize;
         this.fakService.SetSchedule(row).subscribe(
           null,
-          error => {
-            console.log(error);
-          },
+          null,
           () => {
             this.alertify.success('harmonogram ustawiony');
           }

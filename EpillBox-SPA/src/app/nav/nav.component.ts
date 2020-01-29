@@ -76,7 +76,7 @@ export class NavComponent implements OnInit {
       case '/editUser':
         this.routeName = 'Profil użytkownika';
         break;
-      case '/allergies':
+      case '/userCantTake':
         this.routeName = 'Uczulające substancje aktywne';
         break;
       default:

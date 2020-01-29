@@ -59,7 +59,6 @@ export class TableMedicineDatabaseComponent
   }
 
   ngOnChanges() {
-    console.log(this.medicines);
     this.dataSource.data = this.medicines;
   }
 

@@ -103,8 +103,8 @@ namespace EpillBox.API.Controllers
         [Route("getMedicinesUserCantTake/{id}")]
         public async Task<IActionResult> GetMedicinesUserCantTake(int id)
         {
-            var medicinesToReturn = await _fakRepo.GetMedicinesUserCantTake(id);
-            // var medicinesToReturn = _mapper.Map<IEnumerable<UserMedicinesToViewDto>>(expiredMedicines);
+            var medicinesCantTake = await _fakRepo.GetMedicinesUserCantTake(id);
+            var medicinesToReturn = _mapper.Map<IEnumerable<MedicineToViewDto>>(medicinesCantTake);
             return Ok(medicinesToReturn);
 
         }
@@ -259,9 +259,8 @@ namespace EpillBox.API.Controllers
             _fakRepo.Update(fakMedicineToUpdate);
             if (await _fakRepo.SaveAll())
             {
-                await _hub.Clients.All.SendAsync("messageReceived", "harmonogram dla " + fakMedicineToUpdate.Medicine.Name + " został ustawiony");
                 var interval = (24 - fakMedicineToUpdate.FirstServingAt.Hour) / fakMedicineToUpdate.NumberOfServings;
-                var cronSettings="0 "+fakMedicineToUpdate.FirstServingAt.Minute+" "+fakMedicineToUpdate.FirstServingAt.Hour+"-23/"+interval+" * * ?";
+                var cronSettings="0 "+fakMedicineToUpdate.FirstServingAt.Minute+" "+fakMedicineToUpdate.FirstServingAt.Hour+"/"+interval+" * * ?";
                 
                 _recurringJob.AddOrUpdate(fakMedicineToUpdate.FirstAidKitMedicineID.ToString(), ()=>ViewReminder(fakMedicineToUpdate.Medicine.Name), cronSettings);
                 return NoContent();

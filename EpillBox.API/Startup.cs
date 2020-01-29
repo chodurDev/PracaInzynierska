@@ -76,8 +76,19 @@ namespace EpillBox.API
                    o.JsonSerializerOptions.PropertyNamingPolicy = null;
                    o.JsonSerializerOptions.DictionaryKeyPolicy = null;
                });
+
+
             services.AddMvc(option => option.EnableEndpointRouting = false)
-                    .AddNewtonsoftJson();
+                    .AddNewtonsoftJson(options =>
+                    {
+                        options.SerializerSettings.ReferenceLoopHandling= Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    });
+
+            // services.AddControllers()
+            //         .AddNewtonsoftJson(options =>
+            //         {
+            //             options.SerializerSettings.ReferenceLoopHandling= Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            //         });
 
             services.AddCors();
             services.AddAutoMapper(typeof(FAKRepository).Assembly);
@@ -119,9 +130,9 @@ namespace EpillBox.API
 
             app.UseRouting();
             app.UseAuthentication();
-            
+
             app.UseHangfireDashboard();
-            
+
             app.UseMvc();
 
 

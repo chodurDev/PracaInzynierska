@@ -59,17 +59,16 @@ namespace EpillBox.API.Data
             return firstAidKitMedicines;
         }
 
-        public async Task<IEnumerable<ActiveSubstanceMedicine>> GetMedicinesUserCantTake(int id)
+        public async Task<IEnumerable<Medicine>> GetMedicinesUserCantTake(int id)
         {
-            var userCantTake = new List<ActiveSubstanceMedicine>();
+            var userCantTake = new List<Medicine>();
             var userAllergies = await _context.UsersAllergies.Include(x => x.Allergies.Name).Where(x => x.UserID == id).Select(x => x.Allergies).ToListAsync();
-            var temp = await _context.ActiveSubstanceMedicines.Include(x => x.Medicine).Include(x => x.ActiveSubstance).ToListAsync();
-
+            var temp = await _context.Medicines.Include(x=>x.ActiveSubstanceMedicines).ThenInclude(y=>y.ActiveSubstance).Include(x=>x.Producer).Include(x=>x.MedicineForm).ToListAsync();
             foreach (var item in temp)
             {
                 userAllergies.ForEach(x =>
                 {
-                    if (x.Name == item.ActiveSubstance.Name) userCantTake.Add(item);
+                    if (item.ActiveSubstanceMedicines.Any(y=>y.ActiveSubstance.Name==x.Name)) userCantTake.Add(item);
                 });
 
             }
