@@ -177,22 +177,26 @@ namespace EpillBox.API.Data
         }
 
 
-        public void AddUFAK(UserFirstAidKit uFAK)
+        public void AddUFAK(UserFirstAidKit uFAK) 
         {
             var fak = new FirstAidKit() { UserFirstAidKits = new List<UserFirstAidKit> { uFAK } };
             Add(fak);
 
         }
-        public void AddAllergyToUserAllergies(int id, IEnumerable<Allergies> allergies)
+        public void AddAllergyToUserAllergies(int id, IEnumerable<ActiveSubstance> allergies)
         {
-            bool temp;
+          
             foreach (var item in allergies)
             {
-                temp = _context.UsersAllergies.All(x => x.AllergiesID != item.AllergiesID);
-
-                if (_context.UsersAllergies.Where(x => x.UserID == id).All(x => x.AllergiesID != item.AllergiesID))
+               
+                if (_context.UsersAllergies.Where(x => x.UserID == id).All(x => x.Allergies.Name.ToLower() != item.Name.ToLower()))
                 {
-                    Add(new UsersAllergies { AllergiesID = item.AllergiesID, UserID = id });
+                    if(_context.Allergies.All(x=>x.Name.ToLower() != item.Name.ToLower())){
+                        Add(new UsersAllergies { Allergies = new Allergies{Name=item.Name,}, UserID = id });
+                    }else{
+
+                    Add(new UsersAllergies { AllergiesID = item.ActiveSubstanceID, UserID = id });
+                    }
                 }
             }
 
@@ -216,9 +220,9 @@ namespace EpillBox.API.Data
 
             return await _context.Medicines.Include(x => x.MedicineForm).Include(x => x.Producer).Include(x => x.ActiveSubstanceMedicines).ThenInclude(y => y.ActiveSubstance).ToListAsync();
         }
-        public async Task<IEnumerable<Allergies>> GetAllAllergies()
+        public async Task<IEnumerable<ActiveSubstance>> GetAllAllergies()
         {
-            return await _context.Allergies.ToListAsync();
+            return await _context.ActiveSubstances.ToListAsync();
         }
         public void AddMedicineToAllFAK(int id, FirstAidKitMedicine medicine)
         {

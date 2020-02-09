@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Allergies } from '../_model/Allergies';
+import { ActiveSubstance } from '../_model/ActiveSubstance';
 
 let httpOptions = {
   headers: new HttpHeaders()
@@ -28,7 +29,7 @@ export class UserService {
     );
   }
 
-  AddAllergyToUserAllergies(userID: number, allergies: Allergies[]) {
+  AddAllergyToUserAllergies(userID: number, allergies: ActiveSubstance[]) {
     return this.http.post(
       this.baseUrl + '/fak/addAllergyToUserAllergies/' + userID,
       allergies,

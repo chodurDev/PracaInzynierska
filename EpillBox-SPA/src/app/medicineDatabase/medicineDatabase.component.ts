@@ -11,17 +11,21 @@ import { AuthService } from '../_services/auth.service';
 })
 export class MedicineDatabaseComponent implements OnInit {
   medicines: FirstAidKitMedicine[] = [];
- 
 
-  constructor(private medService: MedicineService,private  authService: AuthService) {}
+  constructor(
+    private medService: MedicineService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.getMedicines();
   }
 
   getMedicines() {
-    this.medService.GetAllMedicines().subscribe((medicines: FirstAidKitMedicine[]) => {
-      this.medicines = medicines;
-    });
+    this.medService
+      .GetAllMedicines()
+      .subscribe((medicines: FirstAidKitMedicine[]) => {
+        this.medicines = medicines;
+      });
   }
 }

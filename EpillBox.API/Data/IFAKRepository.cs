@@ -14,7 +14,7 @@ namespace EpillBox.API.Data
         Task<bool> SaveAll();
         Task<IEnumerable<FirstAidKitMedicine>> GetUserMedicines(int id);
         Task<IEnumerable<Medicine>> GetAllMedicines();
-        Task<IEnumerable<Allergies>> GetAllAllergies();
+        Task<IEnumerable<ActiveSubstance>> GetAllAllergies();
         Task<IEnumerable<FirstAidKitMedicine>> GetUserChosenFirstAidKitMedicines(int id);
         Task<IEnumerable<FirstAidKitMedicine>> GetExpiredMedicines(int id);
         Task<IEnumerable<FirstAidKitMedicine>> GetShortTermMedicines(int id,int days);
@@ -31,7 +31,7 @@ namespace EpillBox.API.Data
         Task<bool> DeleteUserAllergy(int allergyId,int userId);
         void AddMedicineToAllFAK(int id,FirstAidKitMedicine medicine);
         void AddMedicineToBuy(int id,int  medicineId);
-        void AddAllergyToUserAllergies(int id,IEnumerable<Allergies> allergies);
+        void AddAllergyToUserAllergies(int id,IEnumerable<ActiveSubstance> allergies);
         void AddMedicineToDatabase(MedicineToAdd medicine);
     }
 }

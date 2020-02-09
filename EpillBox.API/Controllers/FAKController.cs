@@ -198,7 +198,7 @@ namespace EpillBox.API.Controllers
 
 
         [HttpPost("addAllergyToUserAllergies/{id}")]
-        public async Task<IActionResult> AddAllergyToUserAllergies([FromBody] IEnumerable<Allergies> allergies, int id)
+        public async Task<IActionResult> AddAllergyToUserAllergies([FromBody] IEnumerable<ActiveSubstance> allergies, int id)
         {
             _fakRepo.AddAllergyToUserAllergies(id, allergies);
             await _fakRepo.SaveAll();
@@ -259,9 +259,17 @@ namespace EpillBox.API.Controllers
             _fakRepo.Update(fakMedicineToUpdate);
             if (await _fakRepo.SaveAll())
             {
-                var interval = (24 - fakMedicineToUpdate.FirstServingAt.Hour) / fakMedicineToUpdate.NumberOfServings;
-                var cronSettings="0 "+fakMedicineToUpdate.FirstServingAt.Minute+" "+fakMedicineToUpdate.FirstServingAt.Hour+"/"+interval+" * * ?";
-                
+                string cronSettings;
+                if(fakMedicineToUpdate.NumberOfServings>1){
+                    var interval = (24 - fakMedicineToUpdate.FirstServingAt.Hour) / fakMedicineToUpdate.NumberOfServings;
+                    cronSettings=fakMedicineToUpdate.FirstServingAt.Minute+" "+(fakMedicineToUpdate.FirstServingAt.Hour-1)+"/"+interval+" * * *";
+                }
+                else
+                {
+                    cronSettings=fakMedicineToUpdate.FirstServingAt.Minute+" "+(fakMedicineToUpdate.FirstServingAt.Hour-1)+" * * *";
+                }
+
+         
                 _recurringJob.AddOrUpdate(fakMedicineToUpdate.FirstAidKitMedicineID.ToString(), ()=>ViewReminder(fakMedicineToUpdate.Medicine.Name), cronSettings);
                 return NoContent();
 

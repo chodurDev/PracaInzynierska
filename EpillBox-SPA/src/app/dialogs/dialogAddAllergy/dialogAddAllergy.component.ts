@@ -9,6 +9,7 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { Allergies } from 'src/app/_model/Allergies';
 import { MedicineService } from 'src/app/_services/medicine.service';
+import { ActiveSubstance } from 'src/app/_model/ActiveSubstance';
 
 @Component({
   selector: 'app-dialogAddAllergy',
@@ -17,10 +18,10 @@ import { MedicineService } from 'src/app/_services/medicine.service';
 })
 export class DialogAddAllergyComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['name', 'select'];
-  dataSource = new MatTableDataSource<Allergies>();
+  dataSource = new MatTableDataSource<ActiveSubstance>();
 
   nameFilter = new FormControl('');
-  selection = new SelectionModel<Allergies>(true, []);
+  selection = new SelectionModel<ActiveSubstance>(true, []);
 
   filterValues = {
     name: ''
@@ -37,7 +38,7 @@ export class DialogAddAllergyComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.medService.GetAllAllergies().subscribe((allergies: Allergies[]) => {
+    this.medService.GetAllAllergies().subscribe((allergies: ActiveSubstance[]) => {
       this.dataSource.data = allergies;
     });
 
@@ -60,7 +61,7 @@ export class DialogAddAllergyComponent implements AfterViewInit, OnInit {
     return filterFunction;
   }
 
-  onAddClick(): Allergies[]{
+  onAddClick(): ActiveSubstance[]{
     return this.selection.selected;
   }
 }

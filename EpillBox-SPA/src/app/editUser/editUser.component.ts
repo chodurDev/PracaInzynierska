@@ -16,6 +16,7 @@ import { UserService } from '../_services/user.service';
 import { AuthService } from '../_services/auth.service';
 import { Allergies } from '../_model/Allergies';
 import { DialogAddAllergyComponent } from '../dialogs/dialogAddAllergy/dialogAddAllergy.component';
+import { ActiveSubstance } from '../_model/ActiveSubstance';
 
 @Component({
   selector: 'app-editUser',
@@ -78,7 +79,7 @@ export class EditUserComponent implements AfterViewInit, OnInit {
     const dialogRef = this.dialog.open(DialogAddAllergyComponent, {
       width: '400px'
     });
-    dialogRef.afterClosed().subscribe((result: Allergies[]) => {
+    dialogRef.afterClosed().subscribe((result: ActiveSubstance[]) => {
       if (result) {
         if (result.length > 0) {
           this.userService
